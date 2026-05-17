@@ -22,18 +22,31 @@ color:white;
 overflow-x:hidden;
 }
 
-/* CINEMATIC BACKGROUND */
+/* FIXED BACKGROUND IMAGE (PROPER WAY) */
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:url("IMG_2034.jpeg") center/cover no-repeat;
+filter:brightness(0.35);
+z-index:-3;
+}
 
+/* OPTIONAL VIDEO OVERLAY */
 #bg-video{
 position:fixed;
 width:100%;
 height:100%;
 object-fit:cover;
-z-index:-1;
-filter:brightness(0.45) blur(3px);
+z-index:-2;
+opacity:0.35;
+mix-blend-mode:screen;
 }
 
-/* LANDING PAGE */
+/* LANDING */
 
 #landing{
 height:100vh;
@@ -86,7 +99,7 @@ margin:auto;
 padding:50px 20px;
 }
 
-/* GLASS CARDS */
+/* GLASS CARD */
 
 .card{
 background:rgba(255,255,255,0.10);
@@ -107,14 +120,13 @@ text-align:center;
 margin-bottom:20px;
 }
 
-/* TEXT */
+/* MESSAGE */
 
 .message{
 white-space:pre-line;
 text-align:justify;
 line-height:1.8;
 font-size:15.5px;
-opacity:0.95;
 }
 
 /* IMAGE */
@@ -124,28 +136,12 @@ width:100%;
 border-radius:15px;
 }
 
-/* VIDEO FIX */
+/* VIDEO FIX (IMPORTANT) */
 
 video{
 width:100%;
 border-radius:15px;
 background:black;
-}
-
-/* GIFT */
-
-.gift-title{
-font-size:20px;
-margin-bottom:10px;
-color:#ffd1dc;
-}
-
-.gift-text{
-white-space:pre-line;
-text-align:justify;
-line-height:1.8;
-font-size:15px;
-opacity:0.95;
 }
 
 /* HEARTS */
@@ -168,10 +164,15 @@ opacity:0.4;
 
 <body>
 
-<!-- BACKGROUND -->
+<!-- OPTIONAL BACKGROUND VIDEO -->
 <video autoplay muted loop id="bg-video">
 <source src="background.mp4" type="video/mp4">
 </video>
+
+<!-- BACKGROUND MUSIC (FIXED AUTOPLAY) -->
+<audio id="bg-music" loop>
+<source src="bg.mp3" type="audio/mp3">
+</audio>
 
 <!-- LANDING -->
 <section id="landing">
@@ -206,7 +207,8 @@ opacity:0.4;
 
 <div class="card">
 
-<video controls playsinline>
+<!-- FIXED VIDEO AUTOPLAY + LOOP -->
+<video autoplay muted loop playsinline>
 <source src="luyanda.mp4" type="video/mp4">
 </video>
 
@@ -214,19 +216,23 @@ opacity:0.4;
 
 <div class="card">
 
-<div class="gift-title">Your Gift ⌚</div>
+<h2 style="color:#ffd1dc;">Your Gift ⌚</h2>
 
-<div class="gift-text">
+<br>
+
+<p style="text-align:justify;line-height:1.8">
 
 I got you a small gift — a silver plated bangle watch.
 
+<br><br>
+
 I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
 
-I hope you wear it often.
+<br><br>
 
-Not just as something pretty, but as a reminder that you are valued, remembered, and genuinely appreciated.
+I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, and genuinely appreciated.
 
-</div>
+</p>
 
 </div>
 
@@ -238,10 +244,17 @@ Not just as something pretty, but as a reminder that you are valued, remembered,
 function enter(){
 document.getElementById("landing").style.display="none";
 document.getElementById("main").style.display="block";
+
+/* START MUSIC (IMPORTANT MOBILE FIX) */
+const music = document.getElementById("bg-music");
+music.volume = 0.6;
+music.play().catch(()=>{});
+
+/* START TEXT */
 typeWriter();
 }
 
-/* MESSAGE (formatted into clean paragraphs) */
+/* MESSAGE */
 const text = `Happy birthday.
 
 Today feels important, because it’s the day someone really special came into the world.
@@ -260,7 +273,6 @@ More than anything, I just want you to have a birthday that feels warm, special,
 
 Enjoy your day.`;
 
-/* TYPING */
 let i = 0;
 
 function typeWriter(){
@@ -271,7 +283,7 @@ setTimeout(typeWriter, 35);
 }
 }
 
-/* FLOATING HEARTS */
+/* HEARTS */
 setInterval(()=>{
 
 const heart = document.createElement("div");
