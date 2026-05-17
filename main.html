@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Luyanda</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* 🎬 CINEMATIC BACKGROUND VIDEO */
+#bg-video {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: -1;
+}
+
+/* MAIN CONTENT */
+.container {
+  max-width: 750px;
+  margin: auto;
+  padding: 60px 20px;
+  text-align: center;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+h1 {
+  color: #ff4d6d;
+  font-size: 2.2em;
+}
+
+#typing {
+  margin-top: 20px;
+  min-height: 120px;
+  font-size: 1.1em;
+  white-space: pre-line;
+  opacity: 0.95;
+}
+
+/* VIDEO */
+video {
+  width: 100%;
+  margin-top: 25px;
+  border-radius: 15px;
+}
+
+/* BUTTON */
+button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  background: #ff4d6d;
+  color: white;
+  cursor: pointer;
+}
+
+/* SECRET */
+#secret {
+  display: none;
+  margin-top: 20px;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* HEARTS */
+.heart {
+  position: fixed;
+  color: #ff4d6d;
+  animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 0; }
+  to { transform: translateY(-10vh); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎬 BACKGROUND VIDEO -->
+<video autoplay muted loop id="bg-video">
+  <source src="cinematic.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<!-- 🎧 OPTIONAL MUSIC -->
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<div class="container">
+
+  <h1>Happy Birthday Luyanda 🎉</h1>
+
+  <div id="typing"></div>
+
+  <!-- HER VIDEO -->
+  <video controls>
+    <source src="luyanda.mp4" type="video/mp4">
+  </video>
+
+  <button onclick="reveal()">Tap for something deeper</button>
+
+  <div id="secret">
+    Some people don’t leave your heart…  
+    they just stay there quietly through time.  
+    You are one of those people.
+  </div>
+
+</div>
+
+<script>
+
+// ✍🏽 TEXT
+const text = `Happy Birthday Luyanda.
+
+Today is yours — 23 May 2026.
+
+A moment the world became softer because you exist.
+
+I hope this day brings you peace, love, and memories that feel like warmth.
+
+You deserve a life that feels cinematic… like you are always the main character.`;
+
+// TYPE + VOICE
+let i = 0;
+
+function typeWriter() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 40);
+  }
+}
+
+// 🎙️ VOICE NARRATION
+function speakText(content) {
+  let speech = new SpeechSynthesisUtterance(content);
+  speech.rate = 0.9;
+  speech.pitch = 1;
+  speech.volume = 1;
+
+  let voices = window.speechSynthesis.getVoices();
+  let femaleVoice = voices.find(v =>
+    v.lang.includes("en") || v.name.toLowerCase().includes("female")
+  );
+
+  if (femaleVoice) speech.voice = femaleVoice;
+
+  window.speechSynthesis.speak(speech);
+}
+
+// SECRET MESSAGE
+function reveal() {
+  document.getElementById("secret").style.display = "block";
+}
+
+// HEARTS
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "♥";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 400);
+
+// START
+window.onload = () => {
+  typeWriter();
+  speakText(text);
+};
+
+</script>
+
+</body>
+</html>
