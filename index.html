@@ -1,69 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Luyanda 💗</title>
+
+<title>For Luyanda ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
 <style>
 
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Poppins',sans-serif;
+color:white;
+overflow-x:hidden;
+}
+
+/* VIDEO BACKGROUND */
+
+#bg-video{
+position:fixed;
+right:0;
+bottom:0;
+min-width:100%;
+min-height:100%;
+object-fit:cover;
+z-index:-1;
+filter:brightness(0.45) blur(3px);
+}
+
+/* LANDING PAGE */
+
+#landing{
 height:100vh;
 display:flex;
-align-items:center;
 justify-content:center;
-font-family: "Poppins", sans-serif;
-background-image:url("IMG_2034.jpeg");
-background-size:cover;
-background-position:center;
-}
-
-.overlay{
-position:absolute;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.35);
-}
-
-.card{
-position:relative;
-background:rgba(255,255,255,0.9);
-padding:40px;
-border-radius:25px;
+align-items:center;
 text-align:center;
-box-shadow:0 20px 60px rgba(0,0,0,0.25);
-animation:fadeIn 2s ease;
 }
 
-h1{
-color:#ff5c8a;
-font-size:28px;
+.glass{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.2);
+padding:60px;
+border-radius:20px;
+box-shadow:0 10px 40px rgba(0,0,0,0.5);
 }
 
-p{
-color:#555;
+.glass h1{
+font-family:'Dancing Script';
+font-size:45px;
+margin-bottom:10px;
 }
 
-button{
-margin-top:20px;
-padding:12px 28px;
+.glass p{
+opacity:0.8;
+margin-bottom:25px;
+}
+
+.glass button{
+padding:12px 30px;
 border:none;
 border-radius:30px;
-background:#ff5c8a;
+background:rgba(255,255,255,0.2);
 color:white;
 font-size:16px;
 cursor:pointer;
 transition:0.3s;
 }
 
-button:hover{
-transform:scale(1.08);
+.glass button:hover{
+transform:scale(1.1);
+background:rgba(255,255,255,0.3);
 }
 
-@keyframes fadeIn{
-from{opacity:0;transform:scale(1.1)}
-to{opacity:1;transform:scale(1)}
+/* MAIN SITE */
+
+#main{
+display:none;
+max-width:900px;
+margin:auto;
+padding:50px 20px;
+}
+
+/* GLASS CARDS */
+
+.card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,0.2);
+border-radius:20px;
+padding:40px;
+margin-bottom:30px;
+box-shadow:0 10px 40px rgba(0,0,0,0.4);
+}
+
+/* TITLE */
+
+.title{
+font-family:'Dancing Script';
+font-size:50px;
+text-align:center;
+margin-bottom:20px;
+}
+
+/* PHOTO */
+
+.photo img{
+width:100%;
+border-radius:15px;
+}
+
+/* VIDEO */
+
+.video video{
+width:100%;
+border-radius:15px;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+opacity:0.7;
+margin-top:30px;
+}
+
+/* FLOATING HEARTS */
+
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:20px;
+animation:floatUp 10s linear infinite;
+opacity:0.4;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);}
 }
 
 </style>
@@ -71,22 +153,170 @@ to{opacity:1;transform:scale(1)}
 
 <body>
 
-<div class="overlay"></div>
+<!-- VIDEO BACKGROUND -->
+
+<video autoplay muted loop id="bg-video">
+<source src="cinematic.mp4" type="video/mp4">
+</video>
+
+<!-- LANDING PAGE -->
+
+<section id="landing">
+
+<div class="glass">
+
+<h1>Something special</h1>
+<p>was made especially for you</p>
+
+<button onclick="enter()">Click to open ❤️</button>
+
+</div>
+
+</section>
+
+<!-- MAIN WEBSITE -->
+
+<section id="main">
 
 <div class="card">
 
-<h1>Made Specially For You 💌</h1>
-<p>Luyanda • 23 May 2026</p>
+<h1 class="title">Happy Birthday Luyanda 🎂</h1>
 
-<button onclick="enter()">Open</button>
+<p id="message"></p>
 
 </div>
+
+
+<div class="card photo">
+
+<img src="IMG_2034.jpeg">
+
+</div>
+
+
+<div class="card video">
+
+<h2>A moment of you</h2>
+
+<br>
+
+<video controls>
+<source src="luyanda.mp4" type="video/mp4">
+</video>
+
+</div>
+
+
+<div class="card">
+
+<h2>Your Gift ⌚</h2>
+
+<br>
+
+<p>
+I got you a small gift — a silver plated bangle watch.
+
+<br><br>
+
+I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
+
+<br><br>
+
+I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, and genuinely appreciated.
+</p>
+
+</div>
+
+<footer>
+Made with ❤️ for Luyanda
+</footer>
+
+</section>
+
 
 <script>
 
 function enter(){
-window.location.href="main.html";
+
+document.getElementById("landing").style.display="none";
+document.getElementById("main").style.display="block";
+
+typeMessage();
+speak();
+
 }
+
+/* MESSAGE */
+
+const text = `Happy birthday.
+
+Today feels important, because it’s the day someone really special came into the world. I hope you’re surrounded by love, laughter, and everything that makes your heart feel light today.
+
+I’ve always had a soft spot for you… even with time and distance, that never really changed. And being able to talk again now feels like something I quietly appreciate more than I say out loud.
+
+I also want to say I’m sorry for how things went between us before. I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful we found our way back to talking again.
+
+I got you a small gift — a silver plated bangle watch. I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
+
+I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, and genuinely appreciated.
+
+More than anything, I just want you to have a birthday that feels warm, special, and unforgettable in the best way.
+
+Enjoy your day.`;
+
+let i = 0;
+
+function typeMessage(){
+
+if(i < text.length){
+
+document.getElementById("message").innerHTML += text.charAt(i);
+
+i++;
+
+setTimeout(typeMessage,40);
+
+}
+
+}
+
+/* AI VOICE */
+
+function speak(){
+
+let speech = new SpeechSynthesisUtterance(text);
+
+speech.rate = 0.9;
+
+speech.pitch = 1;
+
+speech.volume = 1;
+
+speechSynthesis.speak(speech);
+
+}
+
+/* FLOATING HEARTS */
+
+function createHeart(){
+
+let heart = document.createElement("div");
+
+heart.classList.add("heart");
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.animationDuration=(5+Math.random()*5)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{heart.remove()},10000);
+
+}
+
+setInterval(createHeart,800);
 
 </script>
 
