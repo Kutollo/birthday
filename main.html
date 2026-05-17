@@ -3,194 +3,170 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Luyanda</title>
+<title>Happy Birthday Luyanda 💗</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial;
-  color: white;
-  overflow-x: hidden;
+
+body{
+margin:0;
+font-family:"Poppins",sans-serif;
+background:linear-gradient(135deg,#ffd6e7,#ffeef5);
+overflow-x:hidden;
+color:#444;
 }
 
-/* 🎬 CINEMATIC BACKGROUND VIDEO */
-#bg-video {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -2;
+/* floating hearts */
+
+.heart{
+position:fixed;
+color:#ff6b9a;
+font-size:20px;
+animation:float 6s linear infinite;
 }
 
-.overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  z-index: -1;
+@keyframes float{
+from{transform:translateY(100vh);opacity:0}
+to{transform:translateY(-10vh);opacity:1}
 }
 
-/* MAIN CONTENT */
-.container {
-  max-width: 750px;
-  margin: auto;
-  padding: 60px 20px;
-  text-align: center;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+/* container */
+
+.container{
+max-width:700px;
+margin:auto;
+padding:60px 20px;
+text-align:center;
 }
 
-h1 {
-  color: #ff4d6d;
-  font-size: 2.2em;
+h1{
+color:#ff4f87;
+font-size:32px;
+margin-bottom:20px;
 }
 
-#typing {
-  margin-top: 20px;
-  min-height: 120px;
-  font-size: 1.1em;
-  white-space: pre-line;
-  opacity: 0.95;
+/* typing */
+
+#typing{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 10px 40px rgba(0,0,0,0.1);
+line-height:1.7;
+min-height:220px;
+white-space:pre-line;
 }
 
-/* VIDEO */
-video {
-  width: 100%;
-  margin-top: 25px;
-  border-radius: 15px;
+/* gift box */
+
+.gift{
+margin-top:30px;
+padding:20px;
+background:white;
+border-radius:20px;
+box-shadow:0 10px 40px rgba(0,0,0,0.1);
 }
 
-/* BUTTON */
-button {
-  margin-top: 20px;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 25px;
-  background: #ff4d6d;
-  color: white;
-  cursor: pointer;
+video{
+width:100%;
+margin-top:25px;
+border-radius:15px;
 }
 
-/* SECRET */
-#secret {
-  display: none;
-  margin-top: 20px;
-  font-style: italic;
-  opacity: 0.85;
-}
-
-/* HEARTS */
-.heart {
-  position: fixed;
-  color: #ff4d6d;
-  animation: floatUp 6s linear infinite;
-}
-
-@keyframes floatUp {
-  from { transform: translateY(100vh); opacity: 0; }
-  to { transform: translateY(-10vh); opacity: 1; }
-}
 </style>
 </head>
 
 <body>
 
-<!-- 🎬 BACKGROUND VIDEO -->
-<video autoplay muted loop id="bg-video">
-  <source src="cinematic.mp4" type="video/mp4">
-</video>
-
-<div class="overlay"></div>
-
-<!-- 🎧 OPTIONAL MUSIC -->
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mp3">
-</audio>
-
 <div class="container">
 
-  <h1>Happy Birthday Luyanda 🎉</h1>
+<h1>Happy Birthday Luyanda 🎉</h1>
 
-  <div id="typing"></div>
+<div id="typing"></div>
 
-  <!-- HER VIDEO -->
-  <video controls>
-    <source src="luyanda.mp4" type="video/mp4">
-  </video>
+<div class="gift">
+💝 Your gift: a **silver plated bangle watch**  
+<br><br>
+A small reminder that some connections don’t disappear —  
+they just pause and continue in different ways.
+</div>
 
-  <button onclick="reveal()">Tap for something deeper</button>
-
-  <div id="secret">
-    Some people don’t leave your heart…  
-    they just stay there quietly through time.  
-    You are one of those people.
-  </div>
+<video controls>
+<source src="luyanda.mp4" type="video/mp4">
+</video>
 
 </div>
 
 <script>
 
-// ✍🏽 TEXT
-const text = `Happy Birthday Luyanda.
+const message=`Happy birthday.
 
-Today is yours — 23 May 2026.
+Today feels important, because it’s the day someone really special came into the world. I hope you’re surrounded by love, laughter, and everything that makes your heart feel light today.
 
-A moment the world became softer because you exist.
+I’ve always had a soft spot for you… even with time and distance, that never really changed. And being able to talk again now feels like something I quietly appreciate more than I say out loud.
 
-I hope this day brings you peace, love, and memories that feel like warmth.
+I also want to say I’m sorry for how things went between us before. I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful we found our way back to talking again.
 
-You deserve a life that feels cinematic… like you are always the main character.`;
+I got you a small gift — a silver plated bangle watch. I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
 
-// TYPE + VOICE
-let i = 0;
+I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, and genuinely appreciated.
 
-function typeWriter() {
-  if (i < text.length) {
-    document.getElementById("typing").innerHTML += text.charAt(i);
-    i++;
-    setTimeout(typeWriter, 40);
-  }
+More than anything, I just want you to have a birthday that feels warm, special, and unforgettable in the best way.
+
+Enjoy your day.`
+
+let i=0;
+
+function typeWriter(){
+
+if(i<message.length){
+
+document.getElementById("typing").innerHTML+=message.charAt(i);
+
+i++;
+
+setTimeout(typeWriter,35);
+
 }
 
-// 🎙️ VOICE NARRATION
-function speakText(content) {
-  let speech = new SpeechSynthesisUtterance(content);
-  speech.rate = 0.9;
-  speech.pitch = 1;
-  speech.volume = 1;
-
-  let voices = window.speechSynthesis.getVoices();
-  let femaleVoice = voices.find(v =>
-    v.lang.includes("en") || v.name.toLowerCase().includes("female")
-  );
-
-  if (femaleVoice) speech.voice = femaleVoice;
-
-  window.speechSynthesis.speak(speech);
 }
 
-// SECRET MESSAGE
-function reveal() {
-  document.getElementById("secret").style.display = "block";
+typeWriter();
+
+/* floating hearts */
+
+setInterval(()=>{
+
+const heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.animationDuration=(3+Math.random()*3)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+
+},400);
+
+/* voice narration */
+
+function speak(){
+
+let speech=new SpeechSynthesisUtterance(message);
+
+speech.rate=0.9;
+
+speech.pitch=1;
+
+window.speechSynthesis.speak(speech);
+
 }
 
-// HEARTS
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "♥";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (3 + Math.random() * 3) + "s";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}, 400);
-
-// START
-window.onload = () => {
-  typeWriter();
-  speakText(text);
-};
+window.onload=speak;
 
 </script>
 
