@@ -12,16 +12,12 @@
 
 <style>
 
+/* RESET */
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Inter',sans-serif;
-}
-
-/* 🚫 LOCK SCROLL UNTIL OPEN */
-body.locked{
-overflow:hidden;
 }
 
 body{
@@ -44,15 +40,17 @@ z-index:-2;
 
 .overlay{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
 background:rgba(0,0,0,0.55);
 z-index:-1;
 }
 
-/* HERO */
+/* LANDING */
 
-.hero{
+#landing{
 height:100vh;
 display:flex;
 flex-direction:column;
@@ -62,18 +60,18 @@ text-align:center;
 padding:40px;
 }
 
-.hero h1{
+#landing h1{
 font-family:'Dancing Script';
 font-size:75px;
 margin-bottom:15px;
 }
 
-.hero p{
+#landing p{
 font-size:20px;
 opacity:0.8;
 }
 
-.enter{
+button{
 margin-top:40px;
 padding:15px 55px;
 border-radius:40px;
@@ -85,7 +83,7 @@ cursor:pointer;
 transition:0.4s;
 }
 
-.enter:hover{
+button:hover{
 transform:scale(1.08);
 }
 
@@ -98,7 +96,7 @@ margin:auto;
 padding:60px 20px;
 }
 
-/* GLASS */
+/* GLASS CARD */
 
 .glass{
 background:rgba(255,255,255,0.10);
@@ -119,7 +117,7 @@ text-align:center;
 margin-bottom:25px;
 }
 
-/* MESSAGE (JUSTIFIED + CLEAN) */
+/* MESSAGE */
 
 .message{
 white-space:pre-line;
@@ -145,15 +143,6 @@ border-radius:18px;
 margin-top:25px;
 }
 
-/* GIFT */
-
-.gift p{
-text-align:justify;
-line-height:1.9;
-font-size:17px;
-margin-top:20px;
-}
-
 /* HEARTS */
 
 .heart{
@@ -173,27 +162,27 @@ animation:floatUp linear infinite;
 
 </head>
 
-<body class="locked">
+<body>
 
-<!-- BACKGROUND -->
+<!-- BACKGROUND VIDEO -->
 <video autoplay muted loop id="bgVideo" playsinline>
 <source src="cinematic.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
+<!-- MUSIC -->
 <audio id="music" loop>
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
-<!-- HERO -->
-<section class="hero">
+<!-- LANDING -->
+<section id="landing">
 
 <h1>For Luyanda</h1>
-
 <p>Something small… made just for you</p>
 
-<button class="enter" onclick="enter()">Open</button>
+<button onclick="enterSite()">Open</button>
 
 </section>
 
@@ -220,11 +209,11 @@ animation:floatUp linear infinite;
 
 </div>
 
-<div class="glass gift">
+<div class="glass">
 
-<h1 class="title">Your Gift </h1>
+<h1 class="title">Your Gift ⌚</h1>
 
-<p>
+<p class="message">
 
 I got you a small gift
 
@@ -238,7 +227,7 @@ Every moment is something I wanted you to feel <em>held in</em>, even when I’m
 
 <br><br>
 
-I hope you wear it often. Not just as something pretty, but as a reminder that you are <strong>valued</strong>, <em>remembered</em>, cared for, loved and genuinely appreciated.
+I hope you wear it often. Not just as something pretty, but as a reminder that you are <strong>valued</strong>, <em>remembered</em>, loved and genuinely appreciated.
 
 <br><br>
 
@@ -252,25 +241,28 @@ I hope it will never leave your wrist, just like how you never really left my he
 
 <script>
 
-/* ENTER */
-function enter(){
+/* ENTER FUNCTION (FIXED) */
 
-document.body.classList.remove("locked");
+function enterSite(){
 
-document.getElementById("landing").style.display="none";
+// show main first
 document.getElementById("main").style.display="block";
 
-/* MUSIC */
+// hide landing
+document.getElementById("landing").style.display="none";
+
+// start music safely
 const music=document.getElementById("music");
 music.volume=0.6;
 music.play().catch(()=>{});
 
-/* TYPE MESSAGE */
+// start typing
 typeMessage();
 
 }
 
-/* EXACT MESSAGE (UPDATED) */
+/* EXACT MESSAGE */
+
 const text = `Tomorrow will be important, because it’s the day someone really special came into the world.
 
 I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
@@ -297,7 +289,7 @@ document.getElementById("message").innerHTML += text.charAt(i);
 
 i++;
 
-setTimeout(typeMessage,100);
+setTimeout(typeMessage,100); // 👈 YOUR REQUEST: SPEED 100
 
 }
 
