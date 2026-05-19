@@ -38,6 +38,8 @@ z-index:-2;
 
 .overlay{
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
 background:rgba(0,0,0,0.55);
@@ -102,7 +104,6 @@ margin-bottom:40px;
 border:1px solid rgba(255,255,255,0.18);
 box-shadow:0 10px 50px rgba(0,0,0,0.5);
 
-/* hidden by default */
 opacity:0;
 transform:translateY(30px);
 transition:1s;
@@ -113,7 +114,7 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* TITLES */
+/* TITLE */
 .title{
 font-family:'Dancing Script';
 font-size:55px;
@@ -139,7 +140,7 @@ margin-top:25px;
 display:none;
 }
 
-/* GIFT */
+/* GIFT BUTTON */
 .gift-btn{
 margin-top:20px;
 padding:12px 30px;
@@ -171,12 +172,14 @@ animation:floatUp linear infinite;
 
 <body>
 
+<!-- BACKGROUND -->
 <video autoplay muted loop id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
+<!-- MUSIC -->
 <audio id="music" loop>
 <source src="bg.mp3" type="audio/mp3">
 </audio>
@@ -232,13 +235,15 @@ Reveal Gift Message
 
 /* TYPE FUNCTION */
 function typeText(el, text, speed, callback){
-let i=0;
+let i = 0;
+el.innerHTML = "";
+
 function run(){
 if(i < text.length){
 el.innerHTML += text.charAt(i);
 i++;
-setTimeout(run,speed);
-}else if(callback){
+setTimeout(run, speed);
+} else if(callback){
 callback();
 }
 }
@@ -247,8 +252,7 @@ run();
 
 /* LANDING */
 const landingTitle = "For Luyanda 💗";
-const landingText =
-`Made with love…
+const landingText = `Made with love…
 
 just for you.`;
 
@@ -256,7 +260,7 @@ typeText(document.getElementById("landingTitle"), landingTitle, 100, ()=>{
 typeText(document.getElementById("landingText"), landingText, 80);
 });
 
-/* ENTER */
+/* ENTER SITE (FIXED) */
 function enterSite(){
 
 document.getElementById("landing").style.display="none";
@@ -266,11 +270,10 @@ const music=document.getElementById("music");
 music.volume=0.6;
 music.play().catch(()=>{});
 
-/* START STORY */
 startStory();
 }
 
-/* STORY */
+/* STORY FLOW */
 function startStory(){
 
 const t1 = "Happy Birthday 🩵 Luyanda 🎈";
@@ -292,18 +295,21 @@ More than anything, I just want you to have a birthday that feels warm, special,
 I Love You 🩵`;
 
 typeText(document.getElementById("t1"), t1, 100, ()=>{
+
 typeText(document.getElementById("message"), msg, 100, ()=>{
 
 document.getElementById("photo").style.display="block";
 
+/* VIDEO */
 setTimeout(()=>{
 document.getElementById("sec2").classList.add("show");
 
 typeText(document.getElementById("t2"), "It's Your Turn", 100, ()=>{
+
 document.getElementById("video").style.display="block";
 
+/* GIFT SECTION */
 setTimeout(()=>{
-
 document.getElementById("sec3").classList.add("show");
 
 typeText(document.getElementById("t3"), "Your Gift", 100, ()=>{
@@ -330,14 +336,15 @@ Every moment is something I wanted you to feel held in.
 
 I hope you wear it often…
 
-And now… close your eyes for me. Just for a moment.`;
+Now… close your eyes for me. Just for a moment.`;
 
 function revealGift(){
 
+const g = document.getElementById("gift");
+g.innerHTML = "";
 document.getElementById("giftBtn").style.display="none";
 
-typeText(document.getElementById("gift"), giftText, 60);
-
+typeText(g, giftText, 60);
 }
 
 /* HEARTS */
