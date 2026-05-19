@@ -25,8 +25,6 @@ color:white;
 overflow-x:hidden;
 }
 
-/* BACKGROUND */
-
 #bgVideo{
 position:fixed;
 top:0;
@@ -47,8 +45,6 @@ background:rgba(0,0,0,0.55);
 z-index:-1;
 }
 
-/* LANDING */
-
 #landing{
 height:100vh;
 display:flex;
@@ -66,16 +62,12 @@ transform:scale(1.1);
 filter:blur(10px);
 }
 
-/* MAIN */
-
 #main{
 display:none;
 max-width:900px;
 margin:auto;
 padding:60px 20px;
 }
-
-/* GLASS */
 
 .glass{
 background:rgba(255,255,255,0.07);
@@ -98,16 +90,12 @@ transform:translateY(0) scale(1);
 filter:blur(0);
 }
 
-/* TITLE */
-
 .title{
 font-family:'Dancing Script';
 font-size:30px;
 text-align:center;
 margin-bottom:25px;
 }
-
-/* INTRO */
 
 #introLine{
 text-align:center;
@@ -116,8 +104,6 @@ line-height:1.9;
 opacity:0.9;
 }
 
-/* MESSAGE */
-
 .message{
 white-space:pre-line;
 text-align:justify;
@@ -125,8 +111,6 @@ line-height:1.9;
 font-size:18px;
 min-height:250px;
 }
-
-/* MEDIA */
 
 .photo,
 .video{
@@ -147,8 +131,6 @@ transform:scale(1);
 filter:blur(0);
 }
 
-/* BUTTON */
-
 button{
 margin-top:30px;
 padding:15px 55px;
@@ -164,8 +146,6 @@ transition:0.4s;
 button:hover{
 transform:scale(1.08);
 }
-
-/* POPUP */
 
 #popup{
 position:fixed;
@@ -193,9 +173,9 @@ background:rgba(255,255,255,0.08);
 backdrop-filter:blur(15px);
 padding:40px 50px;
 border-radius:25px;
-text-align:center;
 font-family:'Dancing Script';
 font-size:32px;
+text-align:center;
 animation:float 3s ease-in-out infinite;
 }
 
@@ -204,8 +184,6 @@ animation:float 3s ease-in-out infinite;
 50%{transform:translateY(-10px)}
 100%{transform:translateY(0)}
 }
-
-/* HEARTS */
 
 .heart{
 position:fixed;
@@ -226,7 +204,6 @@ animation:floatUp linear infinite;
 
 <body>
 
-<!-- BACKGROUND VIDEO -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
@@ -237,14 +214,12 @@ animation:floatUp linear infinite;
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
-<!-- POPUP -->
 <div id="popup">
 <div class="popup-box">
 Please close your eyes 🙈 ❤️
 </div>
 </div>
 
-<!-- LANDING -->
 <section id="landing">
 
 <h1 id="landingTitle"></h1>
@@ -254,7 +229,6 @@ Please close your eyes 🙈 ❤️
 
 </section>
 
-<!-- MAIN -->
 <section id="main">
 
 <div class="glass" id="section1">
@@ -293,23 +267,6 @@ Please close your eyes 🙈 ❤️
 
 <script>
 
-/* FORCE BACKGROUND VIDEO */
-window.addEventListener("load",()=>{
-
-const bg=document.getElementById("bgVideo");
-
-bg.play().catch(()=>{
-
-document.body.addEventListener("click",()=>{
-bg.play();
-},{once:true});
-
-});
-
-});
-
-/* TYPE FUNCTION */
-
 function typeText(id,text,speed=110,callback){
 
 let i=0;
@@ -332,7 +289,6 @@ typing();
 }
 
 /* TEXT */
-
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
 const landingText=`I made something for you…
@@ -375,19 +331,15 @@ I hope you wear it often. Not just as something pretty, but as a reminder that y
 
 I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
 
-/* LANDING */
+/* FLOW */
 
 window.onload=function(){
 
 typeText("landingTitle",landingTitle,110,()=>{
-
 setTimeout(()=>typeText("landingText",landingText,110),800);
-
 });
 
 };
-
-/* ENTER */
 
 function enterSite(){
 
@@ -398,17 +350,13 @@ setTimeout(()=>{
 document.getElementById("landing").style.display="none";
 document.getElementById("main").style.display="block";
 
-const music=document.getElementById("music");
-music.volume=0.6;
-music.play().catch(()=>{});
+document.getElementById("music").play().catch(()=>{});
 
 startFlow();
 
 },1000);
 
 }
-
-/* FLOW */
 
 function startFlow(){
 
@@ -422,38 +370,37 @@ typeText("message",mainText,110,()=>{
 
 document.getElementById("photo").classList.add("show");
 
+/* ⏱ 2s delay before video */
 setTimeout(()=>{
 
 document.getElementById("section2").classList.add("show");
 
-/* 🔥 GUARANTEED VIDEO PLAY FIX */
 const vid=document.getElementById("video");
-
 vid.classList.add("show");
 vid.muted=true;
-vid.playsInline=true;
 vid.loop=true;
-
-const playVideo=()=>{
+vid.playsInline=true;
 vid.play().catch(()=>{});
-};
 
-/* try immediately */
-playVideo();
-
-/* fallback user interaction */
-document.getElementById("section2").addEventListener("click",playVideo,{once:true});
-document.getElementById("main").addEventListener("click",playVideo,{once:true});
-
-},800);
-
+/* ⏱ 2s delay before gift section */
 setTimeout(()=>{
 
 document.getElementById("section3").classList.add("show");
 
+typeText("videoTitle",videoTitle,110,()=>{
+
+/* FIX: ensure title always appears */
+setTimeout(()=>{
+
 typeText("giftTitle",giftTitle,110);
 
-},1600);
+},300);
+
+});
+
+},2000);
+
+},2000);
 
 });
 
@@ -468,23 +415,21 @@ typeText("giftTitle",giftTitle,110);
 function revealGift(){
 
 const g=document.getElementById("gift");
-
 g.style.display="block";
 
 typeText("gift",giftText,110,()=>{
 
 setTimeout(()=>{
 
-document.getElementById("popup").classList.add("show");
+const popup=document.getElementById("popup");
+popup.classList.add("show");
 
-/* vibration */
 if(navigator.vibrate){
 navigator.vibrate([200,100,200,100,500]);
 }
 
-/* auto hide popup after 10s */
 setTimeout(()=>{
-document.getElementById("popup").classList.remove("show");
+popup.classList.remove("show");
 },10000);
 
 },3000);
@@ -498,7 +443,6 @@ document.getElementById("popup").classList.remove("show");
 setInterval(()=>{
 
 const heart=document.createElement("div");
-
 heart.className="heart";
 heart.innerHTML="❤️";
 heart.style.left=Math.random()*100+"vw";
