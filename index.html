@@ -2,17 +2,15 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>For Luyanda ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
 <style>
 
-/* ===== GLOBAL ===== */
+/* ===== BASE ===== */
 *{
 margin:0;
 padding:0;
@@ -26,7 +24,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* ===== VIDEO BACKGROUND ===== */
+/* ===== BACKGROUND VIDEO ===== */
 #bgVideo{
 position:fixed;
 top:0;
@@ -35,7 +33,6 @@ width:100%;
 height:100%;
 object-fit:cover;
 z-index:-2;
-transform:scale(1.1);
 }
 
 .overlay{
@@ -66,22 +63,6 @@ transform:scale(1.05);
 filter:blur(10px);
 }
 
-#landing h1{
-font-family:'Dancing Script';
-font-size:60px;
-margin-bottom:20px;
-min-height:70px;
-}
-
-#landing p{
-font-size:20px;
-opacity:0.9;
-max-width:600px;
-min-height:90px;
-text-align:center;
-margin:auto;
-}
-
 /* ===== MAIN ===== */
 #main{
 display:none;
@@ -90,7 +71,7 @@ margin:auto;
 padding:60px 20px;
 }
 
-/* ===== GLASS ===== */
+/* ===== CARDS ===== */
 .glass{
 background:rgba(255,255,255,0.07);
 backdrop-filter:blur(25px);
@@ -101,13 +82,13 @@ border:1px solid rgba(255,255,255,0.18);
 box-shadow:0 10px 60px rgba(0,0,0,0.6);
 
 opacity:0;
-transform:translateY(40px) scale(0.95);
+transform:translateY(40px);
 transition:1s ease;
 }
 
 .glass.show{
 opacity:1;
-transform:translateY(0) scale(1);
+transform:translateY(0);
 }
 
 /* ===== TEXT ===== */
@@ -123,7 +104,7 @@ white-space:pre-line;
 text-align:justify;
 line-height:1.9;
 font-size:18px;
-min-height:250px;
+min-height:200px;
 }
 
 /* ===== MEDIA ===== */
@@ -196,12 +177,11 @@ animation:floatUp linear infinite;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<!-- BACKGROUND VIDEO -->
+<!-- BACKGROUND -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
@@ -226,7 +206,6 @@ animation:floatUp linear infinite;
 <section id="main">
 
 <div class="glass">
-
 <p id="introLine"></p>
 
 <h1 class="title" id="mainTitle"></h1>
@@ -234,55 +213,55 @@ animation:floatUp linear infinite;
 <p class="message" id="message"></p>
 
 <img src="IMG_2034.jpeg" class="photo" id="photo">
-
 </div>
 
 <div class="glass">
-
 <h1 class="title" id="videoTitle"></h1>
 
 <video muted loop playsinline class="video" id="video">
 <source src="luyanda.mp4" type="video/mp4">
 </video>
-
 </div>
 
 <div class="glass">
-
 <h1 class="title" id="giftTitle"></h1>
 
 <button onclick="revealGift()">Reveal Gift Message</button>
 
 <p class="message" id="gift" style="display:none;"></p>
-
 </div>
 
 </section>
+
+<!-- POPUP -->
+<div id="popup">
+<div class="popup-card">Close your eyes for a moment… 🙈💗</div>
+</div>
 
 <script>
 
 const SPEED = 110;
 
-/* ===== TYPE FUNCTION ===== */
+/* ===== TYPE ENGINE (SAFE) ===== */
 function typeText(id,text,speed=SPEED,callback){
 
 const el=document.getElementById(id);
 if(!el) return;
 
-let i=0;
 el.innerHTML="";
+let i=0;
 
-function typing(){
+function loop(){
 if(i<text.length){
 el.innerHTML+=text.charAt(i);
 i++;
-setTimeout(typing,speed);
+setTimeout(loop,speed);
 }else if(callback){
 callback();
 }
 }
 
-typing();
+loop();
 }
 
 /* ===== TEXT ===== */
@@ -309,9 +288,7 @@ And being able to talk again now feels like something I quietly appreciate more 
 
 I also want to say I’m sorry for how things went between us before.
 
-I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again. I know I'm the last person to be talking about promises but I promise to never fumble the chance you gave us. Hurting you again is something I don't wanna see happening.
-
-More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.
+I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again.
 
 Enjoy your day. I Love You🩵`;
 
@@ -323,13 +300,9 @@ const giftText=`I got you a small gift
 
 I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
 
-Every moment is something I wanted you to feel held in, even when I’m not there. Not rushed, not forgotten, not replaced… just gently remembered in the way that stays.
+I hope you wear it often. You are valued, remembered, loved 🥹`;
 
-I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, loved and genuinely appreciated.
-
-I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
-
-/* ===== ENTER SITE ===== */
+/* ===== ENTER SITE (FIXED) ===== */
 function enterSite(){
 
 document.getElementById("landing").classList.add("hide");
@@ -362,11 +335,11 @@ setTimeout(()=>{
 
 typeText("giftTitle",giftTitle,110);
 
-},800);
+},600);
 
 });
 
-},800);
+},600);
 
 });
 
@@ -388,7 +361,7 @@ typeText("gift",giftText,110,()=>{
 
 setTimeout(()=>{
 document.getElementById("popup").classList.add("show");
-},1000);
+},900);
 
 });
 
