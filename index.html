@@ -12,7 +12,6 @@
 
 <style>
 
-/* RESET */
 *{
 margin:0;
 padding:0;
@@ -26,7 +25,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* BACKGROUND VIDEO */
+/* BACKGROUND */
 #bgVideo{
 position:fixed;
 top:0;
@@ -39,8 +38,6 @@ z-index:-2;
 
 .overlay{
 position:fixed;
-top:0;
-left:0;
 width:100%;
 height:100%;
 background:rgba(0,0,0,0.55);
@@ -67,7 +64,6 @@ margin-bottom:20px;
 #landing p{
 font-size:20px;
 opacity:0.85;
-max-width:600px;
 min-height:80px;
 }
 
@@ -105,9 +101,19 @@ padding:50px;
 margin-bottom:40px;
 border:1px solid rgba(255,255,255,0.18);
 box-shadow:0 10px 50px rgba(0,0,0,0.5);
+
+/* hidden by default */
+opacity:0;
+transform:translateY(30px);
+transition:1s;
 }
 
-/* TITLE */
+.glass.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* TITLES */
 .title{
 font-family:'Dancing Script';
 font-size:55px;
@@ -142,11 +148,7 @@ border-radius:30px;
 background:rgba(255,255,255,0.15);
 color:white;
 cursor:pointer;
-transition:0.3s;
-}
-
-.gift-btn:hover{
-transform:scale(1.05);
+display:none;
 }
 
 /* HEARTS */
@@ -169,14 +171,12 @@ animation:floatUp linear infinite;
 
 <body>
 
-<!-- BACKGROUND -->
-<video autoplay muted loop id="bgVideo" playsinline>
+<video autoplay muted loop id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<!-- MUSIC -->
 <audio id="music" loop>
 <source src="bg.mp3" type="audio/mp3">
 </audio>
@@ -184,8 +184,7 @@ animation:floatUp linear infinite;
 <!-- LANDING -->
 <section id="landing">
 
-<h1>Made with love, specially for you — Luyanda 💗</h1>
-
+<h1 id="landingTitle"></h1>
 <p id="landingText"></p>
 
 <button onclick="enterSite()">Open</button>
@@ -195,13 +194,9 @@ animation:floatUp linear infinite;
 <!-- MAIN -->
 <section id="main">
 
-<div class="glass">
+<div class="glass" id="sec1">
 
-<p class="intro-line" style="text-align:center;opacity:0.85;margin-bottom:10px;">
-I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.
-</p>
-
-<h1 class="title">Happy Birthday 🩵 Luyanda 🎈</h1>
+<h1 class="title" id="t1"></h1>
 
 <p class="message" id="message"></p>
 
@@ -209,9 +204,9 @@ I wanted to be the first to celebrate you… before anyone else gets the chance,
 
 </div>
 
-<div class="glass">
+<div class="glass" id="sec2">
 
-<h1 class="title" id="videoTitle">It's Your Turn</h1>
+<h1 class="title" id="t2"></h1>
 
 <video autoplay muted loop playsinline class="video" id="video">
 <source src="luyanda.mp4" type="video/mp4">
@@ -219,9 +214,9 @@ I wanted to be the first to celebrate you… before anyone else gets the chance,
 
 </div>
 
-<div class="glass">
+<div class="glass" id="sec3">
 
-<h1 class="title" id="giftTitle">Your Gift</h1>
+<h1 class="title" id="t3"></h1>
 
 <button class="gift-btn" id="giftBtn" onclick="revealGift()">
 Reveal Gift Message
@@ -235,27 +230,33 @@ Reveal Gift Message
 
 <script>
 
-/* LANDING TYPE */
+/* TYPE FUNCTION */
+function typeText(el, text, speed, callback){
+let i=0;
+function run(){
+if(i < text.length){
+el.innerHTML += text.charAt(i);
+i++;
+setTimeout(run,speed);
+}else if(callback){
+callback();
+}
+}
+run();
+}
+
+/* LANDING */
+const landingTitle = "For Luyanda 💗";
 const landingText =
-`I made something for you…
+`Made with love…
 
-because you matter more than I ever say out loud.
+just for you.`;
 
-Take your time… and open it when you’re ready 💗`;
+typeText(document.getElementById("landingTitle"), landingTitle, 100, ()=>{
+typeText(document.getElementById("landingText"), landingText, 80);
+});
 
-let l=0;
-
-function typeLanding(){
-if(l < landingText.length){
-document.getElementById("landingText").innerHTML += landingText.charAt(l);
-l++;
-setTimeout(typeLanding,70);
-}
-}
-
-typeLanding();
-
-/* ENTER SITE */
+/* ENTER */
 function enterSite(){
 
 document.getElementById("landing").style.display="none";
@@ -265,51 +266,59 @@ const music=document.getElementById("music");
 music.volume=0.6;
 music.play().catch(()=>{});
 
-startSequence();
+/* START STORY */
+startStory();
 }
 
-/* SEQUENCE */
-function startSequence(){
-setTimeout(typeMessage,800);
-}
+/* STORY */
+function startStory(){
 
-/* MAIN MESSAGE */
-const text = `Tomorrow will be important, because it’s the day someone really special came into the world.
+const t1 = "Happy Birthday 🩵 Luyanda 🎈";
+
+const msg = `Tomorrow will be important, because it’s the day someone really special came into the world.
 
 I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
 
-I’ve always had a soft spot for you as much as you have one for me… even with time and distance, that never really changed.
+I’ve always had a soft spot for you… even with time and distance, that never really changed.
 
 And being able to talk again now feels like something I quietly appreciate more than I say out loud.
 
 I also want to say I’m sorry for how things went between us before.
 
-I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance.
+I don’t want to dwell on it today, but I do regret how I handled things.
 
 More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.
 
-Enjoy your day. I Love You🩵`;
+I Love You 🩵`;
 
-let i=0;
+typeText(document.getElementById("t1"), t1, 100, ()=>{
+typeText(document.getElementById("message"), msg, 100, ()=>{
 
-function typeMessage(){
+document.getElementById("photo").style.display="block";
 
-if(i < text.length){
+setTimeout(()=>{
+document.getElementById("sec2").classList.add("show");
 
-document.getElementById("message").innerHTML += text.charAt(i);
-i++;
-setTimeout(typeMessage,100);
+typeText(document.getElementById("t2"), "It's Your Turn", 100, ()=>{
+document.getElementById("video").style.display="block";
 
-}else{
+setTimeout(()=>{
 
-// STAGED REVEALS
-setTimeout(()=>{ document.getElementById("photo").style.display="block"; },600);
+document.getElementById("sec3").classList.add("show");
 
-setTimeout(()=>{ document.getElementById("video").style.display="block"; },2000);
+typeText(document.getElementById("t3"), "Your Gift", 100, ()=>{
+document.getElementById("giftBtn").style.display="inline-block";
+});
 
-setTimeout(()=>{ document.getElementById("giftBtn").style.display="inline-block"; },3500);
+},2000);
 
-}
+});
+
+},1500);
+
+});
+
+});
 }
 
 /* GIFT */
@@ -317,30 +326,18 @@ const giftText = `I got you a small gift
 
 I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
 
-Every moment is something I wanted you to feel held in, even when I’m not there.
+Every moment is something I wanted you to feel held in.
 
-I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, loved and genuinely appreciated.
+I hope you wear it often…
 
-I hope it will never leave your wrist, just like how you never really left my heart 🥹
-
-Now… close your eyes for me. Just for a moment.`;
-
-let j=0;
+And now… close your eyes for me. Just for a moment.`;
 
 function revealGift(){
 
 document.getElementById("giftBtn").style.display="none";
 
-function typeGift(){
+typeText(document.getElementById("gift"), giftText, 60);
 
-if(j < giftText.length){
-document.getElementById("gift").innerHTML += giftText.charAt(j);
-j++;
-setTimeout(typeGift,60);
-}
-}
-
-typeGift();
 }
 
 /* HEARTS */
