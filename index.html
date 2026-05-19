@@ -204,6 +204,7 @@ animation:floatUp linear infinite;
 
 <body>
 
+<!-- BACKGROUND -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
@@ -267,6 +268,7 @@ Please close your eyes 🙈 ❤️
 
 <script>
 
+/* TYPE SYSTEM */
 function typeText(id,text,speed=110,callback){
 
 let i=0;
@@ -288,58 +290,78 @@ if(callback)callback();
 typing();
 }
 
-/* TEXT */
-const landingTitle="Made with love, specially for you — Luyanda 💗";
+/* TEXT (CLINGY ROMANTIC VERSION) */
 
-const landingText=`I made something for you…
+const landingTitle="Made with love… only for you, Luyanda 💗";
 
-because you matter more than I ever say out loud.
+const landingText=`I made this for you…
 
-Take your time… and open it when you’re ready 💗`;
+and honestly, I don’t even know how to explain how much space you take up in my heart.
 
-const introLine="I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
+Take your time…
+but don’t keep me waiting too long 💗`;
 
-const mainTitle="Happy Birthday🩵my Luyanda🎈";
+const introLine="I just had to be the first one to reach you today… I couldn’t wait for anyone else.";
 
-const mainText=`Tomorrow will be important, because it’s the day someone really special came into the world.
+const mainTitle="Happy Birthday 🩵 my Luyanda 🎈";
 
-I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
+const mainText=`Tomorrow is your day… but to me, it already feels like something I’ve been waiting for.
 
-I’ve always had a soft spot for you as much as you have one for me… even with time and distance, that never really changed.
+Because you don’t just exist in my life… you stay in it. Quietly, constantly, in the background of everything I do.
 
-And being able to talk again now feels like something I quietly appreciate more than I say out loud.
+I hope today wraps itself around you softly… love, laughter, peace… all of it finding you without you even trying.
 
-I also want to say I’m sorry for how things went between us before.
+And if I’m being honest… I don’t think you realise how much I still carry you with me.
 
-I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again. I know I'm the last person to be talking about promises but I promise to never fumble the chance you gave us. Hurting you again is something I don't wanna see happening.
+Even when we weren’t talking… even when there was silence… you were still there. Just in a different way.
 
-More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.
+And now that we’re talking again… I won’t lie… I like it a little too much. More than I admit out loud.
 
-Enjoy your day. I Love You🩵`;
+I’m sorry for the past between us.
 
-const videoTitle="It's Your Turn Ke Mfazi";
+I don’t want it to define us… but I do regret it, and I’m really grateful you still let me be part of your life again.
+
+Because I don’t want to lose that again. I don’t want distance between us again. I don’t want that silence again.
+
+I know I’m not perfect with promises… but I’m serious when I say I don’t want to mess this up. Not you. Not us.
+
+More than anything… I just want today to feel beautiful for you. Soft, warm, unforgettable… like it was made just for your heart.
+
+Happy birthday… I love you more than I know how to explain 🩵`;
+
+const videoTitle="It’s your turn… ke mfazi 🩵";
 
 const giftTitle="Your Gift";
 
-const giftText=`I got you a small gift
+const giftText=`I got you something small…
 
-I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
+but don’t let “small” fool you… it carries a lot of me in it.
 
-Every moment is something I wanted you to feel held in, even when I’m not there. Not rushed, not forgotten, not replaced… just gently remembered in the way that stays.
+I chose it because it represents time… and how time doesn’t really take people away from us when they matter. It just changes how close they feel.
 
-I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, loved and genuinely appreciated.
+And you… you never really feel far.
 
-I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
+There’s always this quiet pull toward you in me… like no matter what happens, I still find my way back to you emotionally.
 
-/* FLOW */
+Every moment behind this is me thinking of you… hoping you feel held, even when I’m not right there next to you. Not rushed. Not forgotten. Not replaced. Just… close.
+
+I hope you wear it often… not just because it looks nice, but because it reminds you that you are genuinely loved, deeply valued, and constantly thought of.
+
+And I really hope it never leaves your wrist… because I don’t think you ever really leave my heart either 🥹`;
+
+/* LANDING */
 
 window.onload=function(){
 
 typeText("landingTitle",landingTitle,110,()=>{
+
 setTimeout(()=>typeText("landingText",landingText,110),800);
+
 });
 
 };
+
+/* ENTER */
 
 function enterSite(){
 
@@ -350,13 +372,17 @@ setTimeout(()=>{
 document.getElementById("landing").style.display="none";
 document.getElementById("main").style.display="block";
 
-document.getElementById("music").play().catch(()=>{});
+const music=document.getElementById("music");
+music.volume=0.6;
+music.play().catch(()=>{});
 
 startFlow();
 
 },1000);
 
 }
+
+/* FLOW */
 
 function startFlow(){
 
@@ -370,7 +396,7 @@ typeText("message",mainText,110,()=>{
 
 document.getElementById("photo").classList.add("show");
 
-/* ⏱ 2s delay before video */
+/* 2s delay → video */
 setTimeout(()=>{
 
 document.getElementById("section2").classList.add("show");
@@ -378,25 +404,16 @@ document.getElementById("section2").classList.add("show");
 const vid=document.getElementById("video");
 vid.classList.add("show");
 vid.muted=true;
-vid.loop=true;
 vid.playsInline=true;
+vid.loop=true;
 vid.play().catch(()=>{});
 
-/* ⏱ 2s delay before gift section */
+/* 2s delay → gift */
 setTimeout(()=>{
 
 document.getElementById("section3").classList.add("show");
 
-typeText("videoTitle",videoTitle,110,()=>{
-
-/* FIX: ensure title always appears */
-setTimeout(()=>{
-
-typeText("giftTitle",giftTitle,110);
-
-},300);
-
-});
+typeText("videoTitle",videoTitle,110);
 
 },2000);
 
