@@ -37,6 +37,8 @@ object-fit:cover;
 z-index:-2;
 }
 
+/* overlay */
+
 .overlay{
 position:fixed;
 top:0;
@@ -116,14 +118,22 @@ line-height:1.9;
 opacity:0.9;
 }
 
-/* MESSAGE (NO SCROLLING ANYMORE) */
+/* =========================
+   MOBILE FIX (IMPORTANT)
+========================= */
 
 .message{
 white-space:pre-line;
 text-align:justify;
 line-height:1.9;
 font-size:18px;
-min-height:200px;
+
+/* FIX HEIGHT FOR MOBILE */
+max-height:55vh;
+overflow-y:auto;
+scroll-behavior:smooth;
+
+padding-right:5px;
 }
 
 /* MEDIA */
@@ -308,7 +318,7 @@ bg.play();
 
 });
 
-/* TYPE FUNCTION (NO SCROLLING) */
+/* TYPE FUNCTION (MOBILE FIXED) */
 
 function typeText(id,text,speed=110,callback){
 
@@ -322,6 +332,10 @@ if(i<text.length){
 
 el.innerHTML+=text.charAt(i);
 i++;
+
+/* ONLY SCROLL INSIDE BOX */
+el.scrollTop = el.scrollHeight;
+
 setTimeout(typing,speed);
 
 }else{
@@ -335,7 +349,7 @@ if(callback)callback();
 typing();
 }
 
-/* TEXT */
+/* TEXT (UNCHANGED) */
 
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
@@ -426,6 +440,7 @@ typeText("message",mainText,110,()=>{
 
 document.getElementById("photo").classList.add("show");
 
+/* VIDEO FIX (MOBILE SAFE) */
 setTimeout(()=>{
 
 document.getElementById("section2").classList.add("show");
@@ -437,14 +452,21 @@ vid.muted=true;
 vid.playsInline=true;
 vid.loop=true;
 
-vid.play().catch(()=>{
+const playVideo=()=>{
+vid.play().catch(()=>{});
+};
 
-document.body.addEventListener("click",()=>vid.play(),{once:true});
+playVideo();
 
-});
+/* fallback unlock */
+document.body.addEventListener("click",playVideo,{once:true});
+
+/* extra force after render */
+setTimeout(playVideo,600);
 
 },800);
 
+/* GIFT */
 setTimeout(()=>{
 
 document.getElementById("section3").classList.add("show");
@@ -461,7 +483,7 @@ typeText("giftTitle",giftTitle,110);
 
 }
 
-/* GIFT */
+/* GIFT + POPUP */
 
 function revealGift(){
 
@@ -476,10 +498,12 @@ setTimeout(()=>{
 const popup=document.getElementById("popup");
 popup.classList.add("show");
 
+/* vibration */
 if(navigator.vibrate){
 navigator.vibrate([200,100,200,100,500]);
 }
 
+/* auto hide */
 setTimeout(()=>{
 popup.classList.remove("show");
 },10000);
