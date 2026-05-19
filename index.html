@@ -12,6 +12,8 @@
 
 <style>
 
+/* ===== BASIC ===== */
+
 *{
 margin:0;
 padding:0;
@@ -25,7 +27,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* ===== BACKGROUND VIDEO ===== */
+/* ===== BACKGROUND ===== */
 
 #bgVideo{
 position:fixed;
@@ -46,10 +48,7 @@ to{transform:scale(1.2);}
 
 .overlay{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+inset:0;
 background:rgba(0,0,0,0.55);
 z-index:-1;
 }
@@ -64,29 +63,13 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
-transition:1.2s ease;
+transition:1s ease;
 }
 
 #landing.hide{
 opacity:0;
 transform:scale(1.1);
 filter:blur(10px);
-}
-
-#landing h1{
-font-family:'Dancing Script';
-font-size:60px;
-margin-bottom:20px;
-min-height:70px;
-}
-
-#landing p{
-font-size:20px;
-opacity:0.9;
-max-width:600px;
-min-height:90px;
-text-align:center;
-margin:auto;
 }
 
 /* ===== MAIN ===== */
@@ -176,13 +159,12 @@ button:hover{
 transform:scale(1.08);
 }
 
-/* ===== POPUP (CUTE ROMANTIC) ===== */
+/* ===== POPUP ===== */
 
 #popup{
 position:fixed;
 inset:0;
-background:rgba(0,0,0,0.75);
-backdrop-filter:blur(12px);
+background:rgba(0,0,0,0.85);
 display:flex;
 align-items:center;
 justify-content:center;
@@ -199,19 +181,11 @@ pointer-events:auto;
 
 .popup-card{
 background:rgba(255,255,255,0.08);
-border:1px solid rgba(255,255,255,0.2);
 padding:40px 50px;
 border-radius:25px;
 text-align:center;
-font-size:22px;
 font-family:'Dancing Script';
-box-shadow:0 0 40px rgba(255,255,255,0.08);
-animation:pop 0.8s ease;
-}
-
-@keyframes pop{
-from{transform:scale(0.7); opacity:0;}
-to{transform:scale(1); opacity:1;}
+font-size:22px;
 }
 
 /* ===== HEARTS ===== */
@@ -235,8 +209,8 @@ animation:floatUp linear infinite;
 
 <body>
 
-<!-- BACKGROUND VIDEO -->
-<video autoplay muted loop playsinline preload="auto" id="bgVideo">
+<!-- BACKGROUND -->
+<video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
 
@@ -248,10 +222,7 @@ animation:floatUp linear infinite;
 
 <!-- POPUP -->
 <div id="popup">
-<div class="popup-card">
-Close your eyes for a moment… 🙈💗<br>
-I made this just for your heart.
-</div>
+<div class="popup-card">Please close your eyes 🙈💗</div>
 </div>
 
 <!-- LANDING -->
@@ -267,7 +238,7 @@ I made this just for your heart.
 <!-- MAIN -->
 <section id="main">
 
-<div class="glass" id="section1">
+<div class="glass">
 
 <p id="introLine"></p>
 
@@ -279,7 +250,7 @@ I made this just for your heart.
 
 </div>
 
-<div class="glass" id="section2">
+<div class="glass">
 
 <h1 class="title" id="videoTitle"></h1>
 
@@ -289,7 +260,7 @@ I made this just for your heart.
 
 </div>
 
-<div class="glass" id="section3">
+<div class="glass">
 
 <h1 class="title" id="giftTitle"></h1>
 
@@ -303,14 +274,7 @@ I made this just for your heart.
 
 <script>
 
-/* ===== FORCE VIDEO PLAY (FIX) ===== */
-
-window.addEventListener("load",()=>{
-const vid=document.getElementById("bgVideo");
-vid.play().catch(()=>{});
-});
-
-/* ===== TYPE FUNCTION (110ms) ===== */
+/* ===== TYPE FUNCTION ===== */
 
 function typeText(id,text,speed=110,callback){
 
@@ -324,8 +288,8 @@ if(i<text.length){
 el.innerHTML+=text.charAt(i);
 i++;
 setTimeout(typing,speed);
-}else{
-if(callback) callback();
+}else if(callback){
+callback();
 }
 
 }
@@ -365,8 +329,6 @@ Enjoy your day. I Love You🩵`;
 
 const videoTitle="It's Your Turn Ke Mfazi";
 
-const giftTitle="Your Gift";
-
 const giftText=`I got you a small gift
 
 I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
@@ -377,23 +339,14 @@ I hope you wear it often. Not just as something pretty, but as a reminder that y
 
 I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
 
-/* ===== LANDING ===== */
+/* ===== FLOW CONTROL (FIXED) ===== */
 
-window.onload=function(){
-
-typeText("landingTitle",landingTitle,110,()=>{
-
-setTimeout(()=>{
-typeText("landingText",landingText,110);
-},800);
-
-});
-
-};
-
-/* ===== ENTER SITE ===== */
+let started=false;
 
 function enterSite(){
+
+if(started) return;
+started=true;
 
 document.getElementById("landing").classList.add("hide");
 
@@ -406,7 +359,7 @@ const music=document.getElementById("music");
 music.volume=0.6;
 music.play().catch(()=>{});
 
-/* FLOW */
+/* FLOW STARTS HERE */
 
 typeText("introLine",introLine,110,()=>{
 
@@ -414,19 +367,13 @@ typeText("mainTitle",mainTitle,110,()=>{
 
 typeText("message",mainText,110,()=>{
 
-document.getElementById("photo").classList.add("show");
+document.querySelector(".photo").classList.add("show");
 
 setTimeout(()=>{
 
 typeText("videoTitle",videoTitle,110,()=>{
 
-document.getElementById("video").classList.add("show");
-
-setTimeout(()=>{
-
-typeText("giftTitle",giftTitle,110);
-
-},800);
+document.querySelector(".video").classList.add("show");
 
 });
 
@@ -438,11 +385,11 @@ typeText("giftTitle",giftTitle,110);
 
 });
 
-},1200);
+},1000);
 
 }
 
-/* ===== GIFT + POPUP ===== */
+/* ===== GIFT ===== */
 
 function revealGift(){
 
