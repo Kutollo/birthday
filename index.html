@@ -12,21 +12,20 @@
 
 <style>
 
-*{
+/* =========================
+   GLOBAL LOCK (NO SCROLL)
+========================= */
+html, body{
 margin:0;
 padding:0;
-box-sizing:border-box;
+height:100%;
+overflow:hidden;
+background:black;
+color:white;
 font-family:'Inter',sans-serif;
 }
 
-body{
-background:black;
-color:white;
-overflow-x:hidden;
-}
-
 /* BACKGROUND VIDEO */
-
 #bgVideo{
 position:fixed;
 top:0;
@@ -36,8 +35,6 @@ height:100%;
 object-fit:cover;
 z-index:-2;
 }
-
-/* overlay */
 
 .overlay{
 position:fixed;
@@ -50,7 +47,6 @@ z-index:-1;
 }
 
 /* LANDING */
-
 #landing{
 height:100vh;
 display:flex;
@@ -68,22 +64,29 @@ transform:scale(1.1);
 filter:blur(10px);
 }
 
-/* MAIN */
-
+/* MAIN SCREEN (FIXED VIEWPORT) */
 #main{
 display:none;
-max-width:900px;
-margin:auto;
-padding:60px 20px;
+height:100vh;
+width:100%;
+overflow:hidden;
+position:relative;
+}
+
+/* SCROLL AREA INSIDE ONLY */
+.container{
+height:100%;
+overflow-y:auto;
+padding:40px 20px;
+box-sizing:border-box;
 }
 
 /* GLASS */
-
 .glass{
 background:rgba(255,255,255,0.07);
 backdrop-filter:blur(25px);
 border-radius:25px;
-padding:50px;
+padding:40px;
 margin-bottom:40px;
 border:1px solid rgba(255,255,255,0.18);
 box-shadow:0 10px 60px rgba(0,0,0,0.6);
@@ -101,7 +104,6 @@ filter:blur(0);
 }
 
 /* TITLE */
-
 .title{
 font-family:'Dancing Script';
 font-size:30px;
@@ -109,35 +111,18 @@ text-align:center;
 margin-bottom:25px;
 }
 
-/* INTRO */
-
-#introLine{
-text-align:center;
-margin-bottom:20px;
-line-height:1.9;
-opacity:0.9;
-}
-
-/* =========================
-   MOBILE FIX (IMPORTANT)
-========================= */
-
+/* TEXT BOX (NO PAGE SCROLL BUG) */
 .message{
 white-space:pre-line;
 text-align:justify;
 line-height:1.9;
 font-size:18px;
-
-/* FIX HEIGHT FOR MOBILE */
-max-height:55vh;
+max-height:40vh;
 overflow-y:auto;
-scroll-behavior:smooth;
-
-padding-right:5px;
+padding:10px;
 }
 
 /* MEDIA */
-
 .photo,
 .video{
 width:100%;
@@ -158,7 +143,6 @@ filter:blur(0);
 }
 
 /* BUTTON */
-
 button{
 margin-top:30px;
 padding:15px 55px;
@@ -176,7 +160,6 @@ transform:scale(1.08);
 }
 
 /* POPUP */
-
 #popup{
 position:fixed;
 top:0;
@@ -216,7 +199,6 @@ animation:float 3s ease-in-out infinite;
 }
 
 /* HEARTS */
-
 .heart{
 position:fixed;
 bottom:-20px;
@@ -267,6 +249,8 @@ Please close your eyes 🙈 ❤️
 <!-- MAIN -->
 <section id="main">
 
+<div class="container">
+
 <div class="glass" id="section1">
 
 <p id="introLine"></p>
@@ -299,6 +283,8 @@ Please close your eyes 🙈 ❤️
 
 </div>
 
+</div>
+
 </section>
 
 <script>
@@ -318,8 +304,7 @@ bg.play();
 
 });
 
-/* TYPE FUNCTION (MOBILE FIXED) */
-
+/* TYPE FUNCTION (NO PAGE SCROLL BUG) */
 function typeText(id,text,speed=110,callback){
 
 let i=0;
@@ -329,19 +314,11 @@ el.innerHTML="";
 function typing(){
 
 if(i<text.length){
-
 el.innerHTML+=text.charAt(i);
 i++;
-
-/* ONLY SCROLL INSIDE BOX */
-el.scrollTop = el.scrollHeight;
-
 setTimeout(typing,speed);
-
 }else{
-
 if(callback)callback();
-
 }
 
 }
@@ -350,7 +327,6 @@ typing();
 }
 
 /* TEXT (UNCHANGED) */
-
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
 const landingText=`I made something for you…
@@ -394,7 +370,6 @@ I hope you wear it often. Not just as something pretty, but as a reminder that y
 I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
 
 /* LANDING */
-
 window.onload=function(){
 
 typeText("landingTitle",landingTitle,110,()=>{
@@ -405,8 +380,7 @@ setTimeout(()=>typeText("landingText",landingText,110),800);
 
 };
 
-/* ENTER SITE */
-
+/* ENTER */
 function enterSite(){
 
 document.getElementById("landing").classList.add("hide");
@@ -427,8 +401,9 @@ startFlow();
 }
 
 /* FLOW */
-
 function startFlow(){
+
+document.querySelector(".container").scrollTop = 0;
 
 document.getElementById("section1").classList.add("show");
 
@@ -440,7 +415,6 @@ typeText("message",mainText,110,()=>{
 
 document.getElementById("photo").classList.add("show");
 
-/* VIDEO FIX (MOBILE SAFE) */
 setTimeout(()=>{
 
 document.getElementById("section2").classList.add("show");
@@ -457,16 +431,11 @@ vid.play().catch(()=>{});
 };
 
 playVideo();
-
-/* fallback unlock */
 document.body.addEventListener("click",playVideo,{once:true});
-
-/* extra force after render */
 setTimeout(playVideo,600);
 
 },800);
 
-/* GIFT */
 setTimeout(()=>{
 
 document.getElementById("section3").classList.add("show");
@@ -481,10 +450,7 @@ typeText("giftTitle",giftTitle,110);
 
 });
 
-}
-
-/* GIFT + POPUP */
-
+/* GIFT */
 function revealGift(){
 
 const g=document.getElementById("gift");
@@ -498,12 +464,10 @@ setTimeout(()=>{
 const popup=document.getElementById("popup");
 popup.classList.add("show");
 
-/* vibration */
 if(navigator.vibrate){
 navigator.vibrate([200,100,200,100,500]);
 }
 
-/* auto hide */
 setTimeout(()=>{
 popup.classList.remove("show");
 },10000);
@@ -515,11 +479,9 @@ popup.classList.remove("show");
 }
 
 /* HEARTS */
-
 setInterval(()=>{
 
 const heart=document.createElement("div");
-
 heart.className="heart";
 heart.innerHTML="❤️";
 heart.style.left=Math.random()*100+"vw";
