@@ -20,13 +20,7 @@ font-family:'Inter',sans-serif;
 body{
 background:black;
 color:white;
-height:100vh;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:30px;
+overflow-x:hidden;
 }
 
 /* BACKGROUND */
@@ -38,6 +32,7 @@ width:100%;
 height:100%;
 object-fit:cover;
 z-index:-2;
+filter:brightness(0.55);
 }
 
 .overlay{
@@ -46,27 +41,54 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.6);
+background:rgba(0,0,0,0.5);
 z-index:-1;
 }
 
-/* MAIN */
-.container{
-max-width:800px;
-width:100%;
+/* SECTIONS */
+section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:60px 20px;
+text-align:center;
+opacity:0;
+transform:translateY(40px);
+transition:1.2s ease;
 }
 
+section.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* CARD */
+.card{
+max-width:850px;
+width:100%;
+padding:45px;
+border-radius:25px;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,0.12);
+box-shadow:0 20px 70px rgba(0,0,0,0.6);
+}
+
+/* TITLE */
 h1{
 font-family:'Dancing Script';
-font-size:48px;
+font-size:52px;
 margin-bottom:20px;
 }
 
+/* TEXT */
 p{
 font-size:18px;
-line-height:1.8;
+line-height:1.9;
 white-space:pre-line;
-min-height:120px;
+min-height:50px;
 }
 
 /* MEDIA */
@@ -75,26 +97,6 @@ width:100%;
 border-radius:18px;
 margin-top:20px;
 display:none;
-}
-
-/* GIFT */
-#gift{
-margin-top:20px;
-display:none;
-}
-
-/* TAP HINT */
-.tap{
-position:fixed;
-bottom:30px;
-font-size:14px;
-opacity:0.6;
-animation:fade 2s infinite;
-}
-
-@keyframes fade{
-0%,100%{opacity:0.3;}
-50%{opacity:1;}
 }
 
 </style>
@@ -109,105 +111,149 @@ animation:fade 2s infinite;
 
 <div class="overlay"></div>
 
-<div class="container">
+<!-- SECTION 1 -->
+<section id="s1" class="show">
+<div class="card">
+<h1 id="title1"></h1>
+<p id="text1"></p>
+</div>
+</section>
 
-<h1 id="title">For Luyanda 💗</h1>
+<!-- SECTION 2 -->
+<section id="s2">
+<div class="card">
+<h1 id="title2"></h1>
+<p id="text2"></p>
+<img id="img1" src="IMG_2034.jpeg">
+</div>
+</section>
 
-<p id="text">Tap anywhere to begin your story…</p>
-
-<img id="img" src="IMG_2034.jpeg">
-
-<video id="vid" autoplay muted loop>
+<!-- SECTION 3 -->
+<section id="s3">
+<div class="card">
+<h1 id="title3"></h1>
+<video id="vid1" autoplay muted loop playsinline>
 <source src="luyanda.mp4" type="video/mp4">
 </video>
-
-<p id="gift"></p>
-
 </div>
+</section>
 
-<div class="tap">Tap anywhere to continue →</div>
+<!-- SECTION 4 -->
+<section id="s4">
+<div class="card">
+<h1 id="title4"></h1>
+<p id="text4"></p>
+</div>
+</section>
 
 <script>
 
-let step = 0;
-
-function type(el, txt, speed=100, cb){
+/* =========================
+TYPEWRITER (100ms)
+========================= */
+function type(el, text, speed=100, callback){
 el.innerHTML = "";
 let i = 0;
 
 function run(){
-if(i < txt.length){
-el.innerHTML += txt[i++];
+if(i < text.length){
+el.innerHTML += text.charAt(i);
+i++;
 setTimeout(run, speed);
-}else if(cb){
-cb();
+} else if(callback){
+callback();
 }
 }
 run();
 }
 
-document.body.addEventListener("click", nextStep);
+/* =========================
+FULL STORY FLOW (ORDERED)
+========================= */
 
-function nextStep(){
+function start(){
 
-step++;
+// 1 TITLE + INTRO
+type(document.getElementById("title1"),
+"For Luyanda 💗", 100, ()=>{
 
-if(step === 1){
+type(document.getElementById("text1"),
+`Specially made with love for you Luyanda
 
-type(document.getElementById("text"),
-`Happy Birthday 🩵 Luyanda 🎈
+I decided to be the first one to celebrate you before anyone else hence you seeing it today`, 100, ()=>{
 
-Tomorrow will be important, because it’s the day someone really special came into the world.
+document.getElementById("s2").classList.add("show");
+
+// 2 BIRTHDAY MESSAGE
+type(document.getElementById("title2"),
+"Happy Birthday 🩵", 100, ()=>{
+
+type(document.getElementById("text2"),
+`Tomorrow will be important, because it’s the day someone really special came into the world.
 
 I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
 
-I’ve always had a soft spot for you… and that never really changed.
+I’ve always had a soft spot for you as much as you have one for me… even with time and distance, that never really changed.
 
-I Love You 🩵`);
+And being able to talk again now feels like something I quietly appreciate more than I say out loud.
 
-}
+I also want to say I’m sorry for how things went between us before.
 
-if(step === 2){
+I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again. I know I'm the last person to be talking about promises but I promise to never fumble the chance you gave us. Hurting you again is something I don't wanna see it happening.
 
-document.getElementById("img").style.display = "block";
+More than anything, I just want you to have a birthday that feels warm, special, and unforgettable in the best way.
 
-type(document.getElementById("text"),
-`I wanted to be the first to celebrate you… before anyone else gets the chance.
+Enjoy your day. I Love You🩵`, 100, ()=>{
 
-So I made this just for you 💗`);
+document.getElementById("img1").style.display = "block";
+setTimeout(()=>{
 
-}
+document.getElementById("s3").classList.add("show");
 
-if(step === 3){
+// 3 VIDEO SECTION
+type(document.getElementById("title3"),
+"It's Your Turn Ke Mfazi", 100, ()=>{
 
-document.getElementById("vid").style.display = "block";
+document.getElementById("vid1").style.display = "block";
 
-type(document.getElementById("text"),
-`A moment of you… because you deserve to be remembered like this.`);
+setTimeout(()=>{
 
-}
+document.getElementById("s4").classList.add("show");
 
-if(step === 4){
+// 4 GIFT
+type(document.getElementById("title4"),
+"Your Gift ⌚", 100, ()=>{
 
-document.getElementById("gift").style.display = "block";
-
-type(document.getElementById("gift"),
-`I got you a small gift…
+type(document.getElementById("text4"),
+`I got you a small gift
 
 I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
 
-Every moment is something I wanted you to feel held in.
+Every moment is something I wanted you to feel held in, even when I’m not there. Not rushed, not forgotten, not replaced… just gently remembered in the way that stays.
 
-I hope it will never leave your wrist… just like how you never really left my heart 🥹
+I hope it will never leave your wrist, just like how you never really left my heart 🥹
 
-Now… close your eyes for me. Just for a moment 💗`);
+Now… close your eyes for me. Just for a moment.`, 100);
+
+});
+
+},1500);
+
+});
+
+},800);
+
+});
+
+});
+
+});
+
+});
+
 }
 
-if(step > 4){
-step = 4;
-}
-
-}
+window.onload = start;
 
 </script>
 
