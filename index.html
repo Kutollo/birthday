@@ -37,8 +37,6 @@ object-fit:cover;
 z-index:-2;
 }
 
-/* overlay */
-
 .overlay{
 position:fixed;
 top:0;
@@ -109,7 +107,7 @@ text-align:center;
 margin-bottom:25px;
 }
 
-/* INTRO CENTER */
+/* INTRO */
 
 #introLine{
 text-align:center;
@@ -139,7 +137,7 @@ margin-top:25px;
 opacity:0;
 transform:scale(1.05);
 filter:blur(10px);
-transition:1.2s;
+transition:1.2s ease;
 }
 
 .photo.show,
@@ -295,8 +293,7 @@ Please close your eyes 🙈 ❤️
 
 <script>
 
-/* FORCE VIDEO PLAY FIX */
-
+/* FORCE BACKGROUND VIDEO */
 window.addEventListener("load",()=>{
 
 const bg=document.getElementById("bgVideo");
@@ -334,7 +331,7 @@ if(callback)callback();
 typing();
 }
 
-/* TEXT (UNCHANGED) */
+/* TEXT */
 
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
@@ -390,7 +387,7 @@ setTimeout(()=>typeText("landingText",landingText,110),800);
 
 };
 
-/* ENTER */
+/* ENTER SITE */
 
 function enterSite(){
 
@@ -429,9 +426,18 @@ setTimeout(()=>{
 
 document.getElementById("section2").classList.add("show");
 
-typeText("videoTitle",videoTitle,110,()=>{
+/* FIXED VIDEO PLAY */
+const vid=document.getElementById("video");
+vid.classList.add("show");
+vid.muted=true;
+vid.playsInline=true;
+vid.loop=true;
 
-document.getElementById("video").classList.add("show");
+vid.play().catch(()=>{
+
+document.body.addEventListener("click",()=>{
+vid.play();
+},{once:true});
 
 });
 
@@ -453,7 +459,7 @@ typeText("giftTitle",giftTitle,110);
 
 }
 
-/* GIFT + POPUP DELAY */
+/* GIFT */
 
 function revealGift(){
 
@@ -465,30 +471,11 @@ typeText("gift",giftText,110,()=>{
 
 setTimeout(()=>{
 
-showPopup();
+document.getElementById("popup").classList.add("show");
 
 },3000);
 
 });
-
-}
-
-/* POPUP + VIBRATION + AUTO HIDE */
-
-function showPopup(){
-
-const popup=document.getElementById("popup");
-popup.classList.add("show");
-
-/* vibration */
-if(navigator.vibrate){
-navigator.vibrate([200,100,200,100,500]);
-}
-
-/* auto hide after 10 seconds */
-setTimeout(()=>{
-popup.classList.remove("show");
-},10000);
 
 }
 
