@@ -25,7 +25,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* BACKGROUND VIDEO */
+/* BACKGROUND */
 
 #bgVideo{
 position:fixed;
@@ -73,20 +73,6 @@ transform:scale(1.1);
 filter:blur(10px);
 }
 
-#landing h1{
-font-family:'Dancing Script';
-font-size:60px;
-margin-bottom:20px;
-min-height:70px;
-}
-
-#landing p{
-font-size:20px;
-opacity:0.85;
-max-width:600px;
-min-height:90px;
-}
-
 /* MAIN */
 
 #main{
@@ -118,6 +104,8 @@ opacity:1;
 transform:translateY(0) scale(1);
 filter:blur(0);
 }
+
+/* TEXT */
 
 .title{
 font-family:'Dancing Script';
@@ -184,41 +172,17 @@ background:rgba(0,0,0,0.9);
 display:flex;
 align-items:center;
 justify-content:center;
-flex-direction:column;
-font-size:35px;
+font-size:30px;
 text-align:center;
 opacity:0;
 pointer-events:none;
 transition:1s;
-z-index:1000;
+z-index:9999;
 }
 
 #popup.show{
 opacity:1;
 pointer-events:auto;
-}
-
-/* FINAL SCREEN */
-
-#finalScreen{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:40px;
-font-family:'Dancing Script';
-opacity:0;
-transition:3s;
-z-index:2000;
-}
-
-#finalScreen.show{
-opacity:1;
 }
 
 /* HEARTS */
@@ -242,7 +206,8 @@ animation:floatUp linear infinite;
 
 <body>
 
-<video autoplay muted loop playsinline preload="auto" id="bgVideo">
+<!-- BACKGROUND -->
+<video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
 
@@ -252,14 +217,10 @@ animation:floatUp linear infinite;
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
-<div id="popup">
-<div>Please close your eyes 🙈</div>
-</div>
+<!-- POPUP -->
+<div id="popup">Please close your eyes 🙈</div>
 
-<div id="finalScreen">
-One last surprise is waiting for you ❤️
-</div>
-
+<!-- LANDING -->
 <section id="landing">
 
 <h1 id="landingTitle"></h1>
@@ -269,6 +230,7 @@ One last surprise is waiting for you ❤️
 
 </section>
 
+<!-- MAIN -->
 <section id="main">
 
 <div class="glass" id="section1">
@@ -307,40 +269,30 @@ One last surprise is waiting for you ❤️
 
 <script>
 
-/* TYPE FUNCTION */
+/* ===== TYPE FUNCTION (110ms) ===== */
 
-function typeText(id,text,speed,callback){
+function typeText(id,text,speed=110,callback){
 
 let i=0;
+const el=document.getElementById(id);
+el.innerHTML="";
 
 function typing(){
 
 if(i<text.length){
-
-document.getElementById(id).innerHTML+=text.charAt(i);
+el.innerHTML += text.charAt(i);
 i++;
-
 setTimeout(typing,speed);
-
-}else if(callback){
-
-callback();
-
+}else{
+if(callback) callback();
 }
 
 }
 
 typing();
-
 }
 
-/* SHOW SECTION */
-
-function showSection(id){
-document.getElementById(id).classList.add("show");
-}
-
-/* TEXT */
+/* ===== TEXT ===== */
 
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
@@ -354,7 +306,7 @@ const introLine="I wanted to be the first to celebrate you… before anyone else
 
 const mainTitle="Happy Birthday🩵my Luyanda🎈";
 
-const text=`Tomorrow will be important, because it’s the day someone really special came into the world.
+const mainText=`Tomorrow will be important, because it’s the day someone really special came into the world.
 
 I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
 
@@ -384,19 +336,23 @@ I hope you wear it often. Not just as something pretty, but as a reminder that y
 
 I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
 
-/* LANDING LOAD */
+/* ===== LANDING ===== */
 
 window.onload=function(){
 
-typeText("landingTitle",landingTitle,100);
+typeText("landingTitle",landingTitle,110,()=>{
 
 setTimeout(()=>{
-typeText("landingText",landingText,100);
-},1200);
 
-}
+typeText("landingText",landingText,110);
 
-/* ENTER */
+},800);
+
+});
+
+};
+
+/* ===== ENTER SITE ===== */
 
 function enterSite(){
 
@@ -411,13 +367,15 @@ const music=document.getElementById("music");
 music.volume=0.6;
 music.play().catch(()=>{});
 
+/* SECTION FLOW */
+
 showSection("section1");
 
-typeText("introLine",introLine,100,()=>{
+typeText("introLine",introLine,110,()=>{
 
-typeText("mainTitle",mainTitle,100,()=>{
+typeText("mainTitle",mainTitle,110,()=>{
 
-typeText("message",text,100,()=>{
+typeText("message",mainText,110,()=>{
 
 document.getElementById("photo").classList.add("show");
 
@@ -425,14 +383,16 @@ showSection("section2");
 
 setTimeout(()=>{
 
-typeText("videoTitle",videoTitle,100,()=>{
+typeText("videoTitle",videoTitle,110,()=>{
 
 document.getElementById("video").classList.add("show");
 
 showSection("section3");
 
 setTimeout(()=>{
-typeText("giftTitle",giftTitle,100);
+
+typeText("giftTitle",giftTitle,110);
+
 },800);
 
 });
@@ -449,24 +409,18 @@ typeText("giftTitle",giftTitle,100);
 
 }
 
-/* GIFT */
+/* ===== GIFT ===== */
 
 function revealGift(){
 
 const g=document.getElementById("gift");
 g.style.display="block";
 
-typeText("gift",giftText,100,()=>{
+typeText("gift",giftText,110,()=>{
 
 setTimeout(()=>{
 
 document.getElementById("popup").classList.add("show");
-
-setTimeout(()=>{
-
-document.getElementById("finalScreen").classList.add("show");
-
-},3000);
 
 },1200);
 
@@ -474,18 +428,21 @@ document.getElementById("finalScreen").classList.add("show");
 
 }
 
-/* HEARTS */
+/* ===== SHOW SECTION ===== */
+
+function showSection(id){
+document.getElementById(id).classList.add("show");
+}
+
+/* ===== HEARTS ===== */
 
 setInterval(()=>{
 
 const heart=document.createElement("div");
-
 heart.className="heart";
 heart.innerHTML="❤️";
-
 heart.style.left=Math.random()*100+"vw";
 heart.style.animationDuration=(4+Math.random()*6)+"s";
-
 document.body.appendChild(heart);
 
 setTimeout(()=>heart.remove(),9000);
