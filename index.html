@@ -12,20 +12,21 @@
 
 <style>
 
-/* =========================
-   GLOBAL LOCK (NO SCROLL)
-========================= */
-html, body{
+*{
 margin:0;
 padding:0;
-height:100%;
-overflow:hidden;
-background:black;
-color:white;
+box-sizing:border-box;
 font-family:'Inter',sans-serif;
 }
 
+body{
+background:black;
+color:white;
+overflow-x:hidden;
+}
+
 /* BACKGROUND VIDEO */
+
 #bgVideo{
 position:fixed;
 top:0;
@@ -47,6 +48,7 @@ z-index:-1;
 }
 
 /* LANDING */
+
 #landing{
 height:100vh;
 display:flex;
@@ -64,29 +66,22 @@ transform:scale(1.1);
 filter:blur(10px);
 }
 
-/* MAIN SCREEN (FIXED VIEWPORT) */
+/* MAIN */
+
 #main{
 display:none;
-height:100vh;
-width:100%;
-overflow:hidden;
-position:relative;
-}
-
-/* SCROLL AREA INSIDE ONLY */
-.container{
-height:100%;
-overflow-y:auto;
-padding:40px 20px;
-box-sizing:border-box;
+max-width:900px;
+margin:auto;
+padding:60px 20px;
 }
 
 /* GLASS */
+
 .glass{
 background:rgba(255,255,255,0.07);
 backdrop-filter:blur(25px);
 border-radius:25px;
-padding:40px;
+padding:50px;
 margin-bottom:40px;
 border:1px solid rgba(255,255,255,0.18);
 box-shadow:0 10px 60px rgba(0,0,0,0.6);
@@ -104,6 +99,7 @@ filter:blur(0);
 }
 
 /* TITLE */
+
 .title{
 font-family:'Dancing Script';
 font-size:30px;
@@ -111,18 +107,27 @@ text-align:center;
 margin-bottom:25px;
 }
 
-/* TEXT BOX (NO PAGE SCROLL BUG) */
+/* INTRO */
+
+#introLine{
+text-align:center;
+margin-bottom:20px;
+line-height:1.9;
+opacity:0.9;
+}
+
+/* MESSAGE (NO SCROLLING ANYMORE) */
+
 .message{
 white-space:pre-line;
 text-align:justify;
 line-height:1.9;
 font-size:18px;
-max-height:40vh;
-overflow-y:auto;
-padding:10px;
+min-height:200px;
 }
 
 /* MEDIA */
+
 .photo,
 .video{
 width:100%;
@@ -143,6 +148,7 @@ filter:blur(0);
 }
 
 /* BUTTON */
+
 button{
 margin-top:30px;
 padding:15px 55px;
@@ -160,6 +166,7 @@ transform:scale(1.08);
 }
 
 /* POPUP */
+
 #popup{
 position:fixed;
 top:0;
@@ -199,6 +206,7 @@ animation:float 3s ease-in-out infinite;
 }
 
 /* HEARTS */
+
 .heart{
 position:fixed;
 bottom:-20px;
@@ -249,8 +257,6 @@ Please close your eyes 🙈 ❤️
 <!-- MAIN -->
 <section id="main">
 
-<div class="container">
-
 <div class="glass" id="section1">
 
 <p id="introLine"></p>
@@ -283,8 +289,6 @@ Please close your eyes 🙈 ❤️
 
 </div>
 
-</div>
-
 </section>
 
 <script>
@@ -304,7 +308,8 @@ bg.play();
 
 });
 
-/* TYPE FUNCTION (NO PAGE SCROLL BUG) */
+/* TYPE FUNCTION (NO SCROLLING) */
+
 function typeText(id,text,speed=110,callback){
 
 let i=0;
@@ -314,11 +319,15 @@ el.innerHTML="";
 function typing(){
 
 if(i<text.length){
+
 el.innerHTML+=text.charAt(i);
 i++;
 setTimeout(typing,speed);
+
 }else{
+
 if(callback)callback();
+
 }
 
 }
@@ -326,7 +335,8 @@ if(callback)callback();
 typing();
 }
 
-/* TEXT (UNCHANGED) */
+/* TEXT */
+
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
 const landingText=`I made something for you…
@@ -370,6 +380,7 @@ I hope you wear it often. Not just as something pretty, but as a reminder that y
 I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
 
 /* LANDING */
+
 window.onload=function(){
 
 typeText("landingTitle",landingTitle,110,()=>{
@@ -380,7 +391,8 @@ setTimeout(()=>typeText("landingText",landingText,110),800);
 
 };
 
-/* ENTER */
+/* ENTER SITE */
+
 function enterSite(){
 
 document.getElementById("landing").classList.add("hide");
@@ -401,9 +413,8 @@ startFlow();
 }
 
 /* FLOW */
-function startFlow(){
 
-document.querySelector(".container").scrollTop = 0;
+function startFlow(){
 
 document.getElementById("section1").classList.add("show");
 
@@ -426,13 +437,11 @@ vid.muted=true;
 vid.playsInline=true;
 vid.loop=true;
 
-const playVideo=()=>{
-vid.play().catch(()=>{});
-};
+vid.play().catch(()=>{
 
-playVideo();
-document.body.addEventListener("click",playVideo,{once:true});
-setTimeout(playVideo,600);
+document.body.addEventListener("click",()=>vid.play(),{once:true});
+
+});
 
 },800);
 
@@ -450,7 +459,10 @@ typeText("giftTitle",giftTitle,110);
 
 });
 
+}
+
 /* GIFT */
+
 function revealGift(){
 
 const g=document.getElementById("gift");
@@ -479,9 +491,11 @@ popup.classList.remove("show");
 }
 
 /* HEARTS */
+
 setInterval(()=>{
 
 const heart=document.createElement("div");
+
 heart.className="heart";
 heart.innerHTML="❤️";
 heart.style.left=Math.random()*100+"vw";
