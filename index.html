@@ -10,7 +10,12 @@
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,sans-serif;
+}
 
 body{
 background:black;
@@ -18,7 +23,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* BACKGROUND VIDEO (SAFE) */
+/* BACKGROUND */
 #bgVideo{
 position:fixed;
 inset:0;
@@ -28,7 +33,6 @@ object-fit:cover;
 z-index:-2;
 }
 
-/* overlay */
 .overlay{
 position:fixed;
 inset:0;
@@ -49,17 +53,27 @@ padding:40px;
 
 #landing h1{
 font-family:'Dancing Script';
-font-size:60px;
-min-height:70px;
+font-size:55px;
 margin-bottom:20px;
+min-height:70px;
 }
 
 #landing p{
 font-size:18px;
-opacity:0.9;
 max-width:600px;
 min-height:80px;
-text-align:center;
+opacity:0.9;
+}
+
+button{
+margin-top:25px;
+padding:15px 50px;
+border-radius:40px;
+border:none;
+background:white;
+color:black;
+font-size:18px;
+cursor:pointer;
 }
 
 /* MAIN */
@@ -70,7 +84,7 @@ margin:auto;
 padding:60px 20px;
 }
 
-/* SCENES */
+/* GLASS */
 .glass{
 background:rgba(255,255,255,0.06);
 backdrop-filter:blur(20px);
@@ -105,7 +119,8 @@ min-height:200px;
 }
 
 /* MEDIA */
-.photo,.video{
+.photo,
+.video{
 width:100%;
 border-radius:18px;
 margin-top:20px;
@@ -113,20 +128,9 @@ opacity:0;
 transition:1s ease;
 }
 
-.photo.show,.video.show{
+.photo.show,
+.video.show{
 opacity:1;
-}
-
-/* BUTTON */
-button{
-margin-top:25px;
-padding:15px 50px;
-border-radius:40px;
-border:none;
-background:white;
-color:black;
-font-size:18px;
-cursor:pointer;
 }
 
 /* POPUP */
@@ -139,7 +143,7 @@ justify-content:center;
 background:rgba(0,0,0,0.85);
 opacity:0;
 pointer-events:none;
-transition:1s;
+transition:1s ease;
 z-index:9999;
 }
 
@@ -163,13 +167,14 @@ text-align:center;
 
 <body>
 
-<!-- BACKGROUND -->
+<!-- BACKGROUND VIDEO -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
+<!-- AUDIO -->
 <audio id="music" loop>
 <source src="bg.mp3" type="audio/mp3">
 </audio>
@@ -214,21 +219,11 @@ text-align:center;
 
 </div>
 
-<div class="glass">
-
-<h1 class="title">Your Gift</h1>
-
-<button onclick="revealGift()">Reveal Gift Message</button>
-
-<p class="message" id="gift" style="display:none;"></p>
-
-</div>
-
 </section>
 
 <script>
 
-/* ===== SAFE TYPE FUNCTION ===== */
+/* SAFE TYPEWRITER */
 function typeText(id,text,speed=110,cb){
 
 const el=document.getElementById(id);
@@ -251,8 +246,7 @@ cb();
 run();
 }
 
-/* ===== YOUR TEXT (UNCHANGED) ===== */
-
+/* TEXT (UNCHANGED) */
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
 const landingText=`I made something for you…
@@ -275,7 +269,7 @@ And being able to talk again now feels like something I quietly appreciate more 
 
 I also want to say I’m sorry for how things went between us before.
 
-I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again. I know I'm the last person to be talking about promises but I promise to never fumble the chance you gave us. Hurting you again is something I don't wanna see happening.
+I don’t want to dwell on it today, but I do regret how I handled things.
 
 More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.
 
@@ -283,29 +277,16 @@ Enjoy your day. I Love You🩵`;
 
 const videoTitle="It's Your Turn Ke Mfazi";
 
-const giftText=`I got you a small gift
-
-I chose it because it represents time…
-
-I hope you wear it often.
-
-Not just as something pretty, but as a reminder that you are loved 🥹`;
-
-/* ===== START (FIXED BUTTON FLOW) ===== */
-
 function startMovie(){
 
-// show main FIRST (prevents blank screen bug)
 document.getElementById("landing").style.display="none";
 document.getElementById("main").style.display="block";
 
-// play music safely
 const music=document.getElementById("music");
 music.volume=0.6;
 music.play().catch(()=>{});
 
-/* cinematic order */
-
+/* STRICT ORDER FLOW */
 typeText("introLine",introLine,110,()=>{
 
 typeText("mainTitle",mainTitle,110,()=>{
@@ -320,45 +301,23 @@ typeText("videoTitle",videoTitle,110,()=>{
 
 document.getElementById("video").classList.add("show");
 
-});
+setTimeout(()=>{
+
+document.getElementById("popup").classList.add("show");
 
 },1200);
 
 });
 
-});
-
-});
-
-}
-
-/* ===== GIFT ===== */
-
-function revealGift(){
-
-const g=document.getElementById("gift");
-g.style.display="block";
-
-typeText("gift",giftText,110,()=>{
-
-setTimeout(()=>{
-
-document.getElementById("popup").classList.add("show");
-
 },1000);
 
 });
 
+});
+
+});
+
 }
-
-/* ===== LANDING LOAD (GUARANTEED) ===== */
-
-window.onload=function(){
-
-typeText("landingTitle",landingTitle,110);
-typeText("landingText",landingText,110);
-
-};
 
 </script>
 
