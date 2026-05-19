@@ -37,8 +37,6 @@ object-fit:cover;
 z-index:-2;
 }
 
-/* dark overlay */
-
 .overlay{
 position:fixed;
 top:0;
@@ -59,93 +57,26 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
-transition:1.2s ease;
+transition:1s;
 }
 
 #landing.hide{
 opacity:0;
 transform:scale(1.1);
-filter:blur(10px);
+filter:blur(8px);
 }
 
-/* MAIN */
-
-#main{
-display:none;
-max-width:900px;
-margin:auto;
-padding:60px 20px;
-}
-
-/* GLASS */
-
-.glass{
-background:rgba(255,255,255,0.07);
-backdrop-filter:blur(25px);
-border-radius:25px;
-padding:50px;
-margin-bottom:40px;
-border:1px solid rgba(255,255,255,0.18);
-box-shadow:0 10px 60px rgba(0,0,0,0.6);
-
-opacity:0;
-transform:translateY(40px) scale(0.95);
-filter:blur(12px);
-transition:1.2s ease;
-}
-
-.glass.show{
-opacity:1;
-transform:translateY(0) scale(1);
-filter:blur(0);
-}
-
-/* TITLES */
-
-.title{
+#landing h1{
 font-family:'Dancing Script';
-font-size:30px;
-text-align:center;
-margin-bottom:25px;
+font-size:60px;
+margin-bottom:20px;
 }
 
-/* MESSAGE */
-
-.message{
-white-space:pre-line;
-text-align:justify;
-line-height:1.9;
-font-size:18px;
-min-height:250px;
-}
-
-/* INTRO CENTERED */
-
-#introLine{
-text-align:center;
-line-height:1.9;
-margin-bottom:25px;
-opacity:0.9;
-}
-
-/* MEDIA */
-
-.photo,
-.video{
-width:100%;
-border-radius:18px;
-margin-top:25px;
-opacity:0;
-transform:scale(1.05);
-filter:blur(10px);
-transition:1.2s ease;
-}
-
-.photo.show,
-.video.show{
-opacity:1;
-transform:scale(1);
-filter:blur(0);
+#landing p{
+font-size:20px;
+opacity:0.85;
+max-width:600px;
+min-height:80px;
 }
 
 /* BUTTON */
@@ -166,7 +97,88 @@ button:hover{
 transform:scale(1.08);
 }
 
-/* ROMANTIC POPUP */
+/* MAIN */
+
+#main{
+display:none;
+max-width:900px;
+margin:auto;
+padding:60px 20px;
+}
+
+/* GLASS */
+
+.glass{
+background:rgba(255,255,255,0.07);
+backdrop-filter:blur(22px);
+border-radius:25px;
+padding:50px;
+margin-bottom:40px;
+border:1px solid rgba(255,255,255,0.18);
+box-shadow:0 10px 50px rgba(0,0,0,0.5);
+
+opacity:0;
+transform:translateY(40px) scale(0.95);
+filter:blur(10px);
+transition:1.2s ease;
+}
+
+.glass.show{
+opacity:1;
+transform:translateY(0) scale(1);
+filter:blur(0);
+}
+
+/* TITLE */
+
+.title{
+font-family:'Dancing Script';
+font-size:30px;
+text-align:center;
+margin-bottom:25px;
+}
+
+/* INTRO CENTER */
+
+#introLine{
+text-align:center;
+margin-bottom:20px;
+line-height:1.9;
+opacity:0.9;
+}
+
+/* MESSAGE */
+
+.message{
+white-space:pre-line;
+text-align:justify;
+line-height:1.9;
+font-size:18px;
+min-height:250px;
+}
+
+/* MEDIA */
+
+.photo,
+.video{
+width:100%;
+border-radius:18px;
+margin-top:25px;
+
+opacity:0;
+transform:scale(1.05);
+filter:blur(10px);
+transition:1.2s;
+}
+
+.photo.show,
+.video.show{
+opacity:1;
+transform:scale(1);
+filter:blur(0);
+}
+
+/* POPUP */
 
 #popup{
 position:fixed;
@@ -176,9 +188,8 @@ width:100%;
 height:100%;
 background:rgba(0,0,0,0.85);
 display:flex;
-flex-direction:column;
-align-items:center;
 justify-content:center;
+align-items:center;
 opacity:0;
 pointer-events:none;
 transition:1s;
@@ -196,23 +207,18 @@ backdrop-filter:blur(15px);
 padding:40px 50px;
 border-radius:25px;
 text-align:center;
-font-size:28px;
 font-family:'Dancing Script';
-animation:popupFloat 3s ease-in-out infinite;
+font-size:30px;
+animation:float 3s ease-in-out infinite;
 }
 
-@keyframes popupFloat{
-0%{transform:translateY(0);}
-50%{transform:translateY(-10px);}
-100%{transform:translateY(0);}
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+100%{transform:translateY(0)}
 }
 
-.popup-hearts{
-font-size:22px;
-margin-top:10px;
-}
-
-/* FLOATING HEARTS */
+/* HEARTS */
 
 .heart{
 position:fixed;
@@ -233,8 +239,6 @@ animation:floatUp linear infinite;
 
 <body>
 
-<!-- BACKGROUND VIDEO -->
-
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
@@ -245,18 +249,11 @@ animation:floatUp linear infinite;
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
-<!-- POPUP -->
-
 <div id="popup">
-
 <div class="popup-box">
-Please close your eyes 🙈
-<div class="popup-hearts">❤️✨</div>
+Please close your eyes 🙈 ❤️
 </div>
-
 </div>
-
-<!-- LANDING -->
 
 <section id="landing">
 
@@ -267,8 +264,6 @@ Please close your eyes 🙈
 <button onclick="enterSite()">Open</button>
 
 </section>
-
-<!-- MAIN -->
 
 <section id="main">
 
@@ -339,9 +334,7 @@ function typing(){
 if(i<text.length){
 
 el.innerHTML+=text.charAt(i);
-
 i++;
-
 setTimeout(typing,speed);
 
 }else{
@@ -356,7 +349,7 @@ typing();
 
 }
 
-/* TEXT */
+/* TEXT CONTENT */
 
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
@@ -366,25 +359,51 @@ because you matter more than I ever say out loud.
 
 Take your time… and open it when you’re ready 💗`;
 
-const introLine="I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
+const introLine=`I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.`;
 
 const mainTitle="Happy Birthday🩵my Luyanda🎈";
+
+const mainText=`Tomorrow will be important, because it’s the day someone really special came into the world.
+
+I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
+
+I’ve always had a soft spot for you as much as you have one for me… even with time and distance, that never really changed.
+
+And being able to talk again now feels like something I quietly appreciate more than I say out loud.
+
+I also want to say I’m sorry for how things went between us before.
+
+I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again. I know I'm the last person to be talking about promises but I promise to never fumble the chance you gave us. Hurting you again is something I don't wanna see happening.
+
+More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.
+
+Enjoy your day. I Love You🩵`;
 
 const videoTitle="It's Your Turn Ke Mfazi";
 
 const giftTitle="Your Gift";
 
+const giftText=`I got you a small gift
+
+I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
+
+Every moment is something I wanted you to feel held in, even when I’m not there. Not rushed, not forgotten, not replaced… just gently remembered in the way that stays.
+
+I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, loved and genuinely appreciated.
+
+I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
+
 /* LANDING */
 
 window.onload=function(){
 
-typeText("landingTitle",landingTitle);
+typeText("landingTitle",landingTitle,110,()=>{
 
 setTimeout(()=>{
+typeText("landingText",landingText,110);
+},800);
 
-typeText("landingText",landingText);
-
-},1000);
+});
 
 };
 
@@ -397,18 +416,15 @@ document.getElementById("landing").classList.add("hide");
 setTimeout(()=>{
 
 document.getElementById("landing").style.display="none";
-
 document.getElementById("main").style.display="block";
 
 const music=document.getElementById("music");
-
 music.volume=0.6;
-
 music.play().catch(()=>{});
 
 startFlow();
 
-},1200);
+},1000);
 
 }
 
@@ -416,11 +432,39 @@ startFlow();
 
 function startFlow(){
 
-showSection("section1");
+document.getElementById("section1").classList.add("show");
 
 typeText("introLine",introLine,110,()=>{
 
-typeText("mainTitle",mainTitle);
+typeText("mainTitle",mainTitle,110,()=>{
+
+typeText("message",mainText,110,()=>{
+
+document.getElementById("photo").classList.add("show");
+
+setTimeout(()=>{
+
+document.getElementById("section2").classList.add("show");
+
+typeText("videoTitle",videoTitle,110,()=>{
+
+document.getElementById("video").classList.add("show");
+
+});
+
+},800);
+
+setTimeout(()=>{
+
+document.getElementById("section3").classList.add("show");
+
+typeText("giftTitle",giftTitle,110);
+
+},1600);
+
+});
+
+});
 
 });
 
@@ -440,17 +484,9 @@ setTimeout(()=>{
 
 document.getElementById("popup").classList.add("show");
 
-},1200);
+},1000);
 
 });
-
-}
-
-/* SECTION SHOW */
-
-function showSection(id){
-
-document.getElementById(id).classList.add("show");
 
 }
 
@@ -461,11 +497,8 @@ setInterval(()=>{
 const heart=document.createElement("div");
 
 heart.className="heart";
-
 heart.innerHTML="❤️";
-
 heart.style.left=Math.random()*100+"vw";
-
 heart.style.animationDuration=(4+Math.random()*6)+"s";
 
 document.body.appendChild(heart);
@@ -477,5 +510,4 @@ setTimeout(()=>heart.remove(),9000);
 </script>
 
 </body>
-
 </html>
