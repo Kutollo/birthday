@@ -2,194 +2,171 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Luyanda ❤️</title>
+
+<title id="pageTitle"></title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
+/* SAME CSS (UNCHANGED EXCEPT SMALL ADDITION BELOW) */
 
-body{
-background:black;
-color:white;
-overflow-x:hidden;
-}
-
-/* BACKGROUND */
-#bgVideo{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:cover;
-z-index:-2;
-filter:brightness(0.55);
-}
-
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-z-index:-1;
-}
-
-/* SECTIONS */
-section{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-padding:60px 20px;
+.intro-line{
 text-align:center;
 opacity:0;
-transform:translateY(40px);
-transition:1.2s ease;
+transform:translateY(20px);
+margin-bottom:10px;
+font-size:16px;
+letter-spacing:0.3px;
+animation:fadeInIntro 2.5s ease forwards;
+animation-delay:0.6s;
 }
 
-section.show{
-opacity:1;
+@keyframes fadeInIntro{
+to{
+opacity:0.85;
 transform:translateY(0);
 }
-
-/* CARD */
-.card{
-max-width:850px;
-width:100%;
-padding:45px;
-border-radius:25px;
-background:rgba(255,255,255,0.06);
-backdrop-filter:blur(25px);
-border:1px solid rgba(255,255,255,0.12);
-box-shadow:0 20px 70px rgba(0,0,0,0.6);
 }
 
-/* TITLE */
-h1{
-font-family:'Dancing Script';
-font-size:52px;
-margin-bottom:20px;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
-/* TEXT */
-p{
-font-size:18px;
-line-height:1.9;
-white-space:pre-line;
-min-height:50px;
-}
+body{background:black;color:white;overflow-x:hidden;}
 
-/* MEDIA */
-img,video{
-width:100%;
-border-radius:18px;
-margin-top:20px;
-display:none;
-}
+#bgVideo{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;}
+
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:-1;}
+
+#landing{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px;}
+
+#landing h1{font-family:'Dancing Script';font-size:60px;margin-bottom:20px;}
+
+#landing p{font-size:20px;opacity:0.85;max-width:600px;min-height:80px;}
+
+button{margin-top:30px;padding:15px 55px;border-radius:40px;border:none;background:white;color:black;font-size:18px;cursor:pointer;transition:0.4s;}
+
+button:hover{transform:scale(1.08);}
+
+#main{display:none;max-width:900px;margin:auto;padding:60px 20px;}
+
+.glass{background:rgba(255,255,255,0.07);backdrop-filter:blur(22px);border-radius:25px;padding:50px;margin-bottom:40px;border:1px solid rgba(255,255,255,0.18);box-shadow:0 10px 50px rgba(0,0,0,0.5);}
+
+.title{font-family:'Dancing Script';font-size:30px;text-align:center;margin-bottom:25px;}
+
+.message{white-space:pre-line;text-align:justify;line-height:1.9;font-size:18px;min-height:250px;}
+
+.photo{width:100%;border-radius:18px;margin-top:25px;opacity:0;transition:1s;}
+
+.video{width:100%;border-radius:18px;margin-top:25px;opacity:0;transition:1s;}
+
+.gift-btn{margin-top:20px;padding:12px 30px;border:none;border-radius:30px;background:rgba(255,255,255,0.15);color:white;cursor:pointer;transition:0.3s;}
+
+.gift-btn:hover{transform:scale(1.05);}
+
+.heart{position:fixed;bottom:-20px;font-size:18px;opacity:0.4;animation:floatUp linear infinite;}
+
+@keyframes floatUp{0%{transform:translateY(0);}100%{transform:translateY(-120vh);}}
 
 </style>
+
 </head>
 
 <body>
 
-<!-- BACKGROUND -->
-<video autoplay muted loop id="bgVideo">
+<video autoplay muted loop id="bgVideo" playsinline>
 <source src="cinematic.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<!-- SECTION 1 -->
-<section id="s1" class="show">
-<div class="card">
-<h1 id="title1"></h1>
-<p id="text1"></p>
-</div>
+<audio id="music" loop>
+<source src="bg.mp3" type="audio/mp3">
+</audio>
+
+<!-- LANDING -->
+<section id="landing">
+
+<h1 id="landingTitle"></h1>
+<p id="landingText"></p>
+
+<button onclick="enterSite()">Open</button>
+
 </section>
 
-<!-- SECTION 2 -->
-<section id="s2">
-<div class="card">
-<h1 id="title2"></h1>
-<p id="text2"></p>
-<img id="img1" src="IMG_2034.jpeg">
-</div>
-</section>
+<!-- MAIN -->
+<section id="main">
 
-<!-- SECTION 3 -->
-<section id="s3">
-<div class="card">
-<h1 id="title3"></h1>
-<video id="vid1" autoplay muted loop playsinline>
+<div class="glass">
+
+<p class="intro-line" id="introLine"></p>
+
+<h1 class="title" id="mainTitle"></h1>
+
+<p class="message" id="message"></p>
+
+<img src="IMG_2034.jpeg" class="photo" id="photo">
+
+</div>
+
+<div class="glass">
+
+<h1 class="title" id="videoTitle"></h1>
+
+<video muted loop playsinline class="video" id="video">
 <source src="luyanda.mp4" type="video/mp4">
 </video>
-</div>
-</section>
 
-<!-- SECTION 4 -->
-<section id="s4">
-<div class="card">
-<h1 id="title4"></h1>
-<p id="text4"></p>
 </div>
+
+<div class="glass">
+
+<h1 class="title" id="giftTitle"></h1>
+
+<button class="gift-btn" onclick="revealGift()">Reveal Gift Message</button>
+
+<p class="message" id="gift" style="display:none;"></p>
+
+</div>
+
 </section>
 
 <script>
 
-/* =========================
-TYPEWRITER (100ms)
-========================= */
-function type(el, text, speed=100, callback){
-el.innerHTML = "";
+/* GLOBAL TYPE FUNCTION */
+function typeText(elementId, text, speed, callback){
 let i = 0;
-
-function run(){
+function typing(){
 if(i < text.length){
-el.innerHTML += text.charAt(i);
+document.getElementById(elementId).innerHTML += text.charAt(i);
 i++;
-setTimeout(run, speed);
-} else if(callback){
+setTimeout(typing, speed);
+}else if(callback){
 callback();
 }
 }
-run();
+typing();
 }
 
-/* =========================
-FULL STORY FLOW (ORDERED)
-========================= */
+/* LANDING TEXT */
+const landingTitle = "Made with love, specially for you — Luyanda 💗";
 
-function start(){
+const landingText =
+`I made something for you…
 
-// 1 TITLE + INTRO
-type(document.getElementById("title1"),
-"For Luyanda 💗", 100, ()=>{
+because you matter more than I ever say out loud.
 
-type(document.getElementById("text1"),
-`Specially made with love for you Luyanda
+Take your time… and open it when you’re ready 💗`;
 
-I decided to be the first one to celebrate you before anyone else hence you seeing it today`, 100, ()=>{
+/* MAIN TEXTS */
+const introLine =
+"I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
 
-document.getElementById("s2").classList.add("show");
+const mainTitle = "Happy Birthday🩵my Luyanda🎈";
 
-// 2 BIRTHDAY MESSAGE
-type(document.getElementById("title2"),
-"Happy Birthday 🩵", 100, ()=>{
-
-type(document.getElementById("text2"),
-`Tomorrow will be important, because it’s the day someone really special came into the world.
+const text = `Tomorrow will be important, because it’s the day someone really special came into the world.
 
 I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
 
@@ -199,45 +176,60 @@ And being able to talk again now feels like something I quietly appreciate more 
 
 I also want to say I’m sorry for how things went between us before.
 
-I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again. I know I'm the last person to be talking about promises but I promise to never fumble the chance you gave us. Hurting you again is something I don't wanna see it happening.
+I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again. I know I'm the last person to be talking about promises but I promise to never fumble the chance you gave us. Hurting you again is something I don't wanna see happening.
 
-More than anything, I just want you to have a birthday that feels warm, special, and unforgettable in the best way.
+More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.
 
-Enjoy your day. I Love You🩵`, 100, ()=>{
+Enjoy your day. I Love You🩵`;
 
-document.getElementById("img1").style.display = "block";
-setTimeout(()=>{
+const videoTitle = "It's Your Turn Ke Mfazi";
 
-document.getElementById("s3").classList.add("show");
+const giftTitle = "Your Gift";
 
-// 3 VIDEO SECTION
-type(document.getElementById("title3"),
-"It's Your Turn Ke Mfazi", 100, ()=>{
-
-document.getElementById("vid1").style.display = "block";
-
-setTimeout(()=>{
-
-document.getElementById("s4").classList.add("show");
-
-// 4 GIFT
-type(document.getElementById("title4"),
-"Your Gift ⌚", 100, ()=>{
-
-type(document.getElementById("text4"),
-`I got you a small gift
+const giftText = `I got you a small gift
 
 I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
 
 Every moment is something I wanted you to feel held in, even when I’m not there. Not rushed, not forgotten, not replaced… just gently remembered in the way that stays.
 
-I hope it will never leave your wrist, just like how you never really left my heart 🥹
+I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, loved and genuinely appreciated.
 
-Now… close your eyes for me. Just for a moment.`, 100);
+I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
 
-});
+/* ENTER SITE + SEQUENCE */
+function enterSite(){
 
-},1500);
+document.getElementById("landing").style.display="none";
+document.getElementById("main").style.display="block";
+
+const music=document.getElementById("music");
+music.volume=0.6;
+music.play().catch(()=>{});
+
+/* STEP 1 */
+typeText("introLine", introLine, 40, ()=>{
+
+/* STEP 2 */
+typeText("mainTitle", mainTitle, 60, ()=>{
+
+/* STEP 3 */
+typeText("message", text, 25, ()=>{
+
+/* SHOW IMAGE AFTER TEXT */
+document.getElementById("photo").style.opacity=1;
+
+/* STEP 4 */
+setTimeout(()=>{
+typeText("videoTitle", videoTitle, 60, ()=>{
+
+/* SHOW VIDEO */
+document.getElementById("video").style.opacity=1;
+
+/* STEP 5 */
+setTimeout(()=>{
+typeText("giftTitle", giftTitle, 60);
+
+},800);
 
 });
 
@@ -249,11 +241,34 @@ Now… close your eyes for me. Just for a moment.`, 100);
 
 });
 
-});
+/* LANDING TYPE */
+typeText("landingTitle", landingTitle, 40);
+typeText("landingText", landingText, 60);
 
 }
 
-window.onload = start;
+/* GIFT */
+function revealGift(){
+
+const g=document.getElementById("gift");
+g.style.display="block";
+
+typeText("gift", giftText, 40);
+
+}
+
+/* HEARTS */
+setInterval(()=>{
+
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(4+Math.random()*6)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),9000);
+
+},500);
 
 </script>
 
