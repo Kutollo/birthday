@@ -25,7 +25,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* BACKGROUND VIDEO */
+/* BACKGROUND */
 
 #bgVideo{
 position:fixed;
@@ -36,8 +36,6 @@ height:100%;
 object-fit:cover;
 z-index:-2;
 }
-
-/* overlay */
 
 .overlay{
 position:fixed;
@@ -118,22 +116,14 @@ line-height:1.9;
 opacity:0.9;
 }
 
-/* =========================
-   MOBILE FIX (IMPORTANT)
-========================= */
+/* MESSAGE */
 
 .message{
 white-space:pre-line;
 text-align:justify;
 line-height:1.9;
 font-size:18px;
-
-/* FIX HEIGHT FOR MOBILE */
-max-height:55vh;
-overflow-y:auto;
-scroll-behavior:smooth;
-
-padding-right:5px;
+min-height:250px;
 }
 
 /* MEDIA */
@@ -283,7 +273,7 @@ Please close your eyes 🙈 ❤️
 
 <h1 class="title" id="videoTitle"></h1>
 
-<video muted loop playsinline class="video" id="video">
+<video muted playsinline loop id="video" class="video">
 <source src="luyanda.mp4" type="video/mp4">
 </video>
 
@@ -318,7 +308,7 @@ bg.play();
 
 });
 
-/* TYPE FUNCTION (MOBILE FIXED) */
+/* TYPE FUNCTION */
 
 function typeText(id,text,speed=110,callback){
 
@@ -329,19 +319,11 @@ el.innerHTML="";
 function typing(){
 
 if(i<text.length){
-
 el.innerHTML+=text.charAt(i);
 i++;
-
-/* ONLY SCROLL INSIDE BOX */
-el.scrollTop = el.scrollHeight;
-
 setTimeout(typing,speed);
-
 }else{
-
 if(callback)callback();
-
 }
 
 }
@@ -349,7 +331,7 @@ if(callback)callback();
 typing();
 }
 
-/* TEXT (UNCHANGED) */
+/* TEXT */
 
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
@@ -405,7 +387,7 @@ setTimeout(()=>typeText("landingText",landingText,110),800);
 
 };
 
-/* ENTER SITE */
+/* ENTER */
 
 function enterSite(){
 
@@ -440,11 +422,11 @@ typeText("message",mainText,110,()=>{
 
 document.getElementById("photo").classList.add("show");
 
-/* VIDEO FIX (MOBILE SAFE) */
 setTimeout(()=>{
 
 document.getElementById("section2").classList.add("show");
 
+/* 🔥 GUARANTEED VIDEO PLAY FIX */
 const vid=document.getElementById("video");
 
 vid.classList.add("show");
@@ -456,17 +438,15 @@ const playVideo=()=>{
 vid.play().catch(()=>{});
 };
 
+/* try immediately */
 playVideo();
 
-/* fallback unlock */
-document.body.addEventListener("click",playVideo,{once:true});
-
-/* extra force after render */
-setTimeout(playVideo,600);
+/* fallback user interaction */
+document.getElementById("section2").addEventListener("click",playVideo,{once:true});
+document.getElementById("main").addEventListener("click",playVideo,{once:true});
 
 },800);
 
-/* GIFT */
 setTimeout(()=>{
 
 document.getElementById("section3").classList.add("show");
@@ -483,7 +463,7 @@ typeText("giftTitle",giftTitle,110);
 
 }
 
-/* GIFT + POPUP */
+/* GIFT */
 
 function revealGift(){
 
@@ -495,17 +475,16 @@ typeText("gift",giftText,110,()=>{
 
 setTimeout(()=>{
 
-const popup=document.getElementById("popup");
-popup.classList.add("show");
+document.getElementById("popup").classList.add("show");
 
 /* vibration */
 if(navigator.vibrate){
 navigator.vibrate([200,100,200,100,500]);
 }
 
-/* auto hide */
+/* auto hide popup after 10s */
 setTimeout(()=>{
-popup.classList.remove("show");
+document.getElementById("popup").classList.remove("show");
 },10000);
 
 },3000);
