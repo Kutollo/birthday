@@ -12,14 +12,7 @@
 
 <style>
 
-/* ===== GLOBAL ===== */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif;}
 
 body{
 background:black;
@@ -27,7 +20,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* ===== CINEMATIC BACKGROUND ===== */
+/* BACKGROUND */
 
 #bgVideo{
 position:fixed;
@@ -36,14 +29,6 @@ width:100%;
 height:100%;
 object-fit:cover;
 z-index:-2;
-transform:scale(1.15);
-filter:brightness(0.7);
-animation:zoom 25s ease-in-out infinite alternate;
-}
-
-@keyframes zoom{
-from{transform:scale(1.15);}
-to{transform:scale(1.25);}
 }
 
 .overlay{
@@ -53,7 +38,7 @@ background:rgba(0,0,0,0.55);
 z-index:-1;
 }
 
-/* ===== LANDING (MOVIE INTRO) ===== */
+/* LANDING */
 
 #landing{
 height:100vh;
@@ -63,22 +48,13 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
-transition:1.5s ease;
 }
 
-#landing.fadeOut{
-opacity:0;
-transform:scale(1.1);
-filter:blur(20px);
-}
-
-/* cinematic title glow */
 #landing h1{
 font-family:'Dancing Script';
 font-size:60px;
+min-height:70px;
 margin-bottom:20px;
-text-shadow:0 0 20px rgba(255,255,255,0.3);
-min-height:80px;
 }
 
 #landing p{
@@ -88,7 +64,7 @@ max-width:600px;
 min-height:80px;
 }
 
-/* ===== MAIN ===== */
+/* MAIN */
 
 #main{
 display:none;
@@ -97,29 +73,19 @@ margin:auto;
 padding:60px 20px;
 }
 
-/* ===== SCENES (MOVIE CHAPTERS) ===== */
+/* SCENES */
 
 .glass{
 background:rgba(255,255,255,0.06);
-backdrop-filter:blur(30px);
+backdrop-filter:blur(25px);
 border-radius:25px;
 padding:50px;
 margin-bottom:40px;
-border:1px solid rgba(255,255,255,0.15);
-
-opacity:0;
-transform:translateY(50px) scale(0.96);
-filter:blur(20px);
-transition:1.5s ease;
-}
-
-.glass.show{
 opacity:1;
-transform:translateY(0) scale(1);
-filter:blur(0);
+transition:1s ease;
 }
 
-/* ===== TEXT ===== */
+/* TEXT */
 
 .title{
 font-family:'Dancing Script';
@@ -133,48 +99,31 @@ white-space:pre-line;
 text-align:justify;
 line-height:1.9;
 font-size:18px;
-min-height:250px;
+min-height:200px;
 }
 
-/* ===== MEDIA ===== */
+/* MEDIA */
 
-.photo,
-.video{
+.photo,.video{
 width:100%;
 border-radius:18px;
-margin-top:25px;
-opacity:0;
-transform:scale(1.08);
-filter:blur(15px);
-transition:1.5s ease;
+margin-top:20px;
 }
 
-.photo.show,
-.video.show{
-opacity:1;
-transform:scale(1);
-filter:blur(0);
-}
-
-/* ===== BUTTON ===== */
+/* BUTTON */
 
 button{
 margin-top:25px;
-padding:15px 55px;
+padding:15px 50px;
 border-radius:40px;
 border:none;
 background:white;
 color:black;
 font-size:18px;
 cursor:pointer;
-transition:0.3s;
 }
 
-button:hover{
-transform:scale(1.05);
-}
-
-/* ===== ROMANTIC POPUP ===== */
+/* POPUP */
 
 #popup{
 position:fixed;
@@ -183,11 +132,9 @@ display:flex;
 align-items:center;
 justify-content:center;
 background:rgba(0,0,0,0.85);
-backdrop-filter:blur(10px);
 opacity:0;
 pointer-events:none;
-transition:1.2s ease;
-z-index:9999;
+transition:1s;
 }
 
 #popup.show{
@@ -196,35 +143,12 @@ pointer-events:auto;
 }
 
 .popup-card{
-background:rgba(255,255,255,0.08);
-border:1px solid rgba(255,255,255,0.2);
-padding:40px 50px;
-border-radius:25px;
-text-align:center;
+background:rgba(255,255,255,0.1);
+padding:40px;
+border-radius:20px;
 font-family:'Dancing Script';
-font-size:24px;
-box-shadow:0 0 40px rgba(255,255,255,0.1);
-animation:pop 1s ease;
-}
-
-@keyframes pop{
-from{transform:scale(0.7); opacity:0;}
-to{transform:scale(1); opacity:1;}
-}
-
-/* ===== HEARTS ===== */
-
-.heart{
-position:fixed;
-bottom:-20px;
-font-size:18px;
-opacity:0.4;
-animation:floatUp linear infinite;
-}
-
-@keyframes floatUp{
-0%{transform:translateY(0);}
-100%{transform:translateY(-120vh);}
+font-size:22px;
+text-align:center;
 }
 
 </style>
@@ -233,7 +157,7 @@ animation:floatUp linear infinite;
 
 <body>
 
-<!-- CINEMATIC BACKGROUND -->
+<!-- VIDEO -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
@@ -244,25 +168,25 @@ animation:floatUp linear infinite;
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
-<!-- ROMANTIC POPUP -->
+<!-- POPUP -->
 <div id="popup">
-<div class="popup-card">Close your eyes for a moment… 🙈💗<br>this part is just for your heart</div>
+<div class="popup-card">Please close your eyes 🙈💗</div>
 </div>
 
-<!-- LANDING (MOVIE INTRO SCENE 1) -->
+<!-- LANDING (FORCED VISIBLE) -->
 <section id="landing">
 
 <h1 id="landingTitle"></h1>
 <p id="landingText"></p>
 
-<button onclick="startMovie()">Open</button>
+<button onclick="start()">Open</button>
 
 </section>
 
-<!-- MAIN (MOVIE SCENES) -->
+<!-- MAIN -->
 <section id="main">
 
-<div class="glass" id="scene1">
+<div class="glass">
 
 <p id="introLine"></p>
 
@@ -270,21 +194,21 @@ animation:floatUp linear infinite;
 
 <p class="message" id="message"></p>
 
-<img src="IMG_2034.jpeg" class="photo" id="photo">
+<img src="IMG_2034.jpeg" class="photo">
 
 </div>
 
-<div class="glass" id="scene2">
+<div class="glass">
 
 <h1 class="title" id="videoTitle"></h1>
 
-<video muted loop playsinline class="video" id="video">
+<video muted loop playsinline class="video">
 <source src="luyanda.mp4" type="video/mp4">
 </video>
 
 </div>
 
-<div class="glass" id="scene3">
+<div class="glass">
 
 <h1 class="title">Your Gift</h1>
 
@@ -298,32 +222,32 @@ animation:floatUp linear infinite;
 
 <script>
 
-/* ===== TYPE MACHINE ===== */
+/* ================= SAFE TYPE ENGINE ================= */
 
-function typeText(id,text,speed=110,cb){
+function type(id,text,speed=110){
+
+return new Promise(resolve=>{
 
 const el=document.getElementById(id);
-if(!el) return;
-
-let i=0;
 el.innerHTML="";
+let i=0;
 
 function run(){
 
 if(i<text.length){
-el.innerHTML+=text.charAt(i);
-i++;
+el.innerHTML+=text[i++];
 setTimeout(run,speed);
-}else if(cb){
-cb();
-}
+}else resolve();
 
 }
 
 run();
+
+});
+
 }
 
-/* ===== YOUR ORIGINAL TEXT (UNCHANGED) ===== */
+/* ================= YOUR TEXT (UNCHANGED) ================= */
 
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
@@ -333,7 +257,7 @@ because you matter more than I ever say out loud.
 
 Take your time… and open it when you’re ready 💗`;
 
-const introLine="I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
+const introLine="I wanted to be the first to celebrate you… before anyone else gets the chance.";
 
 const mainTitle="Happy Birthday🩵my Luyanda🎈";
 
@@ -347,7 +271,7 @@ And being able to talk again now feels like something I quietly appreciate more 
 
 I also want to say I’m sorry for how things went between us before.
 
-I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again. I know I'm the last person to be talking about promises but I promise to never fumble the chance you gave us. Hurting you again is something I don't wanna see happening.
+I don’t want to dwell on it today, but I do regret how I handled things.
 
 More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.
 
@@ -357,21 +281,15 @@ const videoTitle="It's Your Turn Ke Mfazi";
 
 const giftText=`I got you a small gift
 
-I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
+I chose it because it represents time…
 
-Every moment is something I wanted you to feel held in, even when I’m not there. Not rushed, not forgotten, not replaced… just gently remembered in the way that stays.
+I hope you wear it often.
 
-I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, loved and genuinely appreciated.
+Not just as something pretty, but as a reminder that you are loved 🥹`;
 
-I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
+/* ================= SAFE FLOW (NO BREAKS) ================= */
 
-/* ===== MOVIE START ===== */
-
-function startMovie(){
-
-document.getElementById("landing").classList.add("fadeOut");
-
-setTimeout(()=>{
+async function start(){
 
 document.getElementById("landing").style.display="none";
 document.getElementById("main").style.display="block";
@@ -380,70 +298,43 @@ const music=document.getElementById("music");
 music.volume=0.6;
 music.play().catch(()=>{});
 
-/* SCENE FLOW */
+/* guaranteed order */
 
-typeText("introLine",introLine,110,()=>{
+await type("introLine",introLine);
+await type("mainTitle",mainTitle);
+await type("message",mainText);
 
-typeText("mainTitle",mainTitle,110,()=>{
+document.querySelector(".photo").classList.add("show");
 
-typeText("message",mainText,110,()=>{
-
-document.getElementById("photo").classList.add("show");
-
-/* scene 2 */
-setTimeout(()=>{
-
-typeText("videoTitle",videoTitle,110,()=>{
-
-document.getElementById("video").classList.add("show");
-
-});
-
-},1200);
-
-});
-
-});
-
-});
-
-},1200);
+await type("videoTitle",videoTitle);
 
 }
 
-/* ===== GIFT + POPUP ===== */
+/* ================= GIFT ================= */
 
 function revealGift(){
 
 const g=document.getElementById("gift");
 g.style.display="block";
 
-typeText("gift",giftText,110,()=>{
+type("gift",giftText).then(()=>{
 
 setTimeout(()=>{
-
 document.getElementById("popup").classList.add("show");
-
-},1200);
+},1000);
 
 });
 
 }
 
-/* ===== HEARTS ===== */
+/* ================= LANDING SAFE LOAD ================= */
 
-setInterval(()=>{
+window.onload=function(){
 
-const h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=(4+Math.random()*6)+"s";
-document.body.appendChild(h);
+type("landingTitle",landingTitle);
+type("landingText",landingText);
 
-setTimeout(()=>h.remove(),9000);
-
-},500);
+};
 
 </script>
 
