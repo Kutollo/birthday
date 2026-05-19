@@ -26,6 +26,7 @@ overflow-x:hidden;
 }
 
 /* BACKGROUND VIDEO */
+
 #bgVideo{
 position:fixed;
 top:0;
@@ -37,6 +38,7 @@ z-index:-2;
 }
 
 /* overlay */
+
 .overlay{
 position:fixed;
 top:0;
@@ -48,6 +50,7 @@ z-index:-1;
 }
 
 /* LANDING */
+
 #landing{
 height:100vh;
 display:flex;
@@ -62,10 +65,11 @@ transition:1s ease;
 #landing.hide{
 opacity:0;
 transform:scale(1.1);
-filter:blur(8px);
+filter:blur(10px);
 }
 
 /* MAIN */
+
 #main{
 display:none;
 max-width:900px;
@@ -74,14 +78,15 @@ padding:60px 20px;
 }
 
 /* GLASS */
+
 .glass{
 background:rgba(255,255,255,0.07);
-backdrop-filter:blur(22px);
+backdrop-filter:blur(25px);
 border-radius:25px;
 padding:50px;
 margin-bottom:40px;
 border:1px solid rgba(255,255,255,0.18);
-box-shadow:0 10px 50px rgba(0,0,0,0.5);
+box-shadow:0 10px 60px rgba(0,0,0,0.6);
 
 opacity:0;
 transform:translateY(40px) scale(0.95);
@@ -95,7 +100,8 @@ transform:translateY(0) scale(1);
 filter:blur(0);
 }
 
-/* TITLES */
+/* TITLE */
+
 .title{
 font-family:'Dancing Script';
 font-size:30px;
@@ -104,6 +110,7 @@ margin-bottom:25px;
 }
 
 /* INTRO CENTER */
+
 #introLine{
 text-align:center;
 margin-bottom:20px;
@@ -112,6 +119,7 @@ opacity:0.9;
 }
 
 /* MESSAGE */
+
 .message{
 white-space:pre-line;
 text-align:justify;
@@ -121,6 +129,7 @@ min-height:250px;
 }
 
 /* MEDIA */
+
 .photo,
 .video{
 width:100%;
@@ -130,7 +139,7 @@ margin-top:25px;
 opacity:0;
 transform:scale(1.05);
 filter:blur(10px);
-transition:1.2s ease;
+transition:1.2s;
 }
 
 .photo.show,
@@ -141,6 +150,7 @@ filter:blur(0);
 }
 
 /* BUTTON */
+
 button{
 margin-top:30px;
 padding:15px 55px;
@@ -158,18 +168,17 @@ transform:scale(1.08);
 }
 
 /* POPUP */
+
 #popup{
 position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(15px);
-padding:35px 45px;
-border-radius:25px;
-font-size:28px;
-font-family:'Dancing Script';
-text-align:center;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.88);
+display:flex;
+align-items:center;
+justify-content:center;
 opacity:0;
 pointer-events:none;
 transition:1s;
@@ -181,7 +190,25 @@ opacity:1;
 pointer-events:auto;
 }
 
+.popup-box{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+padding:40px 50px;
+border-radius:25px;
+text-align:center;
+font-family:'Dancing Script';
+font-size:32px;
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+100%{transform:translateY(0)}
+}
+
 /* HEARTS */
+
 .heart{
 position:fixed;
 bottom:-20px;
@@ -212,6 +239,13 @@ animation:floatUp linear infinite;
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
+<!-- POPUP -->
+<div id="popup">
+<div class="popup-box">
+Please close your eyes 🙈 ❤️
+</div>
+</div>
+
 <!-- LANDING -->
 <section id="landing">
 
@@ -225,7 +259,7 @@ animation:floatUp linear infinite;
 <!-- MAIN -->
 <section id="main">
 
-<div class="glass">
+<div class="glass" id="section1">
 
 <p id="introLine"></p>
 
@@ -237,19 +271,19 @@ animation:floatUp linear infinite;
 
 </div>
 
-<div class="glass">
+<div class="glass" id="section2">
 
-<h1 class="title">It's Your Turn Ke Mfazi</h1>
+<h1 class="title" id="videoTitle"></h1>
 
-<video id="video" class="video" muted loop playsinline>
+<video muted loop playsinline class="video" id="video">
 <source src="luyanda.mp4" type="video/mp4">
 </video>
 
 </div>
 
-<div class="glass">
+<div class="glass" id="section3">
 
-<h1 class="title">Your Gift</h1>
+<h1 class="title" id="giftTitle"></h1>
 
 <button onclick="revealGift()">Reveal Gift Message</button>
 
@@ -259,25 +293,26 @@ animation:floatUp linear infinite;
 
 </section>
 
-<!-- POPUP -->
-<div id="popup">Please close your eyes 🙈</div>
-
 <script>
 
-/* FORCE CINEMATIC VIDEO PLAY */
+/* FORCE VIDEO PLAY FIX */
+
 window.addEventListener("load",()=>{
 
 const bg=document.getElementById("bgVideo");
 
 bg.play().catch(()=>{
+
 document.body.addEventListener("click",()=>{
 bg.play();
 },{once:true});
+
 });
 
 });
 
 /* TYPE FUNCTION */
+
 function typeText(id,text,speed=110,callback){
 
 let i=0;
@@ -299,7 +334,8 @@ if(callback)callback();
 typing();
 }
 
-/* TEXT */
+/* TEXT (UNCHANGED) */
+
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
 const landingText=`I made something for you…
@@ -330,6 +366,8 @@ Enjoy your day. I Love You🩵`;
 
 const videoTitle="It's Your Turn Ke Mfazi";
 
+const giftTitle="Your Gift";
+
 const giftText=`I got you a small gift
 
 I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
@@ -340,20 +378,20 @@ I hope you wear it often. Not just as something pretty, but as a reminder that y
 
 I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
 
-/* LANDING TYPE */
+/* LANDING */
+
 window.onload=function(){
 
 typeText("landingTitle",landingTitle,110,()=>{
 
-setTimeout(()=>{
-typeText("landingText",landingText,110);
-},800);
+setTimeout(()=>typeText("landingText",landingText,110),800);
 
 });
 
 };
 
 /* ENTER */
+
 function enterSite(){
 
 document.getElementById("landing").classList.add("hide");
@@ -374,7 +412,10 @@ startFlow();
 }
 
 /* FLOW */
+
 function startFlow(){
+
+document.getElementById("section1").classList.add("show");
 
 typeText("introLine",introLine,110,()=>{
 
@@ -384,10 +425,25 @@ typeText("message",mainText,110,()=>{
 
 document.getElementById("photo").classList.add("show");
 
-/* video fix */
-const vid=document.getElementById("video");
-vid.classList.add("show");
-vid.play().catch(()=>{});
+setTimeout(()=>{
+
+document.getElementById("section2").classList.add("show");
+
+typeText("videoTitle",videoTitle,110,()=>{
+
+document.getElementById("video").classList.add("show");
+
+});
+
+},800);
+
+setTimeout(()=>{
+
+document.getElementById("section3").classList.add("show");
+
+typeText("giftTitle",giftTitle,110);
+
+},1600);
 
 });
 
@@ -397,26 +453,51 @@ vid.play().catch(()=>{});
 
 }
 
-/* GIFT */
+/* GIFT + POPUP DELAY */
+
 function revealGift(){
 
 const g=document.getElementById("gift");
+
 g.style.display="block";
 
 typeText("gift",giftText,110,()=>{
 
 setTimeout(()=>{
-document.getElementById("popup").classList.add("show");
-},1200);
+
+showPopup();
+
+},3000);
 
 });
 
 }
 
+/* POPUP + VIBRATION + AUTO HIDE */
+
+function showPopup(){
+
+const popup=document.getElementById("popup");
+popup.classList.add("show");
+
+/* vibration */
+if(navigator.vibrate){
+navigator.vibrate([200,100,200,100,500]);
+}
+
+/* auto hide after 10 seconds */
+setTimeout(()=>{
+popup.classList.remove("show");
+},10000);
+
+}
+
 /* HEARTS */
+
 setInterval(()=>{
 
 const heart=document.createElement("div");
+
 heart.className="heart";
 heart.innerHTML="❤️";
 heart.style.left=Math.random()*100+"vw";
