@@ -12,13 +12,7 @@
 
 <style>
 
-/* BACKGROUND */
-
-body{
-background:black;
-color:white;
-overflow-x:hidden;
-}
+/* BACKGROUND VIDEO */
 
 #bgVideo{
 position:fixed;
@@ -56,6 +50,12 @@ box-sizing:border-box;
 font-family:'Inter',sans-serif;
 }
 
+body{
+background:black;
+color:white;
+overflow-x:hidden;
+}
+
 /* LANDING */
 
 #landing{
@@ -66,7 +66,6 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
-opacity:1;
 transition:1.2s ease;
 }
 
@@ -99,7 +98,7 @@ margin:auto;
 padding:60px 20px;
 }
 
-/* CINEMATIC SECTIONS */
+/* GLASS */
 
 .glass{
 background:rgba(255,255,255,0.07);
@@ -177,6 +176,32 @@ button:hover{
 transform:scale(1.08);
 }
 
+/* POPUP */
+
+#popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+font-size:35px;
+text-align:center;
+opacity:0;
+pointer-events:none;
+transition:1s;
+z-index:1000;
+}
+
+#popup.show{
+opacity:1;
+pointer-events:auto;
+}
+
 /* HEARTS */
 
 .heart{
@@ -198,7 +223,9 @@ animation:floatUp linear infinite;
 
 <body>
 
-<video autoplay muted loop id="bgVideo" playsinline>
+<!-- BACKGROUND VIDEO -->
+
+<video autoplay muted loop playsinline preload="auto" id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
 
@@ -208,12 +235,17 @@ animation:floatUp linear infinite;
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
+<!-- POPUP -->
+
+<div id="popup">
+<div>Please close your eyes 🙈</div>
+</div>
+
 <!-- LANDING -->
 
 <section id="landing">
 
 <h1 id="landingTitle"></h1>
-
 <p id="landingText"></p>
 
 <button onclick="enterSite()">Open</button>
@@ -259,6 +291,13 @@ animation:floatUp linear infinite;
 </section>
 
 <script>
+
+/* FORCE VIDEO PLAY */
+
+window.addEventListener("load",()=>{
+const bg=document.getElementById("bgVideo");
+bg.play().catch(()=>{});
+});
 
 /* TYPE FUNCTION */
 
@@ -340,21 +379,19 @@ I hope you wear it often. Not just as something pretty, but as a reminder that y
 
 I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
 
-/* PAGE LOAD (FIXED LANDING TEXT) */
+/* LANDING LOAD */
 
 window.onload=function(){
 
 typeText("landingTitle",landingTitle,40);
 
 setTimeout(()=>{
-
 typeText("landingText",landingText,55);
-
 },1000);
 
 }
 
-/* ENTER SITE */
+/* ENTER */
 
 function enterSite(){
 
@@ -366,9 +403,7 @@ document.getElementById("landing").style.display="none";
 document.getElementById("main").style.display="block";
 
 const music=document.getElementById("music");
-
 music.volume=0.6;
-
 music.play().catch(()=>{});
 
 showSection("section1");
@@ -411,7 +446,7 @@ typeText("giftTitle",giftTitle,55);
 
 }
 
-/* GIFT MESSAGE */
+/* GIFT */
 
 function revealGift(){
 
@@ -419,7 +454,15 @@ const g=document.getElementById("gift");
 
 g.style.display="block";
 
-typeText("gift",giftText,30);
+typeText("gift",giftText,30,()=>{
+
+setTimeout(()=>{
+
+document.getElementById("popup").classList.add("show");
+
+},1200);
+
+});
 
 }
 
@@ -446,5 +489,4 @@ setTimeout(()=>heart.remove(),9000);
 </script>
 
 </body>
-
 </html>
