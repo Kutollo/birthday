@@ -12,6 +12,19 @@
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:black;
+color:white;
+overflow-x:hidden;
+}
+
 /* BACKGROUND VIDEO */
 
 #bgVideo{
@@ -39,21 +52,6 @@ width:100%;
 height:100%;
 background:rgba(0,0,0,0.55);
 z-index:-1;
-}
-
-/* GLOBAL */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
-
-body{
-background:black;
-color:white;
-overflow-x:hidden;
 }
 
 /* LANDING */
@@ -121,8 +119,6 @@ transform:translateY(0) scale(1);
 filter:blur(0);
 }
 
-/* TEXT */
-
 .title{
 font-family:'Dancing Script';
 font-size:30px;
@@ -184,7 +180,7 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.85);
+background:rgba(0,0,0,0.9);
 display:flex;
 align-items:center;
 justify-content:center;
@@ -200,6 +196,29 @@ z-index:1000;
 #popup.show{
 opacity:1;
 pointer-events:auto;
+}
+
+/* FINAL SCREEN */
+
+#finalScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+font-family:'Dancing Script';
+opacity:0;
+transition:3s;
+z-index:2000;
+}
+
+#finalScreen.show{
+opacity:1;
 }
 
 /* HEARTS */
@@ -223,8 +242,6 @@ animation:floatUp linear infinite;
 
 <body>
 
-<!-- BACKGROUND VIDEO -->
-
 <video autoplay muted loop playsinline preload="auto" id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
@@ -235,13 +252,13 @@ animation:floatUp linear infinite;
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
-<!-- POPUP -->
-
 <div id="popup">
 <div>Please close your eyes 🙈</div>
 </div>
 
-<!-- LANDING -->
+<div id="finalScreen">
+One last surprise is waiting for you ❤️
+</div>
 
 <section id="landing">
 
@@ -251,8 +268,6 @@ animation:floatUp linear infinite;
 <button onclick="enterSite()">Open</button>
 
 </section>
-
-<!-- MAIN -->
 
 <section id="main">
 
@@ -292,13 +307,6 @@ animation:floatUp linear infinite;
 
 <script>
 
-/* FORCE VIDEO PLAY */
-
-window.addEventListener("load",()=>{
-const bg=document.getElementById("bgVideo");
-bg.play().catch(()=>{});
-});
-
 /* TYPE FUNCTION */
 
 function typeText(id,text,speed,callback){
@@ -310,7 +318,6 @@ function typing(){
 if(i<text.length){
 
 document.getElementById(id).innerHTML+=text.charAt(i);
-
 i++;
 
 setTimeout(typing,speed);
@@ -330,12 +337,10 @@ typing();
 /* SHOW SECTION */
 
 function showSection(id){
-
 document.getElementById(id).classList.add("show");
-
 }
 
-/* TEXT CONTENT */
+/* TEXT */
 
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
@@ -383,11 +388,11 @@ I hope it will never leave your wrist, just like how you never really left my he
 
 window.onload=function(){
 
-typeText("landingTitle",landingTitle,40);
+typeText("landingTitle",landingTitle,100);
 
 setTimeout(()=>{
-typeText("landingText",landingText,55);
-},1000);
+typeText("landingText",landingText,100);
+},1200);
 
 }
 
@@ -408,11 +413,11 @@ music.play().catch(()=>{});
 
 showSection("section1");
 
-typeText("introLine",introLine,35,()=>{
+typeText("introLine",introLine,100,()=>{
 
-typeText("mainTitle",mainTitle,55,()=>{
+typeText("mainTitle",mainTitle,100,()=>{
 
-typeText("message",text,22,()=>{
+typeText("message",text,100,()=>{
 
 document.getElementById("photo").classList.add("show");
 
@@ -420,16 +425,14 @@ showSection("section2");
 
 setTimeout(()=>{
 
-typeText("videoTitle",videoTitle,55,()=>{
+typeText("videoTitle",videoTitle,100,()=>{
 
 document.getElementById("video").classList.add("show");
 
 showSection("section3");
 
 setTimeout(()=>{
-
-typeText("giftTitle",giftTitle,55);
-
+typeText("giftTitle",giftTitle,100);
 },800);
 
 });
@@ -451,14 +454,19 @@ typeText("giftTitle",giftTitle,55);
 function revealGift(){
 
 const g=document.getElementById("gift");
-
 g.style.display="block";
 
-typeText("gift",giftText,30,()=>{
+typeText("gift",giftText,100,()=>{
 
 setTimeout(()=>{
 
 document.getElementById("popup").classList.add("show");
+
+setTimeout(()=>{
+
+document.getElementById("finalScreen").classList.add("show");
+
+},3000);
 
 },1200);
 
@@ -473,11 +481,9 @@ setInterval(()=>{
 const heart=document.createElement("div");
 
 heart.className="heart";
-
 heart.innerHTML="❤️";
 
 heart.style.left=Math.random()*100+"vw";
-
 heart.style.animationDuration=(4+Math.random()*6)+"s";
 
 document.body.appendChild(heart);
