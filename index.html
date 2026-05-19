@@ -3,384 +3,72 @@
 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Luyanda ❤️</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<title>Luyanda ❤️</title>
 
 <style>
-
-/* ===== BASE ===== */
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
-
 body{
+margin:0;
 background:black;
 color:white;
-overflow-x:hidden;
-}
-
-/* ===== BACKGROUND VIDEO ===== */
-#bgVideo{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:cover;
-z-index:-2;
-}
-
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.55);
-z-index:-1;
-}
-
-/* ===== LANDING ===== */
-#landing{
-height:100vh;
+font-family:Arial;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
+height:100vh;
+flex-direction:column;
 text-align:center;
-padding:40px;
-transition:1s ease;
 }
 
-#landing.hide{
-opacity:0;
-transform:scale(1.05);
-filter:blur(10px);
-}
-
-/* ===== MAIN ===== */
-#main{
-display:none;
-max-width:900px;
-margin:auto;
-padding:60px 20px;
-}
-
-/* ===== CARDS ===== */
-.glass{
-background:rgba(255,255,255,0.07);
-backdrop-filter:blur(25px);
-border-radius:25px;
-padding:50px;
-margin-bottom:40px;
-border:1px solid rgba(255,255,255,0.18);
-box-shadow:0 10px 60px rgba(0,0,0,0.6);
-
-opacity:0;
-transform:translateY(40px);
-transition:1s ease;
-}
-
-.glass.show{
-opacity:1;
-transform:translateY(0);
-}
-
-/* ===== TEXT ===== */
-.title{
-font-family:'Dancing Script';
-font-size:30px;
-text-align:center;
-margin-bottom:25px;
-}
-
-.message{
-white-space:pre-line;
-text-align:justify;
-line-height:1.9;
-font-size:18px;
-min-height:200px;
-}
-
-/* ===== MEDIA ===== */
-.photo,
-.video{
-width:100%;
-border-radius:18px;
-margin-top:25px;
-opacity:0;
-transition:1s ease;
-}
-
-.photo.show,
-.video.show{
-opacity:1;
-}
-
-/* ===== BUTTON ===== */
 button{
-margin-top:30px;
-padding:15px 55px;
-border-radius:40px;
-border:none;
-background:white;
-color:black;
+padding:15px 40px;
 font-size:18px;
+border:none;
+border-radius:30px;
 cursor:pointer;
 }
 
-/* ===== POPUP ===== */
-#popup{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.85);
-display:flex;
-align-items:center;
-justify-content:center;
-opacity:0;
-pointer-events:none;
-transition:1s ease;
-z-index:9999;
+#text{
+margin-top:30px;
+font-size:20px;
+max-width:600px;
+white-space:pre-line;
 }
-
-#popup.show{
-opacity:1;
-pointer-events:auto;
-}
-
-.popup-card{
-background:rgba(255,255,255,0.08);
-padding:40px;
-border-radius:20px;
-text-align:center;
-font-family:'Dancing Script';
-font-size:24px;
-}
-
-/* ===== HEARTS ===== */
-.heart{
-position:fixed;
-bottom:-20px;
-font-size:18px;
-opacity:0.4;
-animation:floatUp linear infinite;
-}
-
-@keyframes floatUp{
-0%{transform:translateY(0);}
-100%{transform:translateY(-120vh);}
-}
-
 </style>
+
 </head>
 
 <body>
 
-<!-- BACKGROUND -->
-<video autoplay muted loop playsinline id="bgVideo">
-<source src="cinematic.mp4" type="video/mp4">
-</video>
+<button onclick="start()">Open</button>
 
-<div class="overlay"></div>
-
-<audio id="music" loop>
-<source src="bg.mp3" type="audio/mp3">
-</audio>
-
-<!-- LANDING -->
-<section id="landing">
-
-<h1 id="landingTitle"></h1>
-<p id="landingText"></p>
-
-<button onclick="enterSite()">Open</button>
-
-</section>
-
-<!-- MAIN -->
-<section id="main">
-
-<div class="glass">
-<p id="introLine"></p>
-
-<h1 class="title" id="mainTitle"></h1>
-
-<p class="message" id="message"></p>
-
-<img src="IMG_2034.jpeg" class="photo" id="photo">
-</div>
-
-<div class="glass">
-<h1 class="title" id="videoTitle"></h1>
-
-<video muted loop playsinline class="video" id="video">
-<source src="luyanda.mp4" type="video/mp4">
-</video>
-</div>
-
-<div class="glass">
-<h1 class="title" id="giftTitle"></h1>
-
-<button onclick="revealGift()">Reveal Gift Message</button>
-
-<p class="message" id="gift" style="display:none;"></p>
-</div>
-
-</section>
-
-<!-- POPUP -->
-<div id="popup">
-<div class="popup-card">Close your eyes for a moment… 🙈💗</div>
-</div>
+<div id="text"></div>
 
 <script>
 
-const SPEED = 110;
+const message = `I made this for you…
 
-/* ===== TYPE ENGINE (SAFE) ===== */
-function typeText(id,text,speed=SPEED,callback){
+because you matter more than I can explain.
 
-const el=document.getElementById(id);
-if(!el) return;
+Happy Birthday Luyanda ❤️`;
 
-el.innerHTML="";
+function typeText(text, el, speed=100){
 let i=0;
+el.innerHTML="";
 
 function loop(){
 if(i<text.length){
-el.innerHTML+=text.charAt(i);
+el.innerHTML += text.charAt(i);
 i++;
 setTimeout(loop,speed);
-}else if(callback){
-callback();
 }
 }
 
 loop();
 }
 
-/* ===== TEXT ===== */
-
-const landingTitle="Made with love, specially for you — Luyanda 💗";
-
-const landingText=`I made something for you…
-
-because you matter more than I ever say out loud.
-
-Take your time… and open it when you’re ready 💗`;
-
-const introLine="I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
-
-const mainTitle="Happy Birthday🩵my Luyanda🎈";
-
-const mainText=`Tomorrow will be important, because it’s the day someone really special came into the world.
-
-I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
-
-I’ve always had a soft spot for you as much as you have one for me… even with time and distance, that never really changed.
-
-And being able to talk again now feels like something I quietly appreciate more than I say out loud.
-
-I also want to say I’m sorry for how things went between us before.
-
-I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again.
-
-Enjoy your day. I Love You🩵`;
-
-const videoTitle="It's Your Turn Ke Mfazi";
-
-const giftTitle="Your Gift";
-
-const giftText=`I got you a small gift
-
-I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
-
-I hope you wear it often. You are valued, remembered, loved 🥹`;
-
-/* ===== ENTER SITE (FIXED) ===== */
-function enterSite(){
-
-document.getElementById("landing").classList.add("hide");
-
-setTimeout(()=>{
-
-document.getElementById("landing").style.display="none";
-document.getElementById("main").style.display="block";
-
-const music=document.getElementById("music");
-music.volume=0.6;
-music.play().catch(()=>{});
-
-/* FLOW */
-typeText("introLine",introLine,110,()=>{
-
-typeText("mainTitle",mainTitle,110,()=>{
-
-typeText("message",mainText,110,()=>{
-
-document.getElementById("photo").classList.add("show");
-
-setTimeout(()=>{
-
-typeText("videoTitle",videoTitle,110,()=>{
-
-document.getElementById("video").classList.add("show");
-
-setTimeout(()=>{
-
-typeText("giftTitle",giftTitle,110);
-
-},600);
-
-});
-
-},600);
-
-});
-
-});
-
-});
-
-},800);
-
+function start(){
+typeText(message, document.getElementById("text"));
 }
-
-/* ===== GIFT ===== */
-function revealGift(){
-
-const g=document.getElementById("gift");
-g.style.display="block";
-
-typeText("gift",giftText,110,()=>{
-
-setTimeout(()=>{
-document.getElementById("popup").classList.add("show");
-},900);
-
-});
-
-}
-
-/* ===== HEARTS ===== */
-setInterval(()=>{
-
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(4+Math.random()*6)+"s";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),9000);
-
-},500);
 
 </script>
 
