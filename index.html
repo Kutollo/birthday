@@ -12,6 +12,8 @@
 
 <style>
 
+/* ===== GLOBAL ===== */
+
 *{
 margin:0;
 padding:0;
@@ -25,7 +27,7 @@ color:white;
 overflow-x:hidden;
 }
 
-/* BACKGROUND */
+/* ===== CINEMATIC BACKGROUND ===== */
 
 #bgVideo{
 position:fixed;
@@ -34,6 +36,14 @@ width:100%;
 height:100%;
 object-fit:cover;
 z-index:-2;
+transform:scale(1.15);
+filter:brightness(0.7);
+animation:zoom 25s ease-in-out infinite alternate;
+}
+
+@keyframes zoom{
+from{transform:scale(1.15);}
+to{transform:scale(1.25);}
 }
 
 .overlay{
@@ -43,7 +53,7 @@ background:rgba(0,0,0,0.55);
 z-index:-1;
 }
 
-/* LANDING */
+/* ===== LANDING (MOVIE INTRO) ===== */
 
 #landing{
 height:100vh;
@@ -53,13 +63,22 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:40px;
+transition:1.5s ease;
 }
 
+#landing.fadeOut{
+opacity:0;
+transform:scale(1.1);
+filter:blur(20px);
+}
+
+/* cinematic title glow */
 #landing h1{
 font-family:'Dancing Script';
 font-size:60px;
 margin-bottom:20px;
-min-height:70px;
+text-shadow:0 0 20px rgba(255,255,255,0.3);
+min-height:80px;
 }
 
 #landing p{
@@ -67,10 +86,9 @@ font-size:18px;
 opacity:0.9;
 max-width:600px;
 min-height:80px;
-text-align:center;
 }
 
-/* MAIN */
+/* ===== MAIN ===== */
 
 #main{
 display:none;
@@ -79,30 +97,33 @@ margin:auto;
 padding:60px 20px;
 }
 
-/* GLASS */
+/* ===== SCENES (MOVIE CHAPTERS) ===== */
 
 .glass{
-background:rgba(255,255,255,0.07);
-backdrop-filter:blur(20px);
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(30px);
 border-radius:25px;
 padding:50px;
 margin-bottom:40px;
-border:1px solid rgba(255,255,255,0.18);
+border:1px solid rgba(255,255,255,0.15);
+
 opacity:0;
-transform:translateY(30px);
-transition:1s ease;
+transform:translateY(50px) scale(0.96);
+filter:blur(20px);
+transition:1.5s ease;
 }
 
 .glass.show{
 opacity:1;
-transform:translateY(0);
+transform:translateY(0) scale(1);
+filter:blur(0);
 }
 
-/* TEXT */
+/* ===== TEXT ===== */
 
 .title{
 font-family:'Dancing Script';
-font-size:30px;
+font-size:32px;
 text-align:center;
 margin-bottom:25px;
 }
@@ -115,7 +136,7 @@ font-size:18px;
 min-height:250px;
 }
 
-/* MEDIA */
+/* ===== MEDIA ===== */
 
 .photo,
 .video{
@@ -123,28 +144,37 @@ width:100%;
 border-radius:18px;
 margin-top:25px;
 opacity:0;
-transition:1s ease;
+transform:scale(1.08);
+filter:blur(15px);
+transition:1.5s ease;
 }
 
 .photo.show,
 .video.show{
 opacity:1;
+transform:scale(1);
+filter:blur(0);
 }
 
-/* BUTTON */
+/* ===== BUTTON ===== */
 
 button{
 margin-top:25px;
-padding:15px 50px;
+padding:15px 55px;
 border-radius:40px;
 border:none;
 background:white;
 color:black;
 font-size:18px;
 cursor:pointer;
+transition:0.3s;
 }
 
-/* POPUP */
+button:hover{
+transform:scale(1.05);
+}
+
+/* ===== ROMANTIC POPUP ===== */
 
 #popup{
 position:fixed;
@@ -153,9 +183,10 @@ display:flex;
 align-items:center;
 justify-content:center;
 background:rgba(0,0,0,0.85);
+backdrop-filter:blur(10px);
 opacity:0;
 pointer-events:none;
-transition:1s;
+transition:1.2s ease;
 z-index:9999;
 }
 
@@ -165,15 +196,23 @@ pointer-events:auto;
 }
 
 .popup-card{
-background:rgba(255,255,255,0.1);
-padding:35px 45px;
-border-radius:20px;
-font-family:'Dancing Script';
-font-size:22px;
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.2);
+padding:40px 50px;
+border-radius:25px;
 text-align:center;
+font-family:'Dancing Script';
+font-size:24px;
+box-shadow:0 0 40px rgba(255,255,255,0.1);
+animation:pop 1s ease;
 }
 
-/* HEARTS */
+@keyframes pop{
+from{transform:scale(0.7); opacity:0;}
+to{transform:scale(1); opacity:1;}
+}
+
+/* ===== HEARTS ===== */
 
 .heart{
 position:fixed;
@@ -194,7 +233,7 @@ animation:floatUp linear infinite;
 
 <body>
 
-<!-- BACKGROUND -->
+<!-- CINEMATIC BACKGROUND -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
@@ -205,25 +244,25 @@ animation:floatUp linear infinite;
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
-<!-- POPUP -->
+<!-- ROMANTIC POPUP -->
 <div id="popup">
-<div class="popup-card">Please close your eyes 🙈💗</div>
+<div class="popup-card">Close your eyes for a moment… 🙈💗<br>this part is just for your heart</div>
 </div>
 
-<!-- LANDING -->
+<!-- LANDING (MOVIE INTRO SCENE 1) -->
 <section id="landing">
 
 <h1 id="landingTitle"></h1>
 <p id="landingText"></p>
 
-<button onclick="enterSite()">Open</button>
+<button onclick="startMovie()">Open</button>
 
 </section>
 
-<!-- MAIN -->
+<!-- MAIN (MOVIE SCENES) -->
 <section id="main">
 
-<div class="glass">
+<div class="glass" id="scene1">
 
 <p id="introLine"></p>
 
@@ -235,7 +274,7 @@ animation:floatUp linear infinite;
 
 </div>
 
-<div class="glass">
+<div class="glass" id="scene2">
 
 <h1 class="title" id="videoTitle"></h1>
 
@@ -245,7 +284,7 @@ animation:floatUp linear infinite;
 
 </div>
 
-<div class="glass">
+<div class="glass" id="scene3">
 
 <h1 class="title">Your Gift</h1>
 
@@ -259,9 +298,9 @@ animation:floatUp linear infinite;
 
 <script>
 
-/* ===== SAFE TYPE FUNCTION ===== */
+/* ===== TYPE MACHINE ===== */
 
-function typeText(id,text,speed=110,callback){
+function typeText(id,text,speed=110,cb){
 
 const el=document.getElementById(id);
 if(!el) return;
@@ -269,22 +308,22 @@ if(!el) return;
 let i=0;
 el.innerHTML="";
 
-function typing(){
+function run(){
 
 if(i<text.length){
 el.innerHTML+=text.charAt(i);
 i++;
-setTimeout(typing,speed);
-}else if(callback){
-callback();
+setTimeout(run,speed);
+}else if(cb){
+cb();
 }
 
 }
 
-typing();
+run();
 }
 
-/* ===== TEXT ===== */
+/* ===== YOUR ORIGINAL TEXT (UNCHANGED) ===== */
 
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
@@ -294,7 +333,7 @@ because you matter more than I ever say out loud.
 
 Take your time… and open it when you’re ready 💗`;
 
-const introLine="I wanted to be the first to celebrate you… before anyone else gets the chance.";
+const introLine="I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
 
 const mainTitle="Happy Birthday🩵my Luyanda🎈";
 
@@ -302,29 +341,37 @@ const mainText=`Tomorrow will be important, because it’s the day someone reall
 
 I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
 
-I’ve always had a soft spot for you as much as you have one for me…
+I’ve always had a soft spot for you as much as you have one for me… even with time and distance, that never really changed.
 
 And being able to talk again now feels like something I quietly appreciate more than I say out loud.
 
 I also want to say I’m sorry for how things went between us before.
 
-I don’t want to dwell on it today, but I do regret how I handled things.
+I don’t want to dwell on it today, but I do regret how I handled things, and I’m grateful you gave me another chance to be in your life again and we found our way back to talking again. I know I'm the last person to be talking about promises but I promise to never fumble the chance you gave us. Hurting you again is something I don't wanna see happening.
 
 More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.
 
 Enjoy your day. I Love You🩵`;
 
+const videoTitle="It's Your Turn Ke Mfazi";
+
 const giftText=`I got you a small gift
 
-I chose it because it represents time…
+I chose it because it represents time… and how some things don’t really disappear, they just pause and continue in different ways.
 
-I hope you wear it often.
+Every moment is something I wanted you to feel held in, even when I’m not there. Not rushed, not forgotten, not replaced… just gently remembered in the way that stays.
 
-Not just as something pretty, but as a reminder that you are loved 🥹`;
+I hope you wear it often. Not just as something pretty, but as a reminder that you are valued, remembered, loved and genuinely appreciated.
 
-/* ===== FLOW (FIXED CLEAN) ===== */
+I hope it will never leave your wrist, just like how you never really left my heart 🥹`;
 
-function enterSite(){
+/* ===== MOVIE START ===== */
+
+function startMovie(){
+
+document.getElementById("landing").classList.add("fadeOut");
+
+setTimeout(()=>{
 
 document.getElementById("landing").style.display="none";
 document.getElementById("main").style.display="block";
@@ -333,7 +380,7 @@ const music=document.getElementById("music");
 music.volume=0.6;
 music.play().catch(()=>{});
 
-/* FLOW START */
+/* SCENE FLOW */
 
 typeText("introLine",introLine,110,()=>{
 
@@ -343,17 +390,24 @@ typeText("message",mainText,110,()=>{
 
 document.getElementById("photo").classList.add("show");
 
-typeText("videoTitle", "It's Your Turn Ke Mfazi",110,()=>{
+/* scene 2 */
+setTimeout(()=>{
+
+typeText("videoTitle",videoTitle,110,()=>{
 
 document.getElementById("video").classList.add("show");
 
 });
 
-});
+},1200);
 
 });
 
 });
+
+});
+
+},1200);
 
 }
 
@@ -380,14 +434,14 @@ document.getElementById("popup").classList.add("show");
 
 setInterval(()=>{
 
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(4+Math.random()*6)+"s";
-document.body.appendChild(heart);
+const h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(4+Math.random()*6)+"s";
+document.body.appendChild(h);
 
-setTimeout(()=>heart.remove(),9000);
+setTimeout(()=>h.remove(),9000);
 
 },500);
 
