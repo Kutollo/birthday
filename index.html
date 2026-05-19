@@ -118,14 +118,22 @@ line-height:1.9;
 opacity:0.9;
 }
 
-/* MESSAGE */
+/* =========================
+   MOBILE FIX (IMPORTANT)
+========================= */
 
 .message{
 white-space:pre-line;
 text-align:justify;
 line-height:1.9;
 font-size:18px;
-min-height:250px;
+
+/* FIX HEIGHT FOR MOBILE */
+max-height:55vh;
+overflow-y:auto;
+scroll-behavior:smooth;
+
+padding-right:5px;
 }
 
 /* MEDIA */
@@ -310,7 +318,7 @@ bg.play();
 
 });
 
-/* TYPE FUNCTION + AUTO SCROLL */
+/* TYPE FUNCTION (MOBILE FIXED) */
 
 function typeText(id,text,speed=110,callback){
 
@@ -325,11 +333,8 @@ if(i<text.length){
 el.innerHTML+=text.charAt(i);
 i++;
 
-/* AUTO SCROLL */
-window.scrollTo({
-top: document.body.scrollHeight,
-behavior: "smooth"
-});
+/* ONLY SCROLL INSIDE BOX */
+el.scrollTop = el.scrollHeight;
 
 setTimeout(typing,speed);
 
@@ -344,7 +349,7 @@ if(callback)callback();
 typing();
 }
 
-/* TEXT */
+/* TEXT (UNCHANGED) */
 
 const landingTitle="Made with love, specially for you — Luyanda 💗";
 
@@ -435,7 +440,7 @@ typeText("message",mainText,110,()=>{
 
 document.getElementById("photo").classList.add("show");
 
-/* VIDEO FIX */
+/* VIDEO FIX (MOBILE SAFE) */
 setTimeout(()=>{
 
 document.getElementById("section2").classList.add("show");
@@ -447,19 +452,21 @@ vid.muted=true;
 vid.playsInline=true;
 vid.loop=true;
 
-const playVideo=()=>{ vid.play().catch(()=>{}); };
+const playVideo=()=>{
+vid.play().catch(()=>{});
+};
 
 playVideo();
 
-/* fallback */
+/* fallback unlock */
 document.body.addEventListener("click",playVideo,{once:true});
 
-/* extra force */
+/* extra force after render */
 setTimeout(playVideo,600);
 
 },800);
 
-/* GIFT SECTION */
+/* GIFT */
 setTimeout(()=>{
 
 document.getElementById("section3").classList.add("show");
@@ -476,7 +483,7 @@ typeText("giftTitle",giftTitle,110);
 
 }
 
-/* GIFT */
+/* GIFT + POPUP */
 
 function revealGift(){
 
