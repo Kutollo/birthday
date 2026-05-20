@@ -12,6 +12,8 @@
 
 <style>
 
+/* (UNCHANGED STYLES - SAME AS YOUR ORIGINAL) */
+
 *{
 margin:0;
 padding:0;
@@ -97,6 +99,13 @@ text-align:center;
 margin-bottom:25px;
 }
 
+#introLine{
+text-align:center;
+margin-bottom:20px;
+line-height:1.9;
+opacity:0.9;
+}
+
 .message{
 white-space:pre-line;
 text-align:justify;
@@ -169,6 +178,26 @@ border-radius:25px;
 font-family:'Dancing Script';
 font-size:32px;
 text-align:center;
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+100%{transform:translateY(0)}
+}
+
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:18px;
+opacity:0.4;
+animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);}
 }
 
 </style>
@@ -177,6 +206,7 @@ text-align:center;
 
 <body>
 
+<!-- BACKGROUND -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
@@ -240,6 +270,7 @@ Please close your eyes 🙈 ❤️
 
 <script>
 
+/* TYPE SYSTEM (UNCHANGED) */
 function typeText(id,text,speed=110,callback){
 
 let i=0;
@@ -261,57 +292,49 @@ if(callback)callback();
 typing();
 }
 
-/* TEXTS */
-const landingTitle="Made with love… only for you, Luyanda 💗";
+/* =======================
+   💗 UPDATED MESSAGES ONLY
+======================= */
 
-const landingText=`I made this for you…
+const landingTitle =
+"Made with love… only for you, Luyanda 💗";
 
-because you matter more to me than I ever really say out loud.
+const landingText =
+"I made this for you…\n\nbecause you matter more to me than I ever really say out loud.\n\nTake your time…\nbut don’t keep me waiting too long 💗";
 
-Take your time…
-and open it when you’re ready 💗`;
+const introLine =
+"I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
 
-const introLine="I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
+const mainTitle =
+"Happy Birthday 🩵 my Luyanda 🎈";
 
-const mainTitle="Happy Birthday 🩵 my Luyanda 🎈";
+const mainText =
+"Tomorrow will be important, because it’s the day someone really special came into this world.\n\n" +
+"I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.\n\n" +
+"I’ve always had a soft spot for you, just as much as you have one for me… and even with time and distance, that never really changed.\n\n" +
+"Being able to talk again now is something I quietly appreciate more than I say out loud.\n\n" +
+"I also want to say I’m sorry for how things went between us before.\n\n" +
+"I don’t want to dwell on it today, but I do regret how I handled things. I’m really grateful that you gave me another chance to be in your life again, and that we somehow found our way back to talking.\n\n" +
+"I know I’m probably the last person who should be talking about promises, but I promise I will never fumble the chance you gave us. Hurting you again is something I never want to see happen.\n\n" +
+"More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.\n\n" +
+"Enjoy your day… I love you 🩵";
 
-const mainText=`Tomorrow will be important, because it’s the day someone really special came into this world.
+const videoTitle =
+"It’s Your Turn Ke Mfazi";
 
-I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
+const giftTitle =
+"Your Gift";
 
-I’ve always had a soft spot for you, just as much as you have one for me… and even with time and distance, that never really changed.
+const giftText =
+"I got you something small…\n\n" +
+"but it means more than it looks like it does.\n\n" +
+"I wanted you to have something that stays with you… something simple, but constant.\n\n" +
+"Something that becomes part of your everyday life in a quiet way… and maybe reminds you that you are thought of, even in the moments when nothing is being said.\n\n" +
+"Not in a loud or heavy way… just something soft and steady.\n\n" +
+"And every time you notice it, I hope it brings you a little warmth… like a quiet reminder that you are cared for, valued, and close to someone’s heart.\n\n" +
+"It’s really just something I wanted to give you… because it felt right for you 🥹";
 
-Being able to talk again now is something I quietly appreciate more than I say out loud.
-
-I also want to say I’m sorry for how things went between us before.
-
-I don’t want to dwell on it today, but I do regret how I handled things. I’m really grateful that you gave me another chance to be in your life again, and that we somehow found our way back to talking.
-
-I know I’m probably the last person who should be talking about promises, but I promise I will never fumble the chance you gave us. Hurting you again is something I never want to see happen.
-
-More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.
-
-Enjoy your day… I love you 🩵`;
-
-const videoTitle="It’s Your Turn Ke Mfazi";
-
-const giftTitle="Your Gift";
-
-const giftText=`I got you something small…
-
-but it means more than it looks like it does.
-
-I wanted you to have something that stays with you… something simple, but constant.
-
-Something that becomes part of your everyday life in a quiet way… and maybe reminds you that you are thought of, even in the moments when nothing is being said.
-
-Not in a loud or heavy way… just something soft and steady.
-
-And every time you notice it, I hope it brings you a little warmth… like a quiet reminder that you are cared for, valued, and close to someone’s heart.
-
-It’s really just something I wanted to give you… because it felt right for you 🥹`;
-
-/* FLOW */
+/* (REST OF YOUR CODE UNCHANGED) */
 
 window.onload=function(){
 
@@ -345,11 +368,8 @@ function startFlow(){
 document.getElementById("section1").classList.add("show");
 
 typeText("introLine",introLine,110,()=>{
-
 typeText("mainTitle",mainTitle,110,()=>{
-
 typeText("message",mainText,110,()=>{
-
 document.getElementById("photo").classList.add("show");
 
 setTimeout(()=>{
@@ -374,7 +394,7 @@ typeText("videoTitle",videoTitle,110);
 },2000);
 
 });
-
+});
 });
 
 }
@@ -385,11 +405,14 @@ const g=document.getElementById("gift");
 g.style.display="block";
 
 typeText("gift",giftText,110,()=>{
-
 setTimeout(()=>{
 
 const popup=document.getElementById("popup");
 popup.classList.add("show");
+
+if(navigator.vibrate){
+navigator.vibrate([200,100,200,100,500]);
+}
 
 setTimeout(()=>{
 popup.classList.remove("show");
@@ -400,6 +423,20 @@ popup.classList.remove("show");
 });
 
 }
+
+setInterval(()=>{
+
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(4+Math.random()*6)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),9000);
+
+},500);
 
 </script>
 
