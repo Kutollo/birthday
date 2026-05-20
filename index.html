@@ -97,13 +97,6 @@ text-align:center;
 margin-bottom:25px;
 }
 
-#introLine{
-text-align:center;
-margin-bottom:20px;
-line-height:1.9;
-opacity:0.9;
-}
-
 .message{
 white-space:pre-line;
 text-align:justify;
@@ -176,26 +169,6 @@ border-radius:25px;
 font-family:'Dancing Script';
 font-size:32px;
 text-align:center;
-animation:float 3s ease-in-out infinite;
-}
-
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
-100%{transform:translateY(0)}
-}
-
-.heart{
-position:fixed;
-bottom:-20px;
-font-size:18px;
-opacity:0.4;
-animation:floatUp linear infinite;
-}
-
-@keyframes floatUp{
-0%{transform:translateY(0);}
-100%{transform:translateY(-120vh);}
 }
 
 </style>
@@ -204,7 +177,6 @@ animation:floatUp linear infinite;
 
 <body>
 
-<!-- BACKGROUND -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
@@ -268,7 +240,6 @@ Please close your eyes 🙈 ❤️
 
 <script>
 
-/* TYPE SYSTEM */
 function typeText(id,text,speed=110,callback){
 
 let i=0;
@@ -290,78 +261,65 @@ if(callback)callback();
 typing();
 }
 
-/* TEXT (CLINGY ROMANTIC VERSION) */
-
+/* TEXTS */
 const landingTitle="Made with love… only for you, Luyanda 💗";
 
 const landingText=`I made this for you…
 
-and honestly, I don’t even know how to explain how much space you take up in my heart.
+because you matter more to me than I ever really say out loud.
 
 Take your time…
-but don’t keep me waiting too long 💗`;
+and open it when you’re ready 💗`;
 
-const introLine="I just had to be the first one to reach you today… I couldn’t wait for anyone else.";
+const introLine="I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
 
 const mainTitle="Happy Birthday 🩵 my Luyanda 🎈";
 
-const mainText=`Tomorrow is your day… but to me, it already feels like something I’ve been waiting for.
+const mainText=`Tomorrow will be important, because it’s the day someone really special came into this world.
 
-Because you don’t just exist in my life… you stay in it. Quietly, constantly, in the background of everything I do.
+I hope you’re surrounded by love, laughter, and everything that makes your heart feel light.
 
-I hope today wraps itself around you softly… love, laughter, peace… all of it finding you without you even trying.
+I’ve always had a soft spot for you, just as much as you have one for me… and even with time and distance, that never really changed.
 
-And if I’m being honest… I don’t think you realise how much I still carry you with me.
+Being able to talk again now is something I quietly appreciate more than I say out loud.
 
-Even when we weren’t talking… even when there was silence… you were still there. Just in a different way.
+I also want to say I’m sorry for how things went between us before.
 
-And now that we’re talking again… I won’t lie… I like it a little too much. More than I admit out loud.
+I don’t want to dwell on it today, but I do regret how I handled things. I’m really grateful that you gave me another chance to be in your life again, and that we somehow found our way back to talking.
 
-I’m sorry for the past between us.
+I know I’m probably the last person who should be talking about promises, but I promise I will never fumble the chance you gave us. Hurting you again is something I never want to see happen.
 
-I don’t want it to define us… but I do regret it, and I’m really grateful you still let me be part of your life again.
+More than anything, I just want you to have a birthday that feels warm, special, and unforgettable.
 
-Because I don’t want to lose that again. I don’t want distance between us again. I don’t want that silence again.
+Enjoy your day… I love you 🩵`;
 
-I know I’m not perfect with promises… but I’m serious when I say I don’t want to mess this up. Not you. Not us.
-
-More than anything… I just want today to feel beautiful for you. Soft, warm, unforgettable… like it was made just for your heart.
-
-Happy birthday… I love you more than I know how to explain 🩵`;
-
-const videoTitle="It’s your turn… ke mfazi 🩵";
+const videoTitle="It’s Your Turn Ke Mfazi";
 
 const giftTitle="Your Gift";
 
 const giftText=`I got you something small…
 
-but don’t let “small” fool you… it carries a lot of me in it.
+but it means more than it looks like it does.
 
-I chose it because it represents time… and how time doesn’t really take people away from us when they matter. It just changes how close they feel.
+I wanted you to have something that stays with you… something simple, but constant.
 
-And you… you never really feel far.
+Something that becomes part of your everyday life in a quiet way… and maybe reminds you that you are thought of, even in the moments when nothing is being said.
 
-There’s always this quiet pull toward you in me… like no matter what happens, I still find my way back to you emotionally.
+Not in a loud or heavy way… just something soft and steady.
 
-Every moment behind this is me thinking of you… hoping you feel held, even when I’m not right there next to you. Not rushed. Not forgotten. Not replaced. Just… close.
+And every time you notice it, I hope it brings you a little warmth… like a quiet reminder that you are cared for, valued, and close to someone’s heart.
 
-I hope you wear it often… not just because it looks nice, but because it reminds you that you are genuinely loved, deeply valued, and constantly thought of.
+It’s really just something I wanted to give you… because it felt right for you 🥹`;
 
-And I really hope it never leaves your wrist… because I don’t think you ever really leave my heart either 🥹`;
-
-/* LANDING */
+/* FLOW */
 
 window.onload=function(){
 
 typeText("landingTitle",landingTitle,110,()=>{
-
 setTimeout(()=>typeText("landingText",landingText,110),800);
-
 });
 
 };
-
-/* ENTER */
 
 function enterSite(){
 
@@ -382,8 +340,6 @@ startFlow();
 
 }
 
-/* FLOW */
-
 function startFlow(){
 
 document.getElementById("section1").classList.add("show");
@@ -396,7 +352,6 @@ typeText("message",mainText,110,()=>{
 
 document.getElementById("photo").classList.add("show");
 
-/* 2s delay → video */
 setTimeout(()=>{
 
 document.getElementById("section2").classList.add("show");
@@ -408,7 +363,6 @@ vid.playsInline=true;
 vid.loop=true;
 vid.play().catch(()=>{});
 
-/* 2s delay → gift */
 setTimeout(()=>{
 
 document.getElementById("section3").classList.add("show");
@@ -423,11 +377,7 @@ typeText("videoTitle",videoTitle,110);
 
 });
 
-});
-
 }
-
-/* GIFT */
 
 function revealGift(){
 
@@ -441,10 +391,6 @@ setTimeout(()=>{
 const popup=document.getElementById("popup");
 popup.classList.add("show");
 
-if(navigator.vibrate){
-navigator.vibrate([200,100,200,100,500]);
-}
-
 setTimeout(()=>{
 popup.classList.remove("show");
 },10000);
@@ -454,22 +400,6 @@ popup.classList.remove("show");
 });
 
 }
-
-/* HEARTS */
-
-setInterval(()=>{
-
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(4+Math.random()*6)+"s";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),9000);
-
-},500);
 
 </script>
 
