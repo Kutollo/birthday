@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>For Luyanda ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
@@ -24,7 +21,7 @@ font-family:'Inter',sans-serif;
 body{
 background:black;
 color:white;
-overflow-x:hidden;
+overflow:hidden;
 cursor:none;
 }
 
@@ -32,8 +29,7 @@ cursor:none;
 
 #bgVideo{
 position:fixed;
-top:0;
-left:0;
+inset:0;
 width:100%;
 height:100%;
 object-fit:cover;
@@ -42,11 +38,8 @@ z-index:-2;
 
 .overlay{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.55);
+inset:0;
+background:rgba(0,0,0,0.65);
 z-index:-1;
 }
 
@@ -54,160 +47,105 @@ z-index:-1;
 
 #cursor{
 position:fixed;
-width:12px;
-height:12px;
+width:14px;
+height:14px;
 border-radius:50%;
 background:white;
+mix-blend-mode:difference;
 transform:translate(-50%,-50%);
 pointer-events:none;
 z-index:9999;
-box-shadow:0 0 20px rgba(255,255,255,0.8);
-mix-blend-mode:difference;
+box-shadow:0 0 25px rgba(255,255,255,0.8);
 }
 
-/* ================= LANDING ================= */
+/* ================= SCENES ================= */
 
-#landing{
-height:100vh;
+.scene{
+position:absolute;
+inset:0;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
-text-align:center;
-padding:40px;
-transition:1s ease;
-}
-
-#landing.hide{
-opacity:0;
-transform:scale(1.1);
-filter:blur(10px);
-}
-
-/* ================= MAIN ================= */
-
-#main{
-display:none;
-max-width:900px;
-margin:auto;
-padding:60px 20px;
-}
-
-/* ================= GLASS CARD ================= */
-
-.glass{
-background:rgba(255,255,255,0.07);
-backdrop-filter:blur(25px);
-border-radius:25px;
-padding:50px;
-margin-bottom:40px;
-border:1px solid rgba(255,255,255,0.18);
-box-shadow:0 10px 60px rgba(0,0,0,0.6);
-
-opacity:0;
-transform:translateY(40px) scale(0.95);
-filter:blur(10px);
-transition:1.2s ease;
-}
-
-/* ACTIVE GLOW */
-.glass.active-glow{
-background:rgba(255,255,255,0.15);
-box-shadow:0 0 30px rgba(255,255,255,0.25),
-0 0 70px rgba(255,255,255,0.15);
-transform:scale(1.02);
-}
-
-/* SHOW */
-.glass.show{
-opacity:1;
-transform:translateY(0) scale(1);
-filter:blur(0);
-}
-
-/* ================= TEXT ================= */
-
-.title{
-font-family:'Dancing Script';
-font-size:30px;
-text-align:center;
-margin-bottom:25px;
-}
-
-#introLine{
-text-align:center;
-margin-bottom:20px;
-line-height:1.9;
-opacity:0.9;
-}
-
-.message{
-white-space:pre-line;
-text-align:justify;
-line-height:1.9;
-font-size:18px;
-min-height:250px;
-}
-
-/* ================= MEDIA ================= */
-
-.photo,
-.video{
-width:100%;
-border-radius:18px;
-margin-top:25px;
-
 opacity:0;
 transform:scale(1.05);
 filter:blur(10px);
 transition:1.2s ease;
+padding:30px;
 }
 
-.photo.show,
-.video.show{
+.scene.active{
 opacity:1;
 transform:scale(1);
 filter:blur(0);
 }
 
+/* ================= CARD ================= */
+
+.card{
+max-width:800px;
+padding:40px;
+border-radius:25px;
+background:rgba(255,255,255,0.07);
+backdrop-filter:blur(25px);
+text-align:center;
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:0 0 60px rgba(0,0,0,0.6);
+transition:0.6s;
+}
+
+.card.glow{
+box-shadow:0 0 40px rgba(255,255,255,0.25);
+transform:scale(1.02);
+}
+
+/* ================= TEXT ================= */
+
+h1{
+font-family:'Dancing Script';
+font-size:42px;
+margin-bottom:20px;
+}
+
+p{
+white-space:pre-line;
+line-height:1.9;
+opacity:0.9;
+min-height:80px;
+}
+
 /* ================= BUTTON ================= */
 
 button{
-margin-top:30px;
-padding:15px 55px;
-border-radius:40px;
+margin-top:20px;
+padding:14px 40px;
+border-radius:30px;
 border:none;
 background:white;
 color:black;
-font-size:18px;
 cursor:pointer;
-transition:0.4s;
-}
-
-button:hover{
-transform:scale(1.08);
 }
 
 /* ================= HEARTS ================= */
 
 .heart{
 position:fixed;
-bottom:-20px;
 font-size:18px;
-opacity:0.4;
-animation:floatUp linear infinite;
+animation:floatUp 6s linear forwards;
+opacity:0.6;
 }
 
 @keyframes floatUp{
-0%{transform:translateY(0);}
-100%{transform:translateY(-120vh);}
+to{
+transform:translateY(-120vh);
+opacity:0;
+}
 }
 
-/* ================= CURSOR BLINK ================= */
+/* ================= TYPING CURSOR ================= */
 
-.cursor::after{
+.typing::after{
 content:"|";
-animation:blink 0.8s infinite;
+animation:blink 0.7s infinite;
 }
 
 @keyframes blink{
@@ -215,12 +153,9 @@ animation:blink 0.8s infinite;
 }
 
 </style>
-
 </head>
 
 <body>
-
-<div id="cursor"></div>
 
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4">
@@ -228,41 +163,46 @@ animation:blink 0.8s infinite;
 
 <div class="overlay"></div>
 
+<div id="cursor"></div>
+
 <audio id="music" loop>
 <source src="bg.mp3">
 </audio>
 
-<!-- LANDING -->
-<section id="landing">
+<!-- SCENES -->
+
+<div class="scene active" id="scene1">
+<div class="card" id="card1">
 <h1 id="landingTitle"></h1>
 <p id="landingText"></p>
-<button onclick="enterSite()">Open</button>
-</section>
-
-<!-- MAIN -->
-<section id="main">
-
-<div class="glass" id="section1">
-<p id="introLine"></p>
-<h1 class="title" id="mainTitle"></h1>
-<p class="message" id="message"></p>
-<img src="IMG_2034.jpeg" class="photo" id="photo">
+<button onclick="startExperience()">Start Experience</button>
+</div>
 </div>
 
-<div class="glass" id="section2">
-<h1 class="title" id="videoTitle"></h1>
-<video muted playsinline loop id="video" class="video">
+<div class="scene" id="scene2">
+<div class="card" id="card2">
+<p id="introLine"></p>
+<h1 id="mainTitle"></h1>
+<p id="mainText"></p>
+</div>
+</div>
+
+<div class="scene" id="scene3">
+<div class="card" id="card3">
+<h1>Her Moment</h1>
+<video id="video" width="100%" controls>
 <source src="luyanda.mp4">
 </video>
 </div>
-
-<div class="glass" id="section3">
-<h1 class="title" id="giftTitle"></h1>
-<button onclick="revealGift()">Reveal Gift Message</button>
-<p class="message" id="gift" style="display:none;"></p>
 </div>
 
-</section>
+<div class="scene" id="scene4">
+<div class="card" id="card4">
+<h1>Your Gift</h1>
+<button onclick="revealGift()">Reveal</button>
+<p id="gift"></p>
+</div>
+</div>
 
 <script>
 
@@ -275,51 +215,46 @@ cursor.style.left=e.clientX+"px";
 cursor.style.top=e.clientY+"px";
 });
 
-/* ================= GLOW CONTROL ================= */
+/* ================= HEART BURST ================= */
 
-let activeCard=null;
-
-function setActive(id){
-if(activeCard){
-document.getElementById(activeCard)?.classList.remove("active-glow");
+document.addEventListener("click",()=>{
+for(let i=0;i<6;i++){
+createHeart();
 }
-activeCard=id;
-document.getElementById(id)?.classList.add("active-glow");
+});
+
+function createHeart(){
+const h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.top="80vh";
+h.style.fontSize=(12+Math.random()*10)+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),6000);
 }
 
-function clearActive(){
-if(activeCard){
-document.getElementById(activeCard)?.classList.remove("active-glow");
-activeCard=null;
-}
-}
+/* ================= TYPE ENGINE ================= */
 
-/* ================= TYPEWRITER ================= */
-
-function typeText(id,text,speed=40,cb,cardId){
-
-if(cardId)setActive(cardId);
-
+function type(id,text,speed=30,cb){
 let el=document.getElementById(id);
 let i=0;
 el.innerHTML="";
-el.classList.add("cursor");
+el.classList.add("typing");
 
 function run(){
 if(i<text.length){
-el.innerHTML+=text.charAt(i++);
+el.innerHTML+=text[i++];
 setTimeout(run,speed);
 }else{
-el.classList.remove("cursor");
-clearActive();
+el.classList.remove("typing");
 if(cb)cb();
 }
 }
-
 run();
 }
 
-/* ================= ORIGINAL MESSAGES ================= */
+/* ================= ORIGINAL MESSAGES (UNCHANGED) ================= */
 
 const landingTitle =
 "Made with love… just for you, my Luyanda 💗";
@@ -344,80 +279,46 @@ const mainText =
 "More than anything, I just want your birthday to feel warm, unforgettable, and full of love. Enjoy every second of it… because you deserve nothing less.\n\n" +
 "I love you 🩵";
 
-const videoTitle =
-"It’s Your Turn Ke Mfazi";
-
 const giftText =
 "I got you something small…\n\nbut it means so much more than it probably looks like. 🥹\n\n" +
 "I wanted to give you something you could keep close to you… something simple, but constant.\n\n" +
 "Something that quietly becomes part of your everyday life… and maybe reminds you, even in silence, that there’s someone thinking about you.\n\n" +
 "And every time you notice it on your wrist, I hope it brings you a little warmth… a quiet reminder that you are cared for, appreciated, valued, and deeply close to someone’s heart. 🩵";
 
-/* ================= FLOW ================= */
+/* ================= FLOW ENGINE ================= */
 
-function enterSite(){
+function startExperience(){
 
-document.getElementById("landing").classList.add("hide");
+document.getElementById("scene1").classList.remove("active");
+document.getElementById("scene2").classList.add("active");
+
+document.getElementById("music").volume=0.6;
+document.getElementById("music").play().catch(()=>{});
+
+type("landingTitle",landingTitle,40,()=>{
+type("landingText",landingText,30,()=>{
 
 setTimeout(()=>{
-
-document.getElementById("landing").style.display="none";
-document.getElementById("main").style.display="block";
-
-const music=document.getElementById("music");
-music.volume=0.6;
-music.play().catch(()=>{});
-
-startFlow();
-
+type("introLine",introLine,30,()=>{
+type("mainTitle",mainTitle,40,()=>{
+type("mainText",mainText,20,()=>{
+setTimeout(()=>{
+document.getElementById("scene3").classList.add("active");
 },1000);
-
-}
-
-function startFlow(){
-
-document.getElementById("section1").classList.add("show");
-
-typeText("introLine",introLine,60,()=>{
-typeText("mainTitle",mainTitle,60,()=>{
-typeText("message",mainText,25,"section1",()=>{
-document.getElementById("photo").classList.add("show");
-
-setTimeout(()=>{
-document.getElementById("section2").classList.add("show");
-document.getElementById("video").play();
-document.getElementById("videoTitle").innerText=videoTitle;
-
-setTimeout(()=>{
-document.getElementById("section3").classList.add("show");
-},2000);
-
-},2000);
-
 });
 });
 });
+},800);
 
+});
+});
 }
 
 /* ================= GIFT ================= */
 
 function revealGift(){
-document.getElementById("gift").style.display="block";
-typeText("gift",giftText,30,"section3");
+type("gift",giftText,25);
 }
-
-/* ================= HEARTS ================= */
-
-setInterval(()=>{
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(4+Math.random()*6)+"s";
-document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),9000);
-},500);
 
 </script>
 
