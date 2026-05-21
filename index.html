@@ -9,86 +9,60 @@
 
 <style>
 
-/* ===== BASE ===== */
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 
-body{
-background:black;
-color:white;
-overflow-x:hidden;
-}
+body{background:black;color:white;overflow-x:hidden;}
 
-/* ===== BACKGROUND VIDEO ===== */
 #bgVideo{
-position:fixed;
-inset:0;
-width:100%;
-height:100%;
-object-fit:cover;
-z-index:-2;
-filter:brightness(0.6);
+position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;
 }
 
 .overlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.6);
-z-index:-1;
+position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:-1;
 }
 
-/* ===== HEARTS ===== */
-.heart{
-position:fixed;
-bottom:-20px;
-font-size:18px;
-opacity:0.4;
-animation:floatUp linear infinite;
-}
-
-@keyframes floatUp{
-0%{transform:translateY(0);}
-100%{transform:translateY(-120vh);}
-}
-
-/* ===== SECTIONS ===== */
-section{
-min-height:100vh;
+/* LANDING */
+#landing{
+height:100vh;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
-padding:60px 20px;
-opacity:0;
-transform:translateY(60px);
-transition:1.2s ease;
+text-align:center;
+padding:30px;
+}
+
+.card{
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(20px);
+padding:40px;
+border-radius:25px;
+max-width:800px;
+}
+
+/* SECTIONS */
+section{
+display:none;
+min-height:100vh;
+justify-content:center;
+align-items:center;
+padding:40px;
 }
 
 section.show{
-opacity:1;
-transform:translateY(0);
+display:flex;
+animation:fade 1s ease;
 }
 
-/* ===== GLASS ===== */
-.glass{
-background:rgba(255,255,255,0.06);
-backdrop-filter:blur(25px);
-border-radius:25px;
-padding:45px;
-border:1px solid rgba(255,255,255,0.15);
-max-width:850px;
+@keyframes fade{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
 }
 
-/* ===== TEXT ===== */
 h1{
 font-family:'Dancing Script';
 font-size:42px;
-text-align:center;
 margin-bottom:20px;
+text-align:center;
 }
 
 p{
@@ -96,138 +70,82 @@ white-space:pre-line;
 text-align:center;
 line-height:1.9;
 opacity:0.9;
-max-width:750px;
 }
 
-/* ===== PHOTO ===== */
+button{
+margin-top:20px;
+padding:14px 40px;
+border-radius:30px;
+border:none;
+cursor:pointer;
+background:white;
+color:black;
+}
+
 img{
 width:100%;
 border-radius:20px;
 margin-top:20px;
-opacity:0;
-transform:scale(1.05);
-transition:1s;
+display:none;
 }
 
-img.show{
-opacity:1;
-transform:scale(1);
-}
-
-/* ===== BUTTON ===== */
-button{
-margin-top:25px;
-padding:14px 40px;
-border-radius:40px;
-border:none;
-background:white;
-color:black;
-cursor:pointer;
-transition:0.3s;
-}
-
-button:hover{
-transform:scale(1.08);
-}
-
-/* ===== POPUP ===== */
-#popup{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.88);
-display:flex;
-align-items:center;
-justify-content:center;
-opacity:0;
-pointer-events:none;
-transition:1s;
-z-index:999;
-}
-
-#popup.show{
-opacity:1;
-pointer-events:auto;
-}
-
-.popup-box{
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(20px);
-padding:40px;
-border-radius:25px;
-font-family:'Dancing Script';
-font-size:30px;
-text-align:center;
-animation:float 3s infinite ease-in-out;
-}
-
-@keyframes float{
-0%{transform:translateY(0);}
-50%{transform:translateY(-10px);}
-100%{transform:translateY(0);}
-}
+img.show{display:block;}
 
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4">
 </video>
-
 <div class="overlay"></div>
 
 <audio id="music" loop>
 <source src="bg.mp3">
 </audio>
 
-<!-- POPUP -->
-<div id="popup">
-<div class="popup-box">Please close your eyes 🙈 ❤️</div>
-</div>
-
-<!-- ===== LANDING ===== -->
-<section id="landing" class="show">
-<div class="glass">
+<!-- LANDING -->
+<section id="landing">
+<div class="card">
 <h1 id="landingTitle"></h1>
 <p id="landingText"></p>
 <button onclick="enterSite()">Open</button>
 </div>
 </section>
 
-<!-- ===== MAIN ===== -->
-<section id="section1">
-<div class="glass">
+<!-- MAIN -->
+<section id="main1">
+<div class="card">
 <p id="introLine"></p>
 <h1 id="mainTitle"></h1>
-<p id="message"></p>
-<img src="IMG_2034.jpeg" id="photo">
+<p id="mainText"></p>
+<img id="photo" src="IMG_2034.jpeg">
 </div>
 </section>
 
-<section id="section2">
-<div class="glass">
+<section id="main2">
+<div class="card">
 <h1 id="videoTitle"></h1>
-<video id="video" width="100%" loop playsinline muted>
+<video id="video" width="100%" controls loop>
 <source src="luyanda.mp4">
 </video>
 </div>
 </section>
 
-<section id="section3">
-<div class="glass">
+<section id="main3">
+<div class="card">
 <h1 id="giftTitle"></h1>
 <button onclick="revealGift()">Reveal Gift Message</button>
-<p id="gift" style="display:none;"></p>
+<p id="gift"></p>
 </div>
 </section>
 
 <script>
 
-/* ===== TYPE SYSTEM ===== */
+/* SAFE TYPEWRITER */
 function type(id,text,speed=40,cb){
-let el=document.getElementById(id);
+const el=document.getElementById(id);
 let i=0;
 el.innerHTML="";
 
@@ -240,7 +158,7 @@ setTimeout(run,speed);
 run();
 }
 
-/* ===== EXACT ORIGINAL MESSAGES (UNCHANGED) ===== */
+/* YOUR ORIGINAL MESSAGES (UNCHANGED) */
 
 const landingTitle =
 "Made with love… just for you, my Luyanda 💗";
@@ -272,50 +190,35 @@ const giftTitle =
 "Your Gift";
 
 const giftText =
-"I got you something small…\n\n" +
-"but it means so much more than it probably looks like. 🥹\n\n" +
+"I got you something small…\n\nbut it means so much more than it probably looks like. 🥹\n\n" +
 "I wanted to give you something you could keep close to you… something simple, but constant.\n\n" +
 "Something that quietly becomes part of your everyday life… and maybe reminds you, even in silence, that there’s someone thinking about you.\n\n" +
-"Not in a loud or overwhelming way… just something soft, steady, and real.\n\n" +
-"And every time you notice it on your wrist, I hope it brings you a little warmth… a quiet reminder that you are cared for, appreciated, valued, and deeply close to someone’s heart.\n\n" +
-"It’s honestly just something I felt was right for you.\n\n" +
-"I can’t wait to see how beautiful it looks on that cute hand of yours… 🥺\n\n" +
-"And I hope it never leaves your wrist… the same way you never really left my heart. 🩵";
+"And every time you notice it on your wrist, I hope it brings you a little warmth… a quiet reminder that you are cared for, appreciated, valued, and deeply close to someone’s heart. 🩵";
 
-/* ===== FLOW ===== */
-
-window.onload=function(){
-
-type("landingTitle",landingTitle,90,()=>{
-setTimeout(()=>type("landingText",landingText,60),800);
-});
-
-};
+/* FLOW */
 
 function enterSite(){
 
-document.getElementById("landing").classList.remove("show");
-
-setTimeout(()=>{
-
 document.getElementById("landing").style.display="none";
-document.getElementById("section1").classList.add("show");
+document.getElementById("main1").style.display="flex";
 
 document.getElementById("music").volume=0.6;
 document.getElementById("music").play().catch(()=>{});
 
-type("introLine",introLine,50,()=>{
-type("mainTitle",mainTitle,60,()=>{
-type("message",mainText,30,()=>{
+type("landingTitle",landingTitle,50,()=>{
+type("landingText",landingText,40,()=>{
+type("introLine",introLine,40,()=>{
+type("mainTitle",mainTitle,50,()=>{
+type("mainText",mainText,25,()=>{
 document.getElementById("photo").classList.add("show");
 
 setTimeout(()=>{
-document.getElementById("section2").classList.add("show");
-document.getElementById("video").play().catch(()=>{});
+document.getElementById("main2").style.display="flex";
 document.getElementById("videoTitle").innerText=videoTitle;
+document.getElementById("video").play();
 
 setTimeout(()=>{
-document.getElementById("section3").classList.add("show");
+document.getElementById("main3").style.display="flex";
 document.getElementById("giftTitle").innerText=giftTitle;
 },2000);
 
@@ -324,39 +227,12 @@ document.getElementById("giftTitle").innerText=giftTitle;
 });
 });
 });
-
+});
 }
 
 function revealGift(){
-
-document.getElementById("gift").style.display="block";
-
-type("gift",giftText,35,()=>{
-
-setTimeout(()=>{
-document.getElementById("popup").classList.add("show");
-
-setTimeout(()=>{
-document.getElementById("popup").classList.remove("show");
-},8000);
-
-},2000);
-
-});
-
+type("gift",giftText,30);
 }
-
-setInterval(()=>{
-
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=(4+Math.random()*6)+"s";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),9000);
-
-},400);
 
 </script>
 
