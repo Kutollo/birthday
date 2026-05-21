@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Luyanda ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===== BASE ===== */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:black;
+color:white;
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
+
+/* ===== CINEMATIC BACKGROUND ===== */
+#bgVideo{
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-2;
+filter:brightness(0.6) contrast(1.1);
+transform:scale(1.1);
+}
+
+.overlay{
+position:fixed;
+inset:0;
+background:radial-gradient(circle, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
+z-index:-1;
+}
+
+/* ===== LOCK SCREEN ===== */
+#lockScreen{
+position:fixed;
+inset:0;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:black;
+z-index:9999;
+}
+
+input{
+padding:14px;
+border-radius:10px;
+border:none;
+outline:none;
+text-align:center;
+margin-top:20px;
+}
+
+button{
+margin-top:20px;
+padding:12px 35px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+background:white;
+color:black;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+/* ===== SCENES ===== */
+section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:60px 20px;
+opacity:0;
+transform:translateY(80px) scale(0.98);
+filter:blur(10px);
+transition:1.4s ease;
+}
+
+section.active{
+opacity:1;
+transform:translateY(0) scale(1);
+filter:blur(0);
+}
+
+/* ===== TEXT ===== */
+h1{
+font-family:'Dancing Script';
+font-size:42px;
+margin-bottom:20px;
+text-align:center;
+}
+
+p{
+max-width:750px;
+text-align:center;
+line-height:1.9;
+white-space:pre-line;
+opacity:0.9;
+}
+
+/* ===== GLASS CARD ===== */
+.card{
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(25px);
+border-radius:25px;
+padding:45px;
+border:1px solid rgba(255,255,255,0.15);
+max-width:850px;
+}
+
+/* ===== GIFT ===== */
+.gift{
+width:140px;
+height:140px;
+border-radius:20px;
+background:linear-gradient(145deg,#ff4d6d,#ff99ac);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:50px;
+cursor:pointer;
+box-shadow:0 20px 60px rgba(255,0,100,0.3);
+transition:0.4s;
+}
+
+.gift:hover{
+transform:scale(1.1) rotate(2deg);
+}
+
+/* ===== POPUP ===== */
+#popup{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,0.9);
+opacity:0;
+pointer-events:none;
+transition:1s;
+z-index:999;
+}
+
+#popup.show{
+opacity:1;
+pointer-events:auto;
+}
+
+.popupBox{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+padding:40px;
+border-radius:25px;
+font-family:'Dancing Script';
+font-size:30px;
+text-align:center;
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
+}
+
+/* ===== HEARTS ===== */
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:18px;
+opacity:0.4;
+animation:rise linear infinite;
+}
+
+@keyframes rise{
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<video autoplay muted loop playsinline id="bgVideo">
+<source src="cinematic.mp4">
+</video>
+<div class="overlay"></div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+<source src="bg.mp3">
+</audio>
+
+<!-- LOCK SCREEN -->
+<div id="lockScreen">
+<h1>Enter your name ❤️</h1>
+<input id="code" placeholder="Type: Luyanda">
+<button onclick="unlock()">Enter</button>
+</div>
+
+<!-- POPUP -->
+<div id="popup">
+<div class="popupBox">Close your eyes… this is just for you ❤️</div>
+</div>
+
+<!-- SCENES -->
+<section id="s1">
+<div class="card">
+<h1>Made for you ❤️</h1>
+<p id="t1"></p>
+</div>
+</section>
+
+<section id="s2">
+<div class="card">
+<h1>Happy Birthday 🩵</h1>
+<p id="t2"></p>
+<img id="img" src="IMG_2034.jpeg" style="width:100%;border-radius:20px;margin-top:20px;opacity:0;">
+</div>
+</section>
+
+<section id="s3">
+<div class="card">
+<h1>Your Memories 🎥</h1>
+<video id="vid" width="100%" controls loop>
+<source src="luyanda.mp4">
+</video>
+</div>
+</section>
+
+<section id="s4">
+<h1>Your Gift 🎁</h1>
+<div class="gift" onclick="openGift()">🎁</div>
+<p id="giftText"></p>
+</section>
+
+<section id="s5">
+<h1>Final Message 💌</h1>
+<p id="final"></p>
+</section>
+
+<script>
+
+/* ===== TEXT SYSTEM ===== */
+function type(el,text,speed=35,cb){
+let i=0;
+el.innerHTML="";
+function run(){
+if(i<text.length){
+el.innerHTML+=text[i++];
+setTimeout(run,speed);
+}else if(cb) cb();
+}
+run();
+}
+
+/* ===== CONTENT ===== */
+const intro =
+"I didn’t just want to wish you a happy birthday…\n\nI wanted to create a moment you can feel.";
+
+const msg =
+"You deserve love that stays, even in silence.\n\n" +
+"You deserve attention that doesn’t fade.\n\n" +
+"And you deserve someone who chooses you repeatedly… even in the smallest ways.";
+
+const gift =
+"I got you something small…\n\nbut meaningful.\n\n" +
+"Something that stays close to you… like a reminder that you are loved beyond words ❤️";
+
+const final =
+"If I could give you one thing forever…\n\nit would be peace, love, and certainty that you are enough.\n\nHappy Birthday Luyanda ❤️";
+
+/* ===== UNLOCK ===== */
+function unlock(){
+let val=document.getElementById("code").value.trim();
+
+if(val.toLowerCase()!=="luyanda"){
+alert("Try again ❤️");
+return;
+}
+
+document.getElementById("lockScreen").style.display="none";
+document.getElementById("music").volume=0.6;
+document.getElementById("music").play().catch(()=>{});
+
+/* START FLOW */
+start();
+}
+
+/* ===== SCENE FLOW ===== */
+function start(){
+
+activate("s1");
+
+type(document.getElementById("t1"),intro,30,()=>{
+
+setTimeout(()=>activate("s2"),1000);
+
+type(document.getElementById("t2"),msg,30,()=>{
+
+document.getElementById("img").style.opacity=1;
+
+setTimeout(()=>activate("s3"),2000);
+
+setTimeout(()=>activate("s4"),4000);
+
+setTimeout(()=>type(document.getElementById("final"),final,30),7000);
+
+});
+
+});
+
+}
+
+/* ===== ACTIVATE SCENE ===== */
+function activate(id){
+document.getElementById(id).classList.add("active");
+}
+
+/* ===== GIFT ===== */
+function openGift(){
+
+type(document.getElementById("giftText"),gift,35,()=>{
+
+setTimeout(()=>{
+
+document.getElementById("popup").classList.add("show");
+
+if(navigator.vibrate){
+navigator.vibrate([200,100,400]);
+}
+
+setTimeout(()=>{
+document.getElementById("popup").classList.remove("show");
+},8000);
+
+},1500);
+
+});
+
+}
+
+/* ===== HEARTS ===== */
+setInterval(()=>{
+
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(4+Math.random()*6)+"s";
+
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),9000);
+
+},300);
+
+</script>
+
+</body>
+</html>
