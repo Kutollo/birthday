@@ -27,28 +27,27 @@ color:white;
 overflow-x:hidden;
 }
 
-/* ================= LOADING SCREEN (NEW) ================= */
+/* ================= LOADING ================= */
 
 #loadingScreen{
 position:fixed;
 inset:0;
 background:black;
 display:flex;
-justify-content:center;
 align-items:center;
-z-index:999999;
+justify-content:center;
 flex-direction:column;
+z-index:99999;
 }
 
 #loadingText{
 font-size:16px;
-letter-spacing:2px;
 opacity:0.8;
-text-align:center;
-animation:fadePulse 1.5s infinite;
+letter-spacing:1px;
+animation:pulse 1.5s infinite;
 }
 
-@keyframes fadePulse{
+@keyframes pulse{
 0%{opacity:0.4;}
 50%{opacity:1;}
 100%{opacity:0.4;}
@@ -95,8 +94,6 @@ transform:scale(1.1);
 filter:blur(10px);
 }
 
-/* ================= MAIN ================= */
-
 #main{
 display:none;
 max-width:900px;
@@ -118,7 +115,7 @@ box-shadow:0 10px 60px rgba(0,0,0,0.6);
 opacity:0;
 transform:translateY(40px) scale(0.95);
 filter:blur(10px);
-transition:1.2s ease;
+transition:1s ease;
 }
 
 .glass.show{
@@ -154,7 +151,7 @@ padding-right:12px;
 padding-top:8px;
 font-family:'Dancing Script',cursive;
 color:white;
-text-shadow:0 0 20px rgba(255,255,255,0.2);
+text-shadow:0 0 18px rgba(255,255,255,0.25);
 }
 
 /* ================= MEDIA ================= */
@@ -211,7 +208,7 @@ opacity:0;
 
 <body>
 
-<!-- 🔥 NEW LOADING SCREEN -->
+<!-- LOADING SCREEN -->
 <div id="loadingScreen">
 <div id="loadingText">Loading Your Early Birthday Wish ❤️...</div>
 </div>
@@ -276,7 +273,7 @@ opacity:0;
 
 <script>
 
-/* REMOVE LOADER AFTER 5 SECONDS */
+/* FIX: SAFE LOADER */
 window.addEventListener("load",()=>{
 
 setTimeout(()=>{
@@ -293,8 +290,10 @@ document.getElementById("loadingScreen").style.display="none";
 /* TYPE SYSTEM */
 function typeText(id,text,speed=110,callback){
 
-let i=0;
 const el=document.getElementById(id);
+if(!el) return;
+
+let i=0;
 el.innerHTML="";
 
 function typing(){
@@ -310,7 +309,7 @@ callback();
 typing();
 }
 
-/* YOUR ORIGINAL MESSAGES (UNCHANGED) */
+/* ================= ORIGINAL MESSAGES (UNCHANGED) ================= */
 
 const landingTitle =
 "Made with love… just for you, my Luyanda 💗";
@@ -318,15 +317,35 @@ const landingTitle =
 const landingText =
 "I made this to celebrate you on your birthday…\n\nbecause you deserve to feel loved, appreciated, and special in every way.\n\nI know I wasn’t there for the past two birthdays,\nbut I’m here now… and I want to make up for every moment I missed.\n\nSo take your time going through this…\nit was all made with you in mind 💗";
 
-/* FLOW */
+const introLine =
+"I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
 
-window.onload=function(){
+const mainTitle =
+"Happy Birthday 🩵 my Luyanda 🎈";
 
-typeText("landingTitle",landingTitle,110,()=>{
-setTimeout(()=>typeText("landingText",landingText,110),800);
-});
+const mainText =
+"Tomorrow is going to be special… because it’s the day someone truly important came into this world. 🩵\n\n" +
+"I hope your birthday is filled with love, laughter, peace, and all the little things that make your heart feel light and happy. You deserve a day that feels as beautiful as the person you are.\n\n" +
+"I’ve always had a soft spot for you… just as much as you’ve always had one for me. No matter the time, distance, or everything that happened in between, that feeling never really disappeared.\n\n" +
+"Being able to talk to you again is honestly something I appreciate more than I probably say out loud.\n\n" +
+"And I also want to apologize for how things ended between us before.\n\n" +
+"I’m grateful you gave me another chance to be part of your life again.\n\n" +
+"I will never take the chance you gave us for granted.\n\n" +
+"I love you 🩵";
 
-};
+const videoTitle =
+"It’s Your Turn Ke Mfazi";
+
+const giftTitle =
+"Your Gift";
+
+const giftText =
+"I got you something small…\n\n" +
+"but it means so much more than it probably looks like. 🥹\n\n" +
+"I wanted to give you something you could keep close to you… something simple, but constant.\n\n" +
+"And every time you notice it on your wrist, I hope it brings you warmth… 🩵";
+
+/* ================= FLOW ================= */
 
 function enterSite(){
 
@@ -344,33 +363,47 @@ music.play().catch(()=>{});
 startFlow();
 
 },1000);
-
 }
 
 function startFlow(){
 
 document.getElementById("section1").classList.add("show");
 
-typeText("introLine","I wanted to be the first to celebrate you…",110,()=>{
-typeText("mainTitle","Happy Birthday 🩵 my Luyanda 🎈",110,()=>{
-typeText("message","Tomorrow is going to be special… 🩵",110,()=>{
+typeText("introLine",introLine,110,()=>{
+
+typeText("mainTitle",mainTitle,110,()=>{
+
+typeText("message",mainText,110,()=>{
+
 document.getElementById("photo").classList.add("show");
 
 setTimeout(()=>{
+
 document.getElementById("section2").classList.add("show");
 
 document.getElementById("video").play().catch(()=>{});
 
 setTimeout(()=>{
+
 document.getElementById("section3").classList.add("show");
-},2000);
+
+typeText("videoTitle",videoTitle,110);
 
 },2000);
 
-});
-});
-});
+},2000);
 
+});
+});
+});
+}
+
+function revealGift(){
+
+const g=document.getElementById("gift");
+g.style.display="block";
+
+typeText("gift",giftText,110);
 }
 
 /* HEARTS */
