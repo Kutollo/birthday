@@ -21,10 +21,9 @@ body{
 background:black;
 color:white;
 overflow-x:hidden;
-scroll-behavior:smooth;
 }
 
-/* ===== CINEMATIC BACKGROUND ===== */
+/* ===== BACKGROUND VIDEO ===== */
 #bgVideo{
 position:fixed;
 inset:0;
@@ -32,54 +31,31 @@ width:100%;
 height:100%;
 object-fit:cover;
 z-index:-2;
-filter:brightness(0.6) contrast(1.1);
-transform:scale(1.1);
+filter:brightness(0.6);
 }
 
 .overlay{
 position:fixed;
 inset:0;
-background:radial-gradient(circle, rgba(0,0,0,0.4), rgba(0,0,0,0.9));
+background:rgba(0,0,0,0.6);
 z-index:-1;
 }
 
-/* ===== LOCK SCREEN ===== */
-#lockScreen{
+/* ===== HEARTS ===== */
+.heart{
 position:fixed;
-inset:0;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-background:black;
-z-index:9999;
+bottom:-20px;
+font-size:18px;
+opacity:0.4;
+animation:floatUp linear infinite;
 }
 
-input{
-padding:14px;
-border-radius:10px;
-border:none;
-outline:none;
-text-align:center;
-margin-top:20px;
+@keyframes floatUp{
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);}
 }
 
-button{
-margin-top:20px;
-padding:12px 35px;
-border:none;
-border-radius:30px;
-cursor:pointer;
-background:white;
-color:black;
-transition:0.3s;
-}
-
-button:hover{
-transform:scale(1.05);
-}
-
-/* ===== SCENES ===== */
+/* ===== SECTIONS ===== */
 section{
 min-height:100vh;
 display:flex;
@@ -88,35 +64,17 @@ justify-content:center;
 align-items:center;
 padding:60px 20px;
 opacity:0;
-transform:translateY(80px) scale(0.98);
-filter:blur(10px);
-transition:1.4s ease;
+transform:translateY(60px);
+transition:1.2s ease;
 }
 
-section.active{
+section.show{
 opacity:1;
-transform:translateY(0) scale(1);
-filter:blur(0);
+transform:translateY(0);
 }
 
-/* ===== TEXT ===== */
-h1{
-font-family:'Dancing Script';
-font-size:42px;
-margin-bottom:20px;
-text-align:center;
-}
-
-p{
-max-width:750px;
-text-align:center;
-line-height:1.9;
-white-space:pre-line;
-opacity:0.9;
-}
-
-/* ===== GLASS CARD ===== */
-.card{
+/* ===== GLASS ===== */
+.glass{
 background:rgba(255,255,255,0.06);
 backdrop-filter:blur(25px);
 border-radius:25px;
@@ -125,33 +83,61 @@ border:1px solid rgba(255,255,255,0.15);
 max-width:850px;
 }
 
-/* ===== GIFT ===== */
-.gift{
-width:140px;
-height:140px;
-border-radius:20px;
-background:linear-gradient(145deg,#ff4d6d,#ff99ac);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:50px;
-cursor:pointer;
-box-shadow:0 20px 60px rgba(255,0,100,0.3);
-transition:0.4s;
+/* ===== TEXT ===== */
+h1{
+font-family:'Dancing Script';
+font-size:42px;
+text-align:center;
+margin-bottom:20px;
 }
 
-.gift:hover{
-transform:scale(1.1) rotate(2deg);
+p{
+white-space:pre-line;
+text-align:center;
+line-height:1.9;
+opacity:0.9;
+max-width:750px;
+}
+
+/* ===== PHOTO ===== */
+img{
+width:100%;
+border-radius:20px;
+margin-top:20px;
+opacity:0;
+transform:scale(1.05);
+transition:1s;
+}
+
+img.show{
+opacity:1;
+transform:scale(1);
+}
+
+/* ===== BUTTON ===== */
+button{
+margin-top:25px;
+padding:14px 40px;
+border-radius:40px;
+border:none;
+background:white;
+color:black;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.08);
 }
 
 /* ===== POPUP ===== */
 #popup{
 position:fixed;
 inset:0;
+background:rgba(0,0,0,0.88);
 display:flex;
-justify-content:center;
 align-items:center;
-background:rgba(0,0,0,0.9);
+justify-content:center;
 opacity:0;
 pointer-events:none;
 transition:1s;
@@ -163,7 +149,7 @@ opacity:1;
 pointer-events:auto;
 }
 
-.popupBox{
+.popup-box{
 background:rgba(255,255,255,0.08);
 backdrop-filter:blur(20px);
 padding:40px;
@@ -171,27 +157,13 @@ border-radius:25px;
 font-family:'Dancing Script';
 font-size:30px;
 text-align:center;
-animation:float 3s ease-in-out infinite;
+animation:float 3s infinite ease-in-out;
 }
 
 @keyframes float{
 0%{transform:translateY(0);}
 50%{transform:translateY(-10px);}
 100%{transform:translateY(0);}
-}
-
-/* ===== HEARTS ===== */
-.heart{
-position:fixed;
-bottom:-20px;
-font-size:18px;
-opacity:0.4;
-animation:rise linear infinite;
-}
-
-@keyframes rise{
-0%{transform:translateY(0);}
-100%{transform:translateY(-120vh);}
 }
 
 </style>
@@ -203,67 +175,62 @@ animation:rise linear infinite;
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4">
 </video>
+
 <div class="overlay"></div>
 
-<!-- MUSIC -->
 <audio id="music" loop>
 <source src="bg.mp3">
 </audio>
 
-<!-- LOCK SCREEN -->
-<div id="lockScreen">
-<h1>Enter your name ❤️</h1>
-<input id="code" placeholder="Type: Luyanda">
-<button onclick="unlock()">Enter</button>
-</div>
-
 <!-- POPUP -->
 <div id="popup">
-<div class="popupBox">Close your eyes… this is just for you ❤️</div>
+<div class="popup-box">Please close your eyes 🙈 ❤️</div>
 </div>
 
-<!-- SCENES -->
-<section id="s1">
-<div class="card">
-<h1>Made for you ❤️</h1>
-<p id="t1"></p>
-</div>
-</section>
-
-<section id="s2">
-<div class="card">
-<h1>Happy Birthday 🩵</h1>
-<p id="t2"></p>
-<img id="img" src="IMG_2034.jpeg" style="width:100%;border-radius:20px;margin-top:20px;opacity:0;">
+<!-- ===== LANDING ===== -->
+<section id="landing" class="show">
+<div class="glass">
+<h1 id="landingTitle"></h1>
+<p id="landingText"></p>
+<button onclick="enterSite()">Open</button>
 </div>
 </section>
 
-<section id="s3">
-<div class="card">
-<h1>Your Memories 🎥</h1>
-<video id="vid" width="100%" controls loop>
+<!-- ===== MAIN ===== -->
+<section id="section1">
+<div class="glass">
+<p id="introLine"></p>
+<h1 id="mainTitle"></h1>
+<p id="message"></p>
+<img src="IMG_2034.jpeg" id="photo">
+</div>
+</section>
+
+<section id="section2">
+<div class="glass">
+<h1 id="videoTitle"></h1>
+<video id="video" width="100%" loop playsinline muted>
 <source src="luyanda.mp4">
 </video>
 </div>
 </section>
 
-<section id="s4">
-<h1>Your Gift 🎁</h1>
-<div class="gift" onclick="openGift()">🎁</div>
-<p id="giftText"></p>
-</section>
-
-<section id="s5">
-<h1>Final Message 💌</h1>
-<p id="final"></p>
+<section id="section3">
+<div class="glass">
+<h1 id="giftTitle"></h1>
+<button onclick="revealGift()">Reveal Gift Message</button>
+<p id="gift" style="display:none;"></p>
+</div>
 </section>
 
 <script>
 
-/* ===== TEXT SYSTEM ===== */
-function type(el,text,speed=35,cb){
+/* ===== TYPE SYSTEM ===== */
+function type(id,text,speed=40,cb){
+let el=document.getElementById(id);
 let i=0;
 el.innerHTML="";
+
 function run(){
 if(i<text.length){
 el.innerHTML+=text[i++];
@@ -273,93 +240,112 @@ setTimeout(run,speed);
 run();
 }
 
-/* ===== CONTENT ===== */
-const intro =
-"I didn’t just want to wish you a happy birthday…\n\nI wanted to create a moment you can feel.";
+/* ===== EXACT ORIGINAL MESSAGES (UNCHANGED) ===== */
 
-const msg =
-"You deserve love that stays, even in silence.\n\n" +
-"You deserve attention that doesn’t fade.\n\n" +
-"And you deserve someone who chooses you repeatedly… even in the smallest ways.";
+const landingTitle =
+"Made with love… just for you, my Luyanda 💗";
 
-const gift =
-"I got you something small…\n\nbut meaningful.\n\n" +
-"Something that stays close to you… like a reminder that you are loved beyond words ❤️";
+const landingText =
+"I made this to celebrate you on your birthday…\n\nbecause you deserve to feel loved, appreciated, and special in every way.\n\nI know I wasn’t there for the past two birthdays,\nbut I’m here now… and I want to make up for every moment I missed.\n\nSo take your time going through this…\nit was all made with you in mind 💗";
 
-const final =
-"If I could give you one thing forever…\n\nit would be peace, love, and certainty that you are enough.\n\nHappy Birthday Luyanda ❤️";
+const introLine =
+"I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
 
-/* ===== UNLOCK ===== */
-function unlock(){
-let val=document.getElementById("code").value.trim();
+const mainTitle =
+"Happy Birthday 🩵 my Luyanda 🎈";
 
-if(val.toLowerCase()!=="luyanda"){
-alert("Try again ❤️");
-return;
-}
+const mainText =
+"Tomorrow is going to be special… because it’s the day someone truly important came into this world. 🩵\n\n" +
+"I hope your birthday is filled with love, laughter, peace, and all the little things that make your heart feel light and happy. You deserve a day that feels as beautiful as the person you are.\n\n" +
+"I’ve always had a soft spot for you… just as much as you’ve always had one for me. No matter the time, distance, or everything that happened in between, that feeling never really disappeared.\n\n" +
+"Being able to talk to you again is honestly something I appreciate more than I probably say out loud.\n\n" +
+"And I also want to apologize for how things ended between us before. I don’t want to ruin such a beautiful moment by dwelling on the past, but I truly regret the way I handled things.\n\n" +
+"I’m grateful you gave me another chance to be part of your life again, and that somehow we found our way back to each other.\n\n" +
+"I know I might be the last person who should be speaking about promises… but I mean this with all my heart: I will never take the chance you gave us for granted. Hurting you again is something I never want to happen.\n\n" +
+"More than anything, I just want your birthday to feel warm, unforgettable, and full of love. Enjoy every second of it… because you deserve nothing less.\n\n" +
+"I love you 🩵";
 
-document.getElementById("lockScreen").style.display="none";
-document.getElementById("music").volume=0.6;
-document.getElementById("music").play().catch(()=>{});
+const videoTitle =
+"It’s Your Turn Ke Mfazi";
 
-/* START FLOW */
-start();
-}
+const giftTitle =
+"Your Gift";
 
-/* ===== SCENE FLOW ===== */
-function start(){
+const giftText =
+"I got you something small…\n\n" +
+"but it means so much more than it probably looks like. 🥹\n\n" +
+"I wanted to give you something you could keep close to you… something simple, but constant.\n\n" +
+"Something that quietly becomes part of your everyday life… and maybe reminds you, even in silence, that there’s someone thinking about you.\n\n" +
+"Not in a loud or overwhelming way… just something soft, steady, and real.\n\n" +
+"And every time you notice it on your wrist, I hope it brings you a little warmth… a quiet reminder that you are cared for, appreciated, valued, and deeply close to someone’s heart.\n\n" +
+"It’s honestly just something I felt was right for you.\n\n" +
+"I can’t wait to see how beautiful it looks on that cute hand of yours… 🥺\n\n" +
+"And I hope it never leaves your wrist… the same way you never really left my heart. 🩵";
 
-activate("s1");
+/* ===== FLOW ===== */
 
-type(document.getElementById("t1"),intro,30,()=>{
+window.onload=function(){
 
-setTimeout(()=>activate("s2"),1000);
-
-type(document.getElementById("t2"),msg,30,()=>{
-
-document.getElementById("img").style.opacity=1;
-
-setTimeout(()=>activate("s3"),2000);
-
-setTimeout(()=>activate("s4"),4000);
-
-setTimeout(()=>type(document.getElementById("final"),final,30),7000);
-
+type("landingTitle",landingTitle,90,()=>{
+setTimeout(()=>type("landingText",landingText,60),800);
 });
 
-});
+};
 
-}
+function enterSite(){
 
-/* ===== ACTIVATE SCENE ===== */
-function activate(id){
-document.getElementById(id).classList.add("active");
-}
-
-/* ===== GIFT ===== */
-function openGift(){
-
-type(document.getElementById("giftText"),gift,35,()=>{
+document.getElementById("landing").classList.remove("show");
 
 setTimeout(()=>{
 
-document.getElementById("popup").classList.add("show");
+document.getElementById("landing").style.display="none";
+document.getElementById("section1").classList.add("show");
 
-if(navigator.vibrate){
-navigator.vibrate([200,100,400]);
+document.getElementById("music").volume=0.6;
+document.getElementById("music").play().catch(()=>{});
+
+type("introLine",introLine,50,()=>{
+type("mainTitle",mainTitle,60,()=>{
+type("message",mainText,30,()=>{
+document.getElementById("photo").classList.add("show");
+
+setTimeout(()=>{
+document.getElementById("section2").classList.add("show");
+document.getElementById("video").play().catch(()=>{});
+document.getElementById("videoTitle").innerText=videoTitle;
+
+setTimeout(()=>{
+document.getElementById("section3").classList.add("show");
+document.getElementById("giftTitle").innerText=giftTitle;
+},2000);
+
+},2000);
+
+});
+});
+});
+
 }
+
+function revealGift(){
+
+document.getElementById("gift").style.display="block";
+
+type("gift",giftText,35,()=>{
+
+setTimeout(()=>{
+document.getElementById("popup").classList.add("show");
 
 setTimeout(()=>{
 document.getElementById("popup").classList.remove("show");
 },8000);
 
-},1500);
+},2000);
 
 });
 
 }
 
-/* ===== HEARTS ===== */
 setInterval(()=>{
 
 let h=document.createElement("div");
@@ -367,11 +353,10 @@ h.className="heart";
 h.innerHTML="❤️";
 h.style.left=Math.random()*100+"vw";
 h.style.animationDuration=(4+Math.random()*6)+"s";
-
 document.body.appendChild(h);
 setTimeout(()=>h.remove(),9000);
 
-},300);
+},400);
 
 </script>
 
