@@ -20,6 +20,7 @@ body{
 background:black;
 color:white;
 overflow-x:hidden;
+cursor:none; /* hide default cursor */
 }
 
 /* BACKGROUND */
@@ -39,6 +40,20 @@ background:rgba(0,0,0,0.6);
 z-index:-1;
 }
 
+/* CUSTOM CURSOR */
+#cursor{
+position:fixed;
+width:12px;
+height:12px;
+border-radius:50%;
+background:white;
+mix-blend-mode:difference;
+pointer-events:none;
+transform:translate(-50%,-50%);
+z-index:9999;
+box-shadow:0 0 20px rgba(255,255,255,0.8);
+}
+
 /* SECTIONS */
 section{
 display:none;
@@ -53,13 +68,23 @@ display:flex;
 }
 
 /* CARD */
-.card{
+.glass{
 max-width:800px;
-background:rgba(255,255,255,0.06);
+background:rgba(255,255,255,0.07);
 backdrop-filter:blur(20px);
 padding:40px;
 border-radius:25px;
 text-align:center;
+transition:0.8s;
+border:1px solid rgba(255,255,255,0.15);
+}
+
+/* ACTIVE GLOW */
+.glass.active-glow{
+background:rgba(255,255,255,0.16);
+box-shadow:0 0 25px rgba(255,255,255,0.25),
+0 0 60px rgba(255,255,255,0.12);
+transform:scale(1.02);
 }
 
 /* TEXT */
@@ -73,6 +98,7 @@ p{
 white-space:pre-line;
 line-height:1.9;
 opacity:0.9;
+min-height:50px;
 }
 
 /* BUTTON */
@@ -98,6 +124,16 @@ img.show{
 display:block;
 }
 
+/* CURSOR BLINK */
+.cursor-blink::after{
+content:"|";
+animation:blink 0.8s infinite;
+}
+
+@keyframes blink{
+50%{opacity:0;}
+}
+
 </style>
 </head>
 
@@ -110,22 +146,25 @@ display:block;
 
 <div class="overlay"></div>
 
+<!-- CUSTOM CURSOR -->
+<div id="cursor"></div>
+
 <audio id="music" loop>
 <source src="bg.mp3">
 </audio>
 
 <!-- LANDING -->
 <section id="landing" class="active">
-<div class="card">
+<div class="glass" id="landingCard">
 <h1 id="landingTitle"></h1>
 <p id="landingText"></p>
-<button onclick="enter()">Open</button>
+<button onclick="enterSite()">Open</button>
 </div>
 </section>
 
-<!-- SECTION 1 -->
+<!-- MAIN -->
 <section id="s1">
-<div class="card">
+<div class="glass" id="card1">
 <p id="introLine"></p>
 <h1 id="mainTitle"></h1>
 <p id="mainText"></p>
@@ -133,9 +172,8 @@ display:block;
 </div>
 </section>
 
-<!-- SECTION 2 -->
 <section id="s2">
-<div class="card">
+<div class="glass" id="card2">
 <h1 id="videoTitle"></h1>
 <video id="video" width="100%" controls loop>
 <source src="luyanda.mp4">
@@ -143,10 +181,9 @@ display:block;
 </div>
 </section>
 
-<!-- SECTION 3 -->
 <section id="s3">
-<div class="card">
-<h1 id="giftTitle"></h1>
+<div class="glass" id="card3">
+<h1>Your Gift</h1>
 <button onclick="revealGift()">Reveal Gift Message</button>
 <p id="gift"></p>
 </div>
@@ -154,23 +191,56 @@ display:block;
 
 <script>
 
-/* ===== TYPEWRITER (SAFE) ===== */
-function type(id,text,speed=35,cb){
-const el=document.getElementById(id);
+/* ================= CURSOR ================= */
+const cursor=document.getElementById("cursor");
+
+document.addEventListener("mousemove",(e)=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+});
+
+/* ================= GLOW SYSTEM ================= */
+let activeCard=null;
+
+function setActive(cardId){
+if(activeCard){
+document.getElementById(activeCard)?.classList.remove("active-glow");
+}
+activeCard=cardId;
+document.getElementById(cardId)?.classList.add("active-glow");
+}
+
+function clearActive(){
+if(activeCard){
+document.getElementById(activeCard)?.classList.remove("active-glow");
+activeCard=null;
+}
+}
+
+/* ================= TYPEWRITER ================= */
+function typeText(id,text,speed=40,cb,cardId){
+
+if(cardId)setActive(cardId);
+
+let el=document.getElementById(id);
 let i=0;
 el.innerHTML="";
+el.classList.add("cursor-blink");
 
 function run(){
 if(i<text.length){
-el.innerHTML+=text[i++];
+el.innerHTML+=text.charAt(i++);
 setTimeout(run,speed);
-}else if(cb) cb();
+}else{
+el.classList.remove("cursor-blink");
+clearActive();
+if(cb)cb();
 }
-
+}
 run();
 }
 
-/* ===== ORIGINAL MESSAGES (UNCHANGED) ===== */
+/* ================= ORIGINAL MESSAGES ================= */
 
 const landingTitle =
 "Made with love… just for you, my Luyanda 💗";
@@ -198,19 +268,15 @@ const mainText =
 const videoTitle =
 "It’s Your Turn Ke Mfazi";
 
-const giftTitle =
-"Your Gift";
-
 const giftText =
-"I got you something small…\n\n" +
-"but it means so much more than it probably looks like. 🥹\n\n" +
+"I got you something small…\n\nbut it means so much more than it probably looks like. 🥹\n\n" +
 "I wanted to give you something you could keep close to you… something simple, but constant.\n\n" +
 "Something that quietly becomes part of your everyday life… and maybe reminds you, even in silence, that there’s someone thinking about you.\n\n" +
 "And every time you notice it on your wrist, I hope it brings you a little warmth… a quiet reminder that you are cared for, appreciated, valued, and deeply close to someone’s heart. 🩵";
 
-/* ===== FLOW CONTROL ===== */
+/* ================= FLOW ================= */
 
-function enter(){
+function enterSite(){
 
 document.getElementById("landing").style.display="none";
 
@@ -219,26 +285,24 @@ document.getElementById("s1").classList.add("active");
 document.getElementById("music").volume=0.6;
 document.getElementById("music").play().catch(()=>{});
 
-/* STEP 1 */
-type("landingTitle",landingTitle,50,()=>{
-type("landingText",landingText,40,()=>{
+typeText("landingTitle",landingTitle,50,()=>{
+typeText("landingText",landingText,35,()=>{
 
-/* STEP 2 */
-type("introLine",introLine,40,()=>{
-type("mainTitle",mainTitle,50,()=>{
-type("mainText",mainText,25,()=>{
+typeText("introLine",introLine,40,()=>{
+
+typeText("mainTitle",mainTitle,50,()=>{
+
+typeText("mainText",mainText,25,()=>{
 
 document.getElementById("photo").classList.add("show");
 
-/* VIDEO */
 setTimeout(()=>{
 document.getElementById("s2").classList.add("active");
+document.getElementById("video").play();
 document.getElementById("videoTitle").innerText=videoTitle;
-document.getElementById("video").play().catch(()=>{});
 
 setTimeout(()=>{
 document.getElementById("s3").classList.add("active");
-document.getElementById("giftTitle").innerText=giftTitle;
 },2000);
 
 },2000);
@@ -249,9 +313,10 @@ document.getElementById("giftTitle").innerText=giftTitle;
 });
 }
 
-/* ===== GIFT ===== */
+/* ================= GIFT ================= */
+
 function revealGift(){
-type("gift",giftText,30);
+typeText("gift",giftText,30);
 }
 
 </script>
