@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>For Luyanda ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
 <style>
+
+/* ================= BASE ================= */
 
 *{
 margin:0;
@@ -20,13 +25,15 @@ body{
 background:black;
 color:white;
 overflow-x:hidden;
-cursor:none; /* hide default cursor */
+cursor:none;
 }
 
-/* BACKGROUND */
+/* ================= BACKGROUND ================= */
+
 #bgVideo{
 position:fixed;
-inset:0;
+top:0;
+left:0;
 width:100%;
 height:100%;
 object-fit:cover;
@@ -35,97 +42,170 @@ z-index:-2;
 
 .overlay{
 position:fixed;
-inset:0;
-background:rgba(0,0,0,0.6);
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.55);
 z-index:-1;
 }
 
-/* CUSTOM CURSOR */
+/* ================= CURSOR ================= */
+
 #cursor{
 position:fixed;
 width:12px;
 height:12px;
 border-radius:50%;
 background:white;
-mix-blend-mode:difference;
-pointer-events:none;
 transform:translate(-50%,-50%);
+pointer-events:none;
 z-index:9999;
 box-shadow:0 0 20px rgba(255,255,255,0.8);
+mix-blend-mode:difference;
 }
 
-/* SECTIONS */
-section{
-display:none;
-min-height:100vh;
+/* ================= LANDING ================= */
+
+#landing{
+height:100vh;
+display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-padding:30px;
-}
-
-section.active{
-display:flex;
-}
-
-/* CARD */
-.glass{
-max-width:800px;
-background:rgba(255,255,255,0.07);
-backdrop-filter:blur(20px);
-padding:40px;
-border-radius:25px;
 text-align:center;
-transition:0.8s;
-border:1px solid rgba(255,255,255,0.15);
+padding:40px;
+transition:1s ease;
+}
+
+#landing.hide{
+opacity:0;
+transform:scale(1.1);
+filter:blur(10px);
+}
+
+/* ================= MAIN ================= */
+
+#main{
+display:none;
+max-width:900px;
+margin:auto;
+padding:60px 20px;
+}
+
+/* ================= GLASS CARD ================= */
+
+.glass{
+background:rgba(255,255,255,0.07);
+backdrop-filter:blur(25px);
+border-radius:25px;
+padding:50px;
+margin-bottom:40px;
+border:1px solid rgba(255,255,255,0.18);
+box-shadow:0 10px 60px rgba(0,0,0,0.6);
+
+opacity:0;
+transform:translateY(40px) scale(0.95);
+filter:blur(10px);
+transition:1.2s ease;
 }
 
 /* ACTIVE GLOW */
 .glass.active-glow{
-background:rgba(255,255,255,0.16);
-box-shadow:0 0 25px rgba(255,255,255,0.25),
-0 0 60px rgba(255,255,255,0.12);
+background:rgba(255,255,255,0.15);
+box-shadow:0 0 30px rgba(255,255,255,0.25),
+0 0 70px rgba(255,255,255,0.15);
 transform:scale(1.02);
 }
 
-/* TEXT */
-h1{
-font-family:'Dancing Script';
-font-size:42px;
-margin-bottom:20px;
+/* SHOW */
+.glass.show{
+opacity:1;
+transform:translateY(0) scale(1);
+filter:blur(0);
 }
 
-p{
-white-space:pre-line;
+/* ================= TEXT ================= */
+
+.title{
+font-family:'Dancing Script';
+font-size:30px;
+text-align:center;
+margin-bottom:25px;
+}
+
+#introLine{
+text-align:center;
+margin-bottom:20px;
 line-height:1.9;
 opacity:0.9;
-min-height:50px;
 }
 
-/* BUTTON */
+.message{
+white-space:pre-line;
+text-align:justify;
+line-height:1.9;
+font-size:18px;
+min-height:250px;
+}
+
+/* ================= MEDIA ================= */
+
+.photo,
+.video{
+width:100%;
+border-radius:18px;
+margin-top:25px;
+
+opacity:0;
+transform:scale(1.05);
+filter:blur(10px);
+transition:1.2s ease;
+}
+
+.photo.show,
+.video.show{
+opacity:1;
+transform:scale(1);
+filter:blur(0);
+}
+
+/* ================= BUTTON ================= */
+
 button{
-margin-top:20px;
-padding:14px 40px;
+margin-top:30px;
+padding:15px 55px;
+border-radius:40px;
 border:none;
-border-radius:30px;
 background:white;
 color:black;
+font-size:18px;
 cursor:pointer;
+transition:0.4s;
 }
 
-/* IMAGE */
-img{
-width:100%;
-margin-top:20px;
-border-radius:20px;
-display:none;
+button:hover{
+transform:scale(1.08);
 }
 
-img.show{
-display:block;
+/* ================= HEARTS ================= */
+
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:18px;
+opacity:0.4;
+animation:floatUp linear infinite;
 }
 
-/* CURSOR BLINK */
-.cursor-blink::after{
+@keyframes floatUp{
+0%{transform:translateY(0);}
+100%{transform:translateY(-120vh);}
+}
+
+/* ================= CURSOR BLINK ================= */
+
+.cursor::after{
 content:"|";
 animation:blink 0.8s infinite;
 }
@@ -135,63 +215,59 @@ animation:blink 0.8s infinite;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<!-- BACKGROUND -->
+<div id="cursor"></div>
+
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4">
 </video>
 
 <div class="overlay"></div>
 
-<!-- CUSTOM CURSOR -->
-<div id="cursor"></div>
-
 <audio id="music" loop>
 <source src="bg.mp3">
 </audio>
 
 <!-- LANDING -->
-<section id="landing" class="active">
-<div class="glass" id="landingCard">
+<section id="landing">
 <h1 id="landingTitle"></h1>
 <p id="landingText"></p>
 <button onclick="enterSite()">Open</button>
-</div>
 </section>
 
 <!-- MAIN -->
-<section id="s1">
-<div class="glass" id="card1">
-<p id="introLine"></p>
-<h1 id="mainTitle"></h1>
-<p id="mainText"></p>
-<img id="photo" src="IMG_2034.jpeg">
-</div>
-</section>
+<section id="main">
 
-<section id="s2">
-<div class="glass" id="card2">
-<h1 id="videoTitle"></h1>
-<video id="video" width="100%" controls loop>
+<div class="glass" id="section1">
+<p id="introLine"></p>
+<h1 class="title" id="mainTitle"></h1>
+<p class="message" id="message"></p>
+<img src="IMG_2034.jpeg" class="photo" id="photo">
+</div>
+
+<div class="glass" id="section2">
+<h1 class="title" id="videoTitle"></h1>
+<video muted playsinline loop id="video" class="video">
 <source src="luyanda.mp4">
 </video>
 </div>
-</section>
 
-<section id="s3">
-<div class="glass" id="card3">
-<h1>Your Gift</h1>
+<div class="glass" id="section3">
+<h1 class="title" id="giftTitle"></h1>
 <button onclick="revealGift()">Reveal Gift Message</button>
-<p id="gift"></p>
+<p class="message" id="gift" style="display:none;"></p>
 </div>
+
 </section>
 
 <script>
 
 /* ================= CURSOR ================= */
+
 const cursor=document.getElementById("cursor");
 
 document.addEventListener("mousemove",(e)=>{
@@ -199,15 +275,16 @@ cursor.style.left=e.clientX+"px";
 cursor.style.top=e.clientY+"px";
 });
 
-/* ================= GLOW SYSTEM ================= */
+/* ================= GLOW CONTROL ================= */
+
 let activeCard=null;
 
-function setActive(cardId){
+function setActive(id){
 if(activeCard){
 document.getElementById(activeCard)?.classList.remove("active-glow");
 }
-activeCard=cardId;
-document.getElementById(cardId)?.classList.add("active-glow");
+activeCard=id;
+document.getElementById(id)?.classList.add("active-glow");
 }
 
 function clearActive(){
@@ -218,6 +295,7 @@ activeCard=null;
 }
 
 /* ================= TYPEWRITER ================= */
+
 function typeText(id,text,speed=40,cb,cardId){
 
 if(cardId)setActive(cardId);
@@ -225,18 +303,19 @@ if(cardId)setActive(cardId);
 let el=document.getElementById(id);
 let i=0;
 el.innerHTML="";
-el.classList.add("cursor-blink");
+el.classList.add("cursor");
 
 function run(){
 if(i<text.length){
 el.innerHTML+=text.charAt(i++);
 setTimeout(run,speed);
 }else{
-el.classList.remove("cursor-blink");
+el.classList.remove("cursor");
 clearActive();
 if(cb)cb();
 }
 }
+
 run();
 }
 
@@ -278,31 +357,39 @@ const giftText =
 
 function enterSite(){
 
+document.getElementById("landing").classList.add("hide");
+
+setTimeout(()=>{
+
 document.getElementById("landing").style.display="none";
+document.getElementById("main").style.display="block";
 
-document.getElementById("s1").classList.add("active");
+const music=document.getElementById("music");
+music.volume=0.6;
+music.play().catch(()=>{});
 
-document.getElementById("music").volume=0.6;
-document.getElementById("music").play().catch(()=>{});
+startFlow();
 
-typeText("landingTitle",landingTitle,50,()=>{
-typeText("landingText",landingText,35,()=>{
+},1000);
 
-typeText("introLine",introLine,40,()=>{
+}
 
-typeText("mainTitle",mainTitle,50,()=>{
+function startFlow(){
 
-typeText("mainText",mainText,25,()=>{
+document.getElementById("section1").classList.add("show");
 
+typeText("introLine",introLine,60,()=>{
+typeText("mainTitle",mainTitle,60,()=>{
+typeText("message",mainText,25,"section1",()=>{
 document.getElementById("photo").classList.add("show");
 
 setTimeout(()=>{
-document.getElementById("s2").classList.add("active");
+document.getElementById("section2").classList.add("show");
 document.getElementById("video").play();
 document.getElementById("videoTitle").innerText=videoTitle;
 
 setTimeout(()=>{
-document.getElementById("s3").classList.add("active");
+document.getElementById("section3").classList.add("show");
 },2000);
 
 },2000);
@@ -310,14 +397,27 @@ document.getElementById("s3").classList.add("active");
 });
 });
 });
-});
+
 }
 
 /* ================= GIFT ================= */
 
 function revealGift(){
-typeText("gift",giftText,30);
+document.getElementById("gift").style.display="block";
+typeText("gift",giftText,30,"section3");
 }
+
+/* ================= HEARTS ================= */
+
+setInterval(()=>{
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(4+Math.random()*6)+"s";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),9000);
+},500);
 
 </script>
 
