@@ -17,15 +17,12 @@ box-sizing:border-box;
 -webkit-tap-highlight-color:transparent;
 }
 
-html{
-scroll-behavior:smooth;
-}
-
 body{
 font-family:'Inter',sans-serif;
-background:#050505;
+background:black;
 color:white;
-overflow-x:hidden;
+overflow:hidden;
+height:100vh;
 }
 
 /* ================= BACKGROUND ================= */
@@ -37,7 +34,7 @@ width:100%;
 height:100%;
 object-fit:cover;
 z-index:-3;
-filter:brightness(0.28);
+filter:brightness(0.25);
 }
 
 .overlay{
@@ -46,8 +43,8 @@ inset:0;
 background:
 linear-gradient(
 to bottom,
-rgba(0,0,0,0.25),
-rgba(0,0,0,0.78)
+rgba(0,0,0,0.3),
+rgba(0,0,0,0.82)
 );
 z-index:-2;
 }
@@ -73,206 +70,149 @@ pointer-events:none;
 
 .loader-heart{
 font-size:60px;
-animation:pulse 1.4s infinite;
+animation:pulse 1.5s infinite;
 }
 
 .loader-text{
 margin-top:20px;
-font-size:15px;
-letter-spacing:3px;
-opacity:0.7;
+font-size:13px;
+letter-spacing:4px;
+opacity:0.6;
 }
 
 @keyframes pulse{
 0%{transform:scale(1);}
-50%{transform:scale(1.2);}
+50%{transform:scale(1.15);}
 100%{transform:scale(1);}
 }
 
-/* ================= MUSIC BUTTON ================= */
+/* ================= EXPERIENCE ================= */
 
-.music-btn{
-position:fixed;
-top:20px;
-right:20px;
-width:52px;
-height:52px;
-border-radius:50%;
-border:none;
-background:rgba(255,255,255,0.12);
-backdrop-filter:blur(15px);
-color:white;
-font-size:20px;
-z-index:9999;
-}
-
-/* ================= COVER ================= */
-
-.cover{
-min-height:100vh;
+#experience{
+width:100%;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:25px;
+padding:20px;
 position:relative;
 }
 
-.cover-card{
+/* ================= MAGAZINE ================= */
+
+.magazine{
 width:100%;
-max-width:430px;
+max-width:460px;
+height:92vh;
 
 background:
 linear-gradient(
 135deg,
-rgba(255,255,255,0.13),
-rgba(255,255,255,0.05)
+rgba(255,255,255,0.14),
+rgba(255,255,255,0.04)
 );
-
-border:1px solid rgba(255,255,255,0.15);
 
 backdrop-filter:blur(20px);
 
+border:1px solid rgba(255,255,255,0.14);
+
 border-radius:30px;
 
-padding:40px 28px;
+overflow:hidden;
 
-text-align:center;
+position:relative;
 
 box-shadow:
-0 0 60px rgba(0,0,0,0.65);
+0 0 60px rgba(0,0,0,0.6);
 }
 
-.magazine-label{
-font-size:11px;
-letter-spacing:4px;
-opacity:0.7;
-margin-bottom:20px;
-}
-
-.cover-title{
-font-family:'Cormorant Garamond',serif;
-font-size:56px;
-line-height:1;
-margin-bottom:18px;
-}
-
-.cover-sub{
-font-size:15px;
-line-height:1.8;
-opacity:0.85;
-margin-bottom:35px;
-}
-
-.cover-image{
-width:100%;
-border-radius:22px;
-margin-bottom:28px;
-box-shadow:
-0 10px 35px rgba(0,0,0,0.5);
-}
-
-.start-btn{
-padding:15px 35px;
-border:none;
-border-radius:40px;
-font-weight:600;
-background:white;
-color:black;
-font-size:15px;
-}
-
-/* ================= BOOK ================= */
-
-.book{
-padding:70px 18px 140px;
-max-width:700px;
-margin:auto;
-display:none;
-}
-
-.book.show{
-display:block;
-animation:fadeIn 1s ease;
-}
-
-@keyframes fadeIn{
-from{
-opacity:0;
-transform:translateY(40px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-/* ================= PAGE ================= */
+/* ================= PAGES ================= */
 
 .page{
-margin-bottom:28px;
+position:absolute;
+inset:0;
 
-background:
-linear-gradient(
-135deg,
-rgba(255,255,255,0.11),
-rgba(255,255,255,0.03)
-);
+padding:32px 26px 110px;
 
-backdrop-filter:blur(18px);
-
-border-radius:28px;
-
-padding:28px 24px;
-
-border:1px solid rgba(255,255,255,0.12);
-
-box-shadow:
-0 10px 40px rgba(0,0,0,0.45);
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
 
 opacity:0;
-transform:translateY(50px);
-transition:1s ease;
+pointer-events:none;
+
+transform:scale(1.04);
+
+transition:
+opacity 0.8s ease,
+transform 0.8s ease;
 }
 
-.page.show{
+.page.active{
 opacity:1;
-transform:translateY(0);
+pointer-events:auto;
+transform:scale(1);
 }
 
-/* ================= PAGE HEADINGS ================= */
+/* ================= PAGE CONTENT ================= */
 
-.page-number{
-font-size:12px;
-letter-spacing:3px;
-opacity:0.45;
-margin-bottom:18px;
+.page-label{
+font-size:11px;
+letter-spacing:4px;
+opacity:0.5;
+margin-bottom:16px;
 }
 
 .page-title{
 font-family:'Cormorant Garamond',serif;
-font-size:40px;
+font-size:42px;
 line-height:1;
-margin-bottom:20px;
+margin-bottom:18px;
 }
 
 .page-text{
-line-height:2;
-font-size:15px;
-opacity:0.92;
+line-height:1.95;
+font-size:14px;
 white-space:pre-line;
+opacity:0.92;
+overflow-y:auto;
+padding-right:4px;
 }
 
-/* ================= IMAGE ================= */
+/* HIDE SCROLLBAR */
+
+.page-text::-webkit-scrollbar{
+display:none;
+}
+
+/* ================= COVER ================= */
+
+.cover-image{
+width:100%;
+border-radius:22px;
+margin:18px 0 25px;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.45);
+}
+
+.cover-sub{
+font-size:14px;
+line-height:1.8;
+opacity:0.85;
+margin-bottom:28px;
+}
+
+/* ================= MEDIA ================= */
 
 .photo{
 width:100%;
 border-radius:20px;
-margin-top:25px;
-box-shadow:
-0 10px 30px rgba(0,0,0,0.5);
-}
+margin-top:20px;
 
-/* ================= VIDEO ================= */
+box-shadow:
+0 10px 25px rgba(0,0,0,0.45);
+}
 
 video{
 width:100%;
@@ -280,34 +220,65 @@ border-radius:20px;
 margin-top:20px;
 }
 
-/* ================= FINAL CARD ================= */
+/* ================= BUTTONS ================= */
 
-.final-card{
-text-align:center;
-padding:35px 25px;
+.controls{
+position:absolute;
+bottom:22px;
+left:0;
+width:100%;
+display:flex;
+justify-content:center;
+gap:14px;
+padding:0 20px;
 }
 
-.final-title{
-font-family:'Dancing Script',cursive;
-font-size:52px;
-margin-bottom:20px;
+button{
+padding:14px 28px;
+border:none;
+border-radius:40px;
+background:white;
+color:black;
+font-weight:600;
+font-size:14px;
 }
 
-.final-text{
-line-height:2;
-opacity:0.92;
+/* ================= MUSIC ================= */
+
+.music-btn{
+position:absolute;
+top:18px;
+right:18px;
+
+width:48px;
+height:48px;
+
+border-radius:50%;
+
+background:
+rgba(255,255,255,0.12);
+
+backdrop-filter:blur(10px);
+
+border:1px solid rgba(255,255,255,0.12);
+
+color:white;
+
+font-size:18px;
+
+z-index:999;
 }
 
-/* ================= FLOATING HEARTS ================= */
+/* ================= HEARTS ================= */
 
 .heart{
 position:fixed;
 bottom:-20px;
 font-size:18px;
 opacity:0.5;
-animation:floatUp linear forwards;
 pointer-events:none;
-z-index:999;
+animation:floatUp linear forwards;
+z-index:9999;
 }
 
 @keyframes floatUp{
@@ -317,38 +288,36 @@ opacity:0;
 }
 }
 
-/* ================= REVEAL EFFECT ================= */
+/* ================= FINAL PAGE ================= */
 
-.reveal{
-opacity:0;
-transform:translateY(50px);
-transition:1s ease;
+.final-title{
+font-family:'Dancing Script',cursive;
+font-size:58px;
+text-align:center;
+margin-top:40px;
+margin-bottom:25px;
 }
 
-.reveal.active{
-opacity:1;
-transform:translateY(0);
+.final-text{
+text-align:center;
+line-height:2;
+opacity:0.9;
 }
 
 /* ================= MOBILE ================= */
 
 @media(max-width:480px){
 
-.cover-title{
-font-size:48px;
+.magazine{
+height:94vh;
 }
 
 .page-title{
-font-size:34px;
-}
-
-.page-text{
-font-size:14px;
-line-height:1.9;
+font-size:36px;
 }
 
 .final-title{
-font-size:42px;
+font-size:48px;
 }
 
 }
@@ -382,21 +351,25 @@ LOADING YOUR LOVE STORY
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
+<!-- EXPERIENCE -->
+
+<section id="experience">
+
+<div class="magazine">
+
 <button class="music-btn" id="musicBtn">
 ♫
 </button>
 
-<!-- COVER -->
+<!-- PAGE 1 -->
 
-<section class="cover" id="cover">
+<div class="page active">
 
-<div class="cover-card reveal active">
-
-<div class="magazine-label">
+<div class="page-label">
 SPECIAL EDITION
 </div>
 
-<h1 class="cover-title">
+<h1 class="page-title">
 For Luyanda ❤️
 </h1>
 
@@ -406,23 +379,17 @@ A small interactive magazine made with love, memories, emotions, and all the wor
 
 <img src="IMG_2034.jpeg" class="cover-image">
 
-<button class="start-btn" onclick="startExperience()">
-Open Magazine
-</button>
+<div class="page-text">
+Made with love… just for you, my Luyanda 💗
+</div>
 
 </div>
 
-</section>
+<!-- PAGE 2 -->
 
-<!-- BOOK -->
+<div class="page">
 
-<section class="book" id="book">
-
-<!-- PAGE 1 -->
-
-<div class="page reveal">
-
-<div class="page-number">
+<div class="page-label">
 PAGE 01
 </div>
 
@@ -430,7 +397,7 @@ PAGE 01
 Made with love… 💗
 </h2>
 
-<p class="page-text">
+<div class="page-text">
 I made this to celebrate you on your birthday…
 
 because you deserve to feel loved, appreciated, and special in every way.
@@ -440,15 +407,15 @@ but I’m here now… and I want to make up for every moment I missed.
 
 So take your time going through this…
 it was all made with you in mind 💗
-</p>
+</div>
 
 </div>
 
-<!-- PAGE 2 -->
+<!-- PAGE 3 -->
 
-<div class="page reveal">
+<div class="page">
 
-<div class="page-number">
+<div class="page-label">
 PAGE 02
 </div>
 
@@ -456,17 +423,17 @@ PAGE 02
 Before Anyone Else 🎈
 </h2>
 
-<p class="page-text">
+<div class="page-text">
 I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.
-</p>
+</div>
 
 </div>
 
-<!-- PAGE 3 -->
+<!-- PAGE 4 -->
 
-<div class="page reveal">
+<div class="page">
 
-<div class="page-number">
+<div class="page-label">
 PAGE 03
 </div>
 
@@ -474,23 +441,21 @@ PAGE 03
 Happy Birthday 🩵
 </h2>
 
-<p class="page-text">
+<div class="page-text">
 Tomorrow is going to be special… because it’s the day someone truly important came into this world. 🩵
 
-I hope your birthday is filled with love, laughter, peace, and all the little things that make your heart feel light and happy.
-
-You deserve a day that feels as beautiful as the person you are.
-</p>
+I hope your birthday is filled with love, laughter, peace, and all the little things that make your heart feel light and happy. You deserve a day that feels as beautiful as the person you are.
+</div>
 
 <img src="IMG_2034.jpeg" class="photo">
 
 </div>
 
-<!-- PAGE 4 -->
+<!-- PAGE 5 -->
 
-<div class="page reveal">
+<div class="page">
 
-<div class="page-number">
+<div class="page-label">
 PAGE 04
 </div>
 
@@ -498,21 +463,21 @@ PAGE 04
 Us 🥺
 </h2>
 
-<p class="page-text">
+<div class="page-text">
 I’ve always had a soft spot for you… just as much as you’ve always had one for me.
 
 No matter the time, distance, or everything that happened in between, that feeling never really disappeared.
 
 Being able to talk to you again is honestly something I appreciate more than I probably say out loud.
-</p>
+</div>
 
 </div>
 
-<!-- PAGE 5 -->
+<!-- PAGE 6 -->
 
-<div class="page reveal">
+<div class="page">
 
-<div class="page-number">
+<div class="page-label">
 PAGE 05
 </div>
 
@@ -520,21 +485,21 @@ PAGE 05
 A Promise 🤍
 </h2>
 
-<p class="page-text">
+<div class="page-text">
 And I also want to apologize for how things ended between us before.
 
-I truly regret the way I handled things.
+I don’t want to ruin such a beautiful moment by dwelling on the past, but I truly regret the way I handled things.
 
 I’m grateful you gave me another chance to be part of your life again, and that somehow we found our way back to each other.
-</p>
+</div>
 
 </div>
 
-<!-- PAGE 6 -->
+<!-- PAGE 7 -->
 
-<div class="page reveal">
+<div class="page">
 
-<div class="page-number">
+<div class="page-label">
 PAGE 06
 </div>
 
@@ -542,7 +507,7 @@ PAGE 06
 Never Again 🩵
 </h2>
 
-<p class="page-text">
+<div class="page-text">
 I know I might be the last person who should be speaking about promises…
 
 but I mean this with all my heart:
@@ -550,15 +515,15 @@ but I mean this with all my heart:
 I will never take the chance you gave us for granted.
 
 Hurting you again is something I never want to happen.
-</p>
+</div>
 
 </div>
 
-<!-- PAGE 7 -->
+<!-- PAGE 8 -->
 
-<div class="page reveal">
+<div class="page">
 
-<div class="page-number">
+<div class="page-label">
 PAGE 07
 </div>
 
@@ -572,11 +537,11 @@ Her Moment 🎬
 
 </div>
 
-<!-- PAGE 8 -->
+<!-- PAGE 9 -->
 
-<div class="page reveal">
+<div class="page">
 
-<div class="page-number">
+<div class="page-label">
 PAGE 08
 </div>
 
@@ -584,7 +549,7 @@ PAGE 08
 Your Gift 🎁
 </h2>
 
-<p class="page-text">
+<div class="page-text">
 I got you something small…
 
 but it means so much more than it probably looks like. 🥹
@@ -593,26 +558,48 @@ I wanted to give you something you could keep close to you… something simple, 
 
 Something that quietly becomes part of your everyday life… and maybe reminds you, even in silence, that there’s someone thinking about you.
 
-And every time you notice it on your wrist, I hope it brings you warmth.
+Not in a loud or overwhelming way… just something soft, steady, and real.
 
-I can’t wait to see how beautiful it looks on that cute hand of yours… 🩵
-</p>
+And every time you notice it on your wrist, I hope it brings you a little warmth… a quiet reminder that you are cared for, appreciated, valued, and deeply close to someone’s heart.
+
+It’s honestly just something I felt was right for you.
+
+I can’t wait to see how beautiful it looks on that cute hand of yours… 🥺
+
+And I hope it never leaves your wrist… the same way you never really left my heart. 🩵
+</div>
 
 </div>
 
-<!-- FINAL -->
+<!-- PAGE 10 -->
 
-<div class="page reveal final-card">
+<div class="page">
 
-<h2 class="final-title">
+<h1 class="final-title">
 I Love You 🩵
-</h2>
+</h1>
 
-<p class="final-text">
+<div class="final-text">
 More than anything, I just want your birthday to feel warm, unforgettable, and full of love.
 
 Enjoy every second of it… because you deserve nothing less.
-</p>
+</div>
+
+</div>
+
+<!-- CONTROLS -->
+
+<div class="controls">
+
+<button onclick="prevPage()">
+Previous
+</button>
+
+<button onclick="nextPage()">
+Next
+</button>
+
+</div>
 
 </div>
 
@@ -626,43 +613,11 @@ window.addEventListener("load",()=>{
 
 setTimeout(()=>{
 document.getElementById("loader").classList.add("hide");
-},2000);
+},1800);
 
 });
 
-/* ================= START EXPERIENCE ================= */
-
-function startExperience(){
-
-document.getElementById("cover").style.display="none";
-
-document.getElementById("book").classList.add("show");
-
-document.getElementById("music").volume=0.6;
-
-document.getElementById("music").play().catch(()=>{});
-
-}
-
-/* ================= REVEAL ANIMATION ================= */
-
-const reveals=document.querySelectorAll(".reveal");
-
-window.addEventListener("scroll",()=>{
-
-reveals.forEach(el=>{
-
-const top=el.getBoundingClientRect().top;
-
-if(top<window.innerHeight-80){
-el.classList.add("active");
-}
-
-});
-
-});
-
-/* ================= MUSIC BUTTON ================= */
+/* ================= MUSIC ================= */
 
 const music=document.getElementById("music");
 
@@ -677,6 +632,50 @@ this.innerHTML="⏸";
 }
 
 };
+
+/* ================= PAGES ================= */
+
+const pages=document.querySelectorAll(".page");
+
+let currentPage=0;
+
+function showPage(index){
+
+pages.forEach(page=>{
+page.classList.remove("active");
+});
+
+pages[index].classList.add("active");
+
+}
+
+/* NEXT */
+
+function nextPage(){
+
+if(currentPage < pages.length-1){
+
+currentPage++;
+
+showPage(currentPage);
+
+}
+
+}
+
+/* PREV */
+
+function prevPage(){
+
+if(currentPage > 0){
+
+currentPage--;
+
+showPage(currentPage);
+
+}
+
+}
 
 /* ================= HEARTS ================= */
 
