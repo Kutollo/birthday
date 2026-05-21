@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>For Luyanda ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,16 +14,21 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+html{
+scroll-behavior:smooth;
 }
 
 body{
 font-family:'Inter',sans-serif;
 background:#050505;
-overflow:hidden;
 color:white;
+overflow-x:hidden;
 }
 
-/* BACKGROUND */
+/* ================= BACKGROUND ================= */
 
 #bgVideo{
 position:fixed;
@@ -32,174 +37,242 @@ width:100%;
 height:100%;
 object-fit:cover;
 z-index:-3;
-filter:brightness(0.35);
+filter:brightness(0.28);
 }
 
 .overlay{
 position:fixed;
 inset:0;
 background:
-linear-gradient(to bottom,
-rgba(0,0,0,0.4),
-rgba(0,0,0,0.7));
+linear-gradient(
+to bottom,
+rgba(0,0,0,0.25),
+rgba(0,0,0,0.78)
+);
 z-index:-2;
 }
 
-/* BOOK */
+/* ================= LOADER ================= */
 
-.book-container{
-width:100%;
-height:100vh;
+#loader{
+position:fixed;
+inset:0;
+background:black;
 display:flex;
 justify-content:center;
 align-items:center;
-padding:20px;
+flex-direction:column;
+z-index:99999;
+transition:1s;
 }
 
-.book{
-width:95%;
-max-width:1200px;
-height:88vh;
+#loader.hide{
+opacity:0;
+pointer-events:none;
+}
+
+.loader-heart{
+font-size:60px;
+animation:pulse 1.4s infinite;
+}
+
+.loader-text{
+margin-top:20px;
+font-size:15px;
+letter-spacing:3px;
+opacity:0.7;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.2);}
+100%{transform:scale(1);}
+}
+
+/* ================= MUSIC BUTTON ================= */
+
+.music-btn{
+position:fixed;
+top:20px;
+right:20px;
+width:52px;
+height:52px;
+border-radius:50%;
+border:none;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(15px);
+color:white;
+font-size:20px;
+z-index:9999;
+}
+
+/* ================= COVER ================= */
+
+.cover{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:25px;
 position:relative;
-perspective:2500px;
 }
 
-/* PAGE */
-
-.page{
-position:absolute;
-width:50%;
-height:100%;
-right:0;
-transform-origin:left;
-transform-style:preserve-3d;
-transition:transform 1.5s ease;
-cursor:pointer;
-}
-
-.page.flipped{
-transform:rotateY(-180deg);
-}
-
-.page-front,
-.page-back{
-position:absolute;
+.cover-card{
 width:100%;
-height:100%;
-backface-visibility:hidden;
-overflow:hidden;
-border-radius:20px;
-}
+max-width:430px;
 
-/* FRONT */
-
-.page-front{
 background:
 linear-gradient(
 135deg,
 rgba(255,255,255,0.13),
-rgba(255,255,255,0.04)
+rgba(255,255,255,0.05)
 );
-
-backdrop-filter:blur(20px);
 
 border:1px solid rgba(255,255,255,0.15);
 
-box-shadow:
-0 0 50px rgba(0,0,0,0.6);
-
-padding:60px 45px;
-
-display:flex;
-flex-direction:column;
-justify-content:center;
-}
-
-/* BACK */
-
-.page-back{
-background:
-linear-gradient(
-135deg,
-rgba(255,255,255,0.09),
-rgba(255,255,255,0.03)
-);
-
-transform:rotateY(180deg);
-
-border:1px solid rgba(255,255,255,0.12);
-
-padding:60px 45px;
-
-display:flex;
-flex-direction:column;
-justify-content:center;
-}
-
-/* LEFT STATIC SIDE */
-
-.book-left{
-position:absolute;
-left:0;
-width:50%;
-height:100%;
-border-radius:20px 0 0 20px;
-
-background:
-linear-gradient(
-135deg,
-rgba(255,255,255,0.12),
-rgba(255,255,255,0.03)
-);
-
 backdrop-filter:blur(20px);
 
-border:1px solid rgba(255,255,255,0.15);
+border-radius:30px;
 
-overflow:hidden;
+padding:40px 28px;
 
-display:flex;
-justify-content:center;
-align-items:center;
-padding:50px;
+text-align:center;
 
 box-shadow:
-0 0 50px rgba(0,0,0,0.6);
+0 0 60px rgba(0,0,0,0.65);
 }
 
-/* TYPOGRAPHY */
-
-.cover-title{
-font-family:'Dancing Script';
-font-size:58px;
-line-height:1.2;
-margin-bottom:25px;
-}
-
-.page-title{
-font-family:'Dancing Script';
-font-size:42px;
+.magazine-label{
+font-size:11px;
+letter-spacing:4px;
+opacity:0.7;
 margin-bottom:20px;
 }
 
-.text{
-line-height:2;
-font-size:17px;
-white-space:pre-line;
-opacity:0.92;
+.cover-title{
+font-family:'Cormorant Garamond',serif;
+font-size:56px;
+line-height:1;
+margin-bottom:18px;
 }
 
-/* PHOTO */
+.cover-sub{
+font-size:15px;
+line-height:1.8;
+opacity:0.85;
+margin-bottom:35px;
+}
+
+.cover-image{
+width:100%;
+border-radius:22px;
+margin-bottom:28px;
+box-shadow:
+0 10px 35px rgba(0,0,0,0.5);
+}
+
+.start-btn{
+padding:15px 35px;
+border:none;
+border-radius:40px;
+font-weight:600;
+background:white;
+color:black;
+font-size:15px;
+}
+
+/* ================= BOOK ================= */
+
+.book{
+padding:70px 18px 140px;
+max-width:700px;
+margin:auto;
+display:none;
+}
+
+.book.show{
+display:block;
+animation:fadeIn 1s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(40px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* ================= PAGE ================= */
+
+.page{
+margin-bottom:28px;
+
+background:
+linear-gradient(
+135deg,
+rgba(255,255,255,0.11),
+rgba(255,255,255,0.03)
+);
+
+backdrop-filter:blur(18px);
+
+border-radius:28px;
+
+padding:28px 24px;
+
+border:1px solid rgba(255,255,255,0.12);
+
+box-shadow:
+0 10px 40px rgba(0,0,0,0.45);
+
+opacity:0;
+transform:translateY(50px);
+transition:1s ease;
+}
+
+.page.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* ================= PAGE HEADINGS ================= */
+
+.page-number{
+font-size:12px;
+letter-spacing:3px;
+opacity:0.45;
+margin-bottom:18px;
+}
+
+.page-title{
+font-family:'Cormorant Garamond',serif;
+font-size:40px;
+line-height:1;
+margin-bottom:20px;
+}
+
+.page-text{
+line-height:2;
+font-size:15px;
+opacity:0.92;
+white-space:pre-line;
+}
+
+/* ================= IMAGE ================= */
 
 .photo{
 width:100%;
-border-radius:18px;
-margin-top:30px;
+border-radius:20px;
+margin-top:25px;
 box-shadow:
-0 10px 30px rgba(0,0,0,0.4);
+0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* VIDEO */
+/* ================= VIDEO ================= */
 
 video{
 width:100%;
@@ -207,45 +280,25 @@ border-radius:20px;
 margin-top:20px;
 }
 
-/* BUTTONS */
+/* ================= FINAL CARD ================= */
 
-.controls{
-position:fixed;
-bottom:30px;
-left:50%;
-transform:translateX(-50%);
-display:flex;
-gap:15px;
-z-index:999;
+.final-card{
+text-align:center;
+padding:35px 25px;
 }
 
-button{
-padding:14px 30px;
-border:none;
-border-radius:40px;
-background:white;
-color:black;
-font-weight:600;
-cursor:pointer;
-transition:0.3s;
+.final-title{
+font-family:'Dancing Script',cursive;
+font-size:52px;
+margin-bottom:20px;
 }
 
-button:hover{
-transform:scale(1.05);
+.final-text{
+line-height:2;
+opacity:0.92;
 }
 
-/* PAGE NUMBER */
-
-.page-number{
-position:absolute;
-bottom:25px;
-right:35px;
-font-size:13px;
-opacity:0.5;
-letter-spacing:2px;
-}
-
-/* HEARTS */
+/* ================= FLOATING HEARTS ================= */
 
 .heart{
 position:fixed;
@@ -254,6 +307,7 @@ font-size:18px;
 opacity:0.5;
 animation:floatUp linear forwards;
 pointer-events:none;
+z-index:999;
 }
 
 @keyframes floatUp{
@@ -263,43 +317,38 @@ opacity:0;
 }
 }
 
-/* MOBILE */
+/* ================= REVEAL EFFECT ================= */
 
-@media(max-width:900px){
-
-.book{
-height:92vh;
+.reveal{
+opacity:0;
+transform:translateY(50px);
+transition:1s ease;
 }
 
-.page,
-.book-left{
-width:100%;
+.reveal.active{
+opacity:1;
+transform:translateY(0);
 }
 
-.book-left{
-display:none;
-}
+/* ================= MOBILE ================= */
 
-.page{
-right:auto;
-left:0;
-}
-
-.page.flipped{
-transform:translateX(-100%);
-}
+@media(max-width:480px){
 
 .cover-title{
-font-size:42px;
+font-size:48px;
 }
 
 .page-title{
 font-size:34px;
 }
 
-.text{
-font-size:15px;
+.page-text{
+font-size:14px;
 line-height:1.9;
+}
+
+.final-title{
+font-size:42px;
 }
 
 }
@@ -309,49 +358,79 @@ line-height:1.9;
 
 <body>
 
+<!-- LOADER -->
+
+<div id="loader">
+
+<div class="loader-heart">❤️</div>
+
+<div class="loader-text">
+LOADING YOUR LOVE STORY
+</div>
+
+</div>
+
+<!-- BACKGROUND -->
+
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<audio autoplay loop id="music">
+<audio id="music" loop>
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
-<div class="book-container">
+<button class="music-btn" id="musicBtn">
+♫
+</button>
 
-<div class="book">
+<!-- COVER -->
 
-<!-- LEFT SIDE -->
+<section class="cover" id="cover">
 
-<div class="book-left">
+<div class="cover-card reveal active">
 
-<div>
-<div class="cover-title">
+<div class="magazine-label">
+SPECIAL EDITION
+</div>
+
+<h1 class="cover-title">
 For Luyanda ❤️
+</h1>
+
+<p class="cover-sub">
+A small interactive magazine made with love, memories, emotions, and all the words I never want you to forget.
+</p>
+
+<img src="IMG_2034.jpeg" class="cover-image">
+
+<button class="start-btn" onclick="startExperience()">
+Open Magazine
+</button>
+
 </div>
 
-<div class="text">
-A small magazine made with love,
-memories, emotions,
-and all the words I never want you to forget.
-</div>
-</div>
+</section>
 
-</div>
+<!-- BOOK -->
+
+<section class="book" id="book">
 
 <!-- PAGE 1 -->
 
-<div class="page" id="page1" style="z-index:4;">
+<div class="page reveal">
 
-<div class="page-front">
-
-<div class="page-title">
-Made with love… 💗
+<div class="page-number">
+PAGE 01
 </div>
 
-<div class="text">
+<h2 class="page-title">
+Made with love… 💗
+</h2>
+
+<p class="page-text">
 I made this to celebrate you on your birthday…
 
 because you deserve to feel loved, appreciated, and special in every way.
@@ -361,101 +440,109 @@ but I’m here now… and I want to make up for every moment I missed.
 
 So take your time going through this…
 it was all made with you in mind 💗
-</div>
-
-<div class="page-number">01</div>
-
-</div>
-
-<div class="page-back">
-
-<div class="page-title">
-Before Anyone Else 🎈
-</div>
-
-<div class="text">
-I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.
-</div>
-
-<div class="page-number">02</div>
-
-</div>
+</p>
 
 </div>
 
 <!-- PAGE 2 -->
 
-<div class="page" id="page2" style="z-index:3;">
+<div class="page reveal">
 
-<div class="page-front">
-
-<div class="page-title">
-Happy Birthday 🩵
+<div class="page-number">
+PAGE 02
 </div>
 
-<div class="text">
-Tomorrow is going to be special… because it’s the day someone truly important came into this world. 🩵
+<h2 class="page-title">
+Before Anyone Else 🎈
+</h2>
 
-I hope your birthday is filled with love, laughter, peace, and all the little things that make your heart feel light and happy.
-
-You deserve a day that feels as beautiful as the person you are.
-</div>
-
-<img src="IMG_2034.jpeg" class="photo">
-
-<div class="page-number">03</div>
-
-</div>
-
-<div class="page-back">
-
-<div class="page-title">
-Us 🥺
-</div>
-
-<div class="text">
-I’ve always had a soft spot for you… just as much as you’ve always had one for me.
-
-No matter the time, distance, or everything that happened in between, that feeling never really disappeared.
-
-Being able to talk to you again is honestly something I appreciate more than I probably say out loud.
-</div>
-
-<div class="page-number">04</div>
-
-</div>
+<p class="page-text">
+I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.
+</p>
 
 </div>
 
 <!-- PAGE 3 -->
 
-<div class="page" id="page3" style="z-index:2;">
+<div class="page reveal">
 
-<div class="page-front">
-
-<div class="page-title">
-A Promise 🤍
+<div class="page-number">
+PAGE 03
 </div>
 
-<div class="text">
+<h2 class="page-title">
+Happy Birthday 🩵
+</h2>
+
+<p class="page-text">
+Tomorrow is going to be special… because it’s the day someone truly important came into this world. 🩵
+
+I hope your birthday is filled with love, laughter, peace, and all the little things that make your heart feel light and happy.
+
+You deserve a day that feels as beautiful as the person you are.
+</p>
+
+<img src="IMG_2034.jpeg" class="photo">
+
+</div>
+
+<!-- PAGE 4 -->
+
+<div class="page reveal">
+
+<div class="page-number">
+PAGE 04
+</div>
+
+<h2 class="page-title">
+Us 🥺
+</h2>
+
+<p class="page-text">
+I’ve always had a soft spot for you… just as much as you’ve always had one for me.
+
+No matter the time, distance, or everything that happened in between, that feeling never really disappeared.
+
+Being able to talk to you again is honestly something I appreciate more than I probably say out loud.
+</p>
+
+</div>
+
+<!-- PAGE 5 -->
+
+<div class="page reveal">
+
+<div class="page-number">
+PAGE 05
+</div>
+
+<h2 class="page-title">
+A Promise 🤍
+</h2>
+
+<p class="page-text">
 And I also want to apologize for how things ended between us before.
 
 I truly regret the way I handled things.
 
 I’m grateful you gave me another chance to be part of your life again, and that somehow we found our way back to each other.
-</div>
-
-<div class="page-number">05</div>
+</p>
 
 </div>
 
-<div class="page-back">
+<!-- PAGE 6 -->
 
-<div class="page-title">
+<div class="page reveal">
+
+<div class="page-number">
+PAGE 06
+</div>
+
+<h2 class="page-title">
 Never Again 🩵
-</div>
+</h2>
 
-<div class="text">
+<p class="page-text">
 I know I might be the last person who should be speaking about promises…
 
 but I mean this with all my heart:
@@ -463,39 +550,41 @@ but I mean this with all my heart:
 I will never take the chance you gave us for granted.
 
 Hurting you again is something I never want to happen.
-</div>
-
-<div class="page-number">06</div>
+</p>
 
 </div>
 
+<!-- PAGE 7 -->
+
+<div class="page reveal">
+
+<div class="page-number">
+PAGE 07
 </div>
 
-<!-- PAGE 4 -->
-
-<div class="page" id="page4" style="z-index:1;">
-
-<div class="page-front">
-
-<div class="page-title">
-Your Moment 🎬
-</div>
+<h2 class="page-title">
+Her Moment 🎬
+</h2>
 
 <video controls>
 <source src="luyanda.mp4" type="video/mp4">
 </video>
 
-<div class="page-number">07</div>
-
 </div>
 
-<div class="page-back">
+<!-- PAGE 8 -->
 
-<div class="page-title">
+<div class="page reveal">
+
+<div class="page-number">
+PAGE 08
+</div>
+
+<h2 class="page-title">
 Your Gift 🎁
-</div>
+</h2>
 
-<div class="text">
+<p class="page-text">
 I got you something small…
 
 but it means so much more than it probably looks like. 🥹
@@ -507,72 +596,102 @@ Something that quietly becomes part of your everyday life… and maybe reminds y
 And every time you notice it on your wrist, I hope it brings you warmth.
 
 I can’t wait to see how beautiful it looks on that cute hand of yours… 🩵
-</div>
-
-<div class="page-number">08</div>
+</p>
 
 </div>
 
-</div>
+<!-- FINAL -->
+
+<div class="page reveal final-card">
+
+<h2 class="final-title">
+I Love You 🩵
+</h2>
+
+<p class="final-text">
+More than anything, I just want your birthday to feel warm, unforgettable, and full of love.
+
+Enjoy every second of it… because you deserve nothing less.
+</p>
 
 </div>
 
-</div>
-
-<div class="controls">
-<button onclick="prevPage()">Previous</button>
-<button onclick="nextPage()">Next</button>
-</div>
+</section>
 
 <script>
 
-const pages=document.querySelectorAll(".page");
+/* ================= LOADER ================= */
 
-let current=0;
+window.addEventListener("load",()=>{
 
-function updatePages(){
+setTimeout(()=>{
+document.getElementById("loader").classList.add("hide");
+},2000);
 
-pages.forEach((page,index)=>{
+});
 
-if(index<current){
-page.classList.add("flipped");
-}else{
-page.classList.remove("flipped");
+/* ================= START EXPERIENCE ================= */
+
+function startExperience(){
+
+document.getElementById("cover").style.display="none";
+
+document.getElementById("book").classList.add("show");
+
+document.getElementById("music").volume=0.6;
+
+document.getElementById("music").play().catch(()=>{});
+
+}
+
+/* ================= REVEAL ANIMATION ================= */
+
+const reveals=document.querySelectorAll(".reveal");
+
+window.addEventListener("scroll",()=>{
+
+reveals.forEach(el=>{
+
+const top=el.getBoundingClientRect().top;
+
+if(top<window.innerHeight-80){
+el.classList.add("active");
 }
 
 });
 
+});
+
+/* ================= MUSIC BUTTON ================= */
+
+const music=document.getElementById("music");
+
+document.getElementById("musicBtn").onclick=function(){
+
+if(music.paused){
+music.play();
+this.innerHTML="♫";
+}else{
+music.pause();
+this.innerHTML="⏸";
 }
 
-function nextPage(){
+};
 
-if(current<pages.length){
-current++;
-updatePages();
-}
-
-}
-
-function prevPage(){
-
-if(current>0){
-current--;
-updatePages();
-}
-
-}
-
-/* HEARTS */
+/* ================= HEARTS ================= */
 
 setInterval(()=>{
 
 const heart=document.createElement("div");
 
 heart.className="heart";
+
 heart.innerHTML="❤️";
 
 heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(4+Math.random()*4)+"s";
+
+heart.style.animationDuration=
+(4+Math.random()*4)+"s";
 
 document.body.appendChild(heart);
 
@@ -580,7 +699,7 @@ setTimeout(()=>{
 heart.remove();
 },8000);
 
-},700);
+},900);
 
 </script>
 
