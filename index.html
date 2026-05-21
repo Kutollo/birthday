@@ -9,34 +9,34 @@
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
 
-body{background:black;color:white;overflow-x:hidden;}
+body{
+background:black;
+color:white;
+overflow-x:hidden;
+}
 
+/* BACKGROUND */
 #bgVideo{
-position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-2;
 }
 
 .overlay{
-position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:-1;
-}
-
-/* LANDING */
-#landing{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:30px;
-}
-
-.card{
-background:rgba(255,255,255,0.06);
-backdrop-filter:blur(20px);
-padding:40px;
-border-radius:25px;
-max-width:800px;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.6);
+z-index:-1;
 }
 
 /* SECTIONS */
@@ -45,60 +45,69 @@ display:none;
 min-height:100vh;
 justify-content:center;
 align-items:center;
-padding:40px;
+padding:30px;
 }
 
-section.show{
+section.active{
 display:flex;
-animation:fade 1s ease;
 }
 
-@keyframes fade{
-from{opacity:0;transform:translateY(30px);}
-to{opacity:1;transform:translateY(0);}
+/* CARD */
+.card{
+max-width:800px;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(20px);
+padding:40px;
+border-radius:25px;
+text-align:center;
 }
 
+/* TEXT */
 h1{
 font-family:'Dancing Script';
 font-size:42px;
 margin-bottom:20px;
-text-align:center;
 }
 
 p{
 white-space:pre-line;
-text-align:center;
 line-height:1.9;
 opacity:0.9;
 }
 
+/* BUTTON */
 button{
 margin-top:20px;
 padding:14px 40px;
-border-radius:30px;
 border:none;
-cursor:pointer;
+border-radius:30px;
 background:white;
 color:black;
+cursor:pointer;
 }
 
+/* IMAGE */
 img{
 width:100%;
-border-radius:20px;
 margin-top:20px;
+border-radius:20px;
 display:none;
 }
 
-img.show{display:block;}
+img.show{
+display:block;
+}
 
 </style>
 </head>
 
 <body>
 
+<!-- BACKGROUND -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4">
 </video>
+
 <div class="overlay"></div>
 
 <audio id="music" loop>
@@ -106,16 +115,16 @@ img.show{display:block;}
 </audio>
 
 <!-- LANDING -->
-<section id="landing">
+<section id="landing" class="active">
 <div class="card">
 <h1 id="landingTitle"></h1>
 <p id="landingText"></p>
-<button onclick="enterSite()">Open</button>
+<button onclick="enter()">Open</button>
 </div>
 </section>
 
-<!-- MAIN -->
-<section id="main1">
+<!-- SECTION 1 -->
+<section id="s1">
 <div class="card">
 <p id="introLine"></p>
 <h1 id="mainTitle"></h1>
@@ -124,7 +133,8 @@ img.show{display:block;}
 </div>
 </section>
 
-<section id="main2">
+<!-- SECTION 2 -->
+<section id="s2">
 <div class="card">
 <h1 id="videoTitle"></h1>
 <video id="video" width="100%" controls loop>
@@ -133,7 +143,8 @@ img.show{display:block;}
 </div>
 </section>
 
-<section id="main3">
+<!-- SECTION 3 -->
+<section id="s3">
 <div class="card">
 <h1 id="giftTitle"></h1>
 <button onclick="revealGift()">Reveal Gift Message</button>
@@ -143,8 +154,8 @@ img.show{display:block;}
 
 <script>
 
-/* SAFE TYPEWRITER */
-function type(id,text,speed=40,cb){
+/* ===== TYPEWRITER (SAFE) ===== */
+function type(id,text,speed=35,cb){
 const el=document.getElementById(id);
 let i=0;
 el.innerHTML="";
@@ -155,10 +166,11 @@ el.innerHTML+=text[i++];
 setTimeout(run,speed);
 }else if(cb) cb();
 }
+
 run();
 }
 
-/* YOUR ORIGINAL MESSAGES (UNCHANGED) */
+/* ===== ORIGINAL MESSAGES (UNCHANGED) ===== */
 
 const landingTitle =
 "Made with love… just for you, my Luyanda 💗";
@@ -190,35 +202,42 @@ const giftTitle =
 "Your Gift";
 
 const giftText =
-"I got you something small…\n\nbut it means so much more than it probably looks like. 🥹\n\n" +
+"I got you something small…\n\n" +
+"but it means so much more than it probably looks like. 🥹\n\n" +
 "I wanted to give you something you could keep close to you… something simple, but constant.\n\n" +
 "Something that quietly becomes part of your everyday life… and maybe reminds you, even in silence, that there’s someone thinking about you.\n\n" +
 "And every time you notice it on your wrist, I hope it brings you a little warmth… a quiet reminder that you are cared for, appreciated, valued, and deeply close to someone’s heart. 🩵";
 
-/* FLOW */
+/* ===== FLOW CONTROL ===== */
 
-function enterSite(){
+function enter(){
 
 document.getElementById("landing").style.display="none";
-document.getElementById("main1").style.display="flex";
+
+document.getElementById("s1").classList.add("active");
 
 document.getElementById("music").volume=0.6;
 document.getElementById("music").play().catch(()=>{});
 
+/* STEP 1 */
 type("landingTitle",landingTitle,50,()=>{
 type("landingText",landingText,40,()=>{
+
+/* STEP 2 */
 type("introLine",introLine,40,()=>{
 type("mainTitle",mainTitle,50,()=>{
 type("mainText",mainText,25,()=>{
+
 document.getElementById("photo").classList.add("show");
 
+/* VIDEO */
 setTimeout(()=>{
-document.getElementById("main2").style.display="flex";
+document.getElementById("s2").classList.add("active");
 document.getElementById("videoTitle").innerText=videoTitle;
-document.getElementById("video").play();
+document.getElementById("video").play().catch(()=>{});
 
 setTimeout(()=>{
-document.getElementById("main3").style.display="flex";
+document.getElementById("s3").classList.add("active");
 document.getElementById("giftTitle").innerText=giftTitle;
 },2000);
 
@@ -230,6 +249,7 @@ document.getElementById("giftTitle").innerText=giftTitle;
 });
 }
 
+/* ===== GIFT ===== */
 function revealGift(){
 type("gift",giftText,30);
 }
