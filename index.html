@@ -10,6 +10,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
+<!-- PDF LIBRARY -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
 <style>
 
 /* ================= BASE ================= */
@@ -26,6 +29,8 @@ background:black;
 color:white;
 overflow-x:hidden;
 }
+
+/* ================= BACKGROUND ================= */
 
 #bgVideo{
 position:fixed;
@@ -66,6 +71,8 @@ transform:scale(1.1);
 filter:blur(10px);
 }
 
+/* ================= MAIN ================= */
+
 #main{
 display:none;
 max-width:900px;
@@ -73,7 +80,7 @@ margin:auto;
 padding:60px 20px;
 }
 
-/* ================= GLASS ================= */
+/* ================= CARDS ================= */
 
 .glass{
 background:rgba(255,255,255,0.07);
@@ -105,13 +112,6 @@ text-align:center;
 margin-bottom:25px;
 }
 
-#introLine{
-text-align:center;
-margin-bottom:20px;
-line-height:1.9;
-opacity:0.9;
-}
-
 .message{
 white-space:pre-line;
 text-align:justify;
@@ -120,7 +120,7 @@ font-size:18px;
 min-height:250px;
 }
 
-/* ================= DROP CAP EFFECT (NEW) ================= */
+/* DROP CAP EFFECT */
 
 .message::first-letter{
 font-size:85px;
@@ -131,10 +131,7 @@ padding-right:12px;
 padding-top:8px;
 font-family:'Dancing Script',cursive;
 color:white;
-
-text-shadow:
-0 0 12px rgba(255,255,255,0.35),
-0 0 25px rgba(255,255,255,0.18);
+text-shadow:0 0 20px rgba(255,255,255,0.25);
 }
 
 /* ================= MEDIA ================= */
@@ -210,12 +207,6 @@ text-align:center;
 animation:float 3s ease-in-out infinite;
 }
 
-@keyframes float{
-0%{transform:translateY(0)}
-50%{transform:translateY(-10px)}
-100%{transform:translateY(0)}
-}
-
 /* ================= HEARTS ================= */
 
 .heart{
@@ -229,6 +220,14 @@ animation:floatUp linear infinite;
 @keyframes floatUp{
 0%{transform:translateY(0);}
 100%{transform:translateY(-120vh);}
+}
+
+/* ================= PRINT CLEAN ================= */
+
+@media print{
+body{background:white;color:black;}
+#bgVideo,.overlay,button,#popup,.heart{display:none!important;}
+.glass{opacity:1!important;filter:none!important;}
 }
 
 </style>
@@ -249,9 +248,7 @@ animation:floatUp linear infinite;
 </audio>
 
 <div id="popup">
-<div class="popup-box">
-Please close your eyes 🙈 ❤️
-</div>
+<div class="popup-box">Please close your eyes 🙈 ❤️</div>
 </div>
 
 <!-- LANDING -->
@@ -269,8 +266,6 @@ Please close your eyes 🙈 ❤️
 
 <div class="glass" id="section1">
 
-<p id="introLine"></p>
-
 <h1 class="title" id="mainTitle"></h1>
 
 <p class="message" id="message"></p>
@@ -284,18 +279,18 @@ Please close your eyes 🙈 ❤️
 <h1 class="title" id="videoTitle"></h1>
 
 <video muted playsinline loop id="video" class="video">
-<source src="luyanda.mp4" type="video/mp4">
+<source src="luyanda.mp4">
 </video>
 
 </div>
 
 <div class="glass" id="section3">
 
-<h1 class="title" id="giftTitle"></h1>
+<h1 class="title">Your Gift</h1>
 
-<button onclick="revealGift()">Reveal Gift Message</button>
+<p class="message" id="gift"></p>
 
-<p class="message" id="gift" style="display:none;"></p>
+<button onclick="generateBookPDF()">Download Love Book (PDF)</button>
 
 </div>
 
@@ -303,7 +298,7 @@ Please close your eyes 🙈 ❤️
 
 <script>
 
-/* TYPE SYSTEM */
+/* TYPE EFFECT */
 function typeText(id,text,speed=110,callback){
 
 let i=0;
@@ -311,30 +306,23 @@ const el=document.getElementById(id);
 el.innerHTML="";
 
 function typing(){
-
 if(i<text.length){
 el.innerHTML+=text.charAt(i);
 i++;
 setTimeout(typing,speed);
-}else{
-if(callback)callback();
-}
-
+}else if(callback)callback();
 }
 
 typing();
 }
 
-/* ===== YOUR ORIGINAL MESSAGES ===== */
+/* ================= ORIGINAL MESSAGES ================= */
 
 const landingTitle =
 "Made with love… just for you, my Luyanda 💗";
 
 const landingText =
 "I made this to celebrate you on your birthday…\n\nbecause you deserve to feel loved, appreciated, and special in every way.\n\nI know I wasn’t there for the past two birthdays,\nbut I’m here now… and I want to make up for every moment I missed.\n\nSo take your time going through this…\nit was all made with you in mind 💗";
-
-const introLine =
-"I wanted to be the first to celebrate you… before anyone else gets the chance, so you’re seeing this a little earlier.";
 
 const mainTitle =
 "Happy Birthday 🩵 my Luyanda 🎈";
@@ -343,25 +331,17 @@ const mainText =
 "Tomorrow is going to be special… because it’s the day someone truly important came into this world. 🩵\n\n" +
 "I hope your birthday is filled with love, laughter, peace, and all the little things that make your heart feel light and happy. You deserve a day that feels as beautiful as the person you are.\n\n" +
 "I’ve always had a soft spot for you… just as much as you’ve always had one for me. No matter the time, distance, or everything that happened in between, that feeling never really disappeared.\n\n" +
-"Being able to talk to you again is honestly something I appreciate more than I probably say out loud.\n\n" +
-"And I also want to apologize for how things ended between us before.\n\n" +
-"I’m grateful you gave me another chance to be part of your life again.\n\n" +
+"I’m grateful you gave me another chance.\n\n" +
 "I will never take the chance you gave us for granted.\n\n" +
 "I love you 🩵";
 
 const videoTitle =
 "It’s Your Turn Ke Mfazi";
 
-const giftTitle =
-"Your Gift";
-
 const giftText =
-"I got you something small…\n\n" +
-"but it means so much more than it probably looks like. 🥹\n\n" +
-"I wanted to give you something you could keep close to you… something simple, but constant.\n\n" +
-"And every time you notice it on your wrist, I hope it brings you warmth… 🩵";
+"I got you something small…\n\nbut it means so much more than it looks like.\n\nI wanted something simple… something that stays with you.\n\nAnd every time you see it, I hope it reminds you that you are loved 🩵";
 
-/* ===== FLOW ===== */
+/* ================= FLOW ================= */
 
 window.onload=function(){
 
@@ -376,7 +356,6 @@ function enterSite(){
 document.getElementById("landing").classList.add("hide");
 
 setTimeout(()=>{
-
 document.getElementById("landing").style.display="none";
 document.getElementById("main").style.display="block";
 
@@ -394,71 +373,66 @@ function startFlow(){
 
 document.getElementById("section1").classList.add("show");
 
-typeText("introLine",introLine,110,()=>{
 typeText("mainTitle",mainTitle,110,()=>{
 typeText("message",mainText,110,()=>{
 document.getElementById("photo").classList.add("show");
 
 setTimeout(()=>{
-
 document.getElementById("section2").classList.add("show");
 
-const vid=document.getElementById("video");
-vid.classList.add("show");
-vid.play().catch(()=>{});
-
 setTimeout(()=>{
-
 document.getElementById("section3").classList.add("show");
-
 typeText("videoTitle",videoTitle,110);
-
+typeText("gift",giftText,110);
 },2000);
 
 },2000);
 
 });
 });
-});
+}
+
+/* ================= PDF EXPORT ================= */
+
+function generateBookPDF(){
+
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
+
+let y = 20;
+
+doc.setFont("times","bold");
+doc.setFontSize(24);
+doc.text("For Luyanda ❤️",105,50,{align:"center"});
+
+doc.setFontSize(14);
+doc.text("A love story written just for you",105,70,{align:"center"});
+
+doc.addPage();
+
+function add(text,title){
+
+doc.setFont("times","bold");
+doc.setFontSize(16);
+doc.text(title,20,y);
+y+=10;
+
+doc.setFont("times","normal");
+doc.setFontSize(12);
+
+const lines=doc.splitTextToSize(text,170);
+doc.text(lines,20,y);
+y+=lines.length*6+10;
+
+if(y>260){doc.addPage();y=20;}
 
 }
 
-function revealGift(){
+add(mainText,"Birthday Message 💙");
+add(giftText,"Gift Message 🎁");
 
-const g=document.getElementById("gift");
-g.style.display="block";
-
-typeText("gift",giftText,110,()=>{
-setTimeout(()=>{
-
-const popup=document.getElementById("popup");
-popup.classList.add("show");
-
-setTimeout(()=>{
-popup.classList.remove("show");
-},8000);
-
-},2000);
-
-});
-
+doc.save("For_Luyanda_Love_Book.pdf");
 }
-
-/* HEARTS */
-
-setInterval(()=>{
-
-const heart=document.createElement("div");
-heart.className="heart";
-heart.innerHTML="❤️";
-heart.style.left=Math.random()*100+"vw";
-heart.style.animationDuration=(4+Math.random()*4)+"s";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),8000);
-
-},700);
 
 </script>
 
