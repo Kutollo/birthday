@@ -45,6 +45,10 @@ background:rgba(0,0,0,0.55);
 z-index:-1;
 }
 
+/* =======================
+LANDING PAGE
+======================= */
+
 #landing{
 height:100vh;
 display:flex;
@@ -52,8 +56,9 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
-padding:40px;
+padding:30px 25px;
 transition:1s ease;
+gap:18px;
 }
 
 #landing.hide{
@@ -61,6 +66,25 @@ opacity:0;
 transform:scale(1.1);
 filter:blur(10px);
 }
+
+#landingTitle{
+font-family:'Dancing Script';
+font-size:42px;
+line-height:1.2;
+}
+
+#landingText{
+max-width:520px;
+line-height:1.7;
+font-size:15px;
+opacity:0.92;
+white-space:pre-line;
+margin:auto;
+}
+
+/* =======================
+MAIN CONTENT
+======================= */
 
 #main{
 display:none;
@@ -95,20 +119,6 @@ font-family:'Dancing Script';
 font-size:34px;
 text-align:center;
 margin-bottom:25px;
-}
-
-#landingTitle{
-font-family:'Dancing Script';
-font-size:50px;
-margin-bottom:25px;
-}
-
-#landingText{
-max-width:700px;
-line-height:1.9;
-font-size:18px;
-opacity:0.95;
-white-space:pre-line;
 }
 
 #introLine{
@@ -146,7 +156,7 @@ filter:blur(0);
 }
 
 button{
-margin-top:30px;
+margin-top:10px;
 padding:15px 55px;
 border-radius:40px;
 border:none;
@@ -161,6 +171,10 @@ font-weight:600;
 button:hover{
 transform:scale(1.08);
 }
+
+/* =======================
+POPUP
+======================= */
 
 #popup{
 position:fixed;
@@ -192,6 +206,7 @@ font-family:'Dancing Script';
 font-size:32px;
 text-align:center;
 animation:float 3s ease-in-out infinite;
+line-height:1.5;
 }
 
 @keyframes float{
@@ -199,6 +214,10 @@ animation:float 3s ease-in-out infinite;
 50%{transform:translateY(-10px)}
 100%{transform:translateY(0)}
 }
+
+/* =======================
+HEARTS
+======================= */
 
 .heart{
 position:fixed;
@@ -220,6 +239,10 @@ opacity:0;
 }
 }
 
+/* =======================
+ANIMATION
+======================= */
+
 .fade-up{
 animation:fadeUp 1.5s ease forwards;
 }
@@ -233,6 +256,42 @@ to{
 opacity:1;
 transform:translateY(0);
 }
+}
+
+/* =======================
+MOBILE
+======================= */
+
+@media(max-width:768px){
+
+#landingTitle{
+font-size:34px;
+}
+
+#landingText{
+font-size:14px;
+line-height:1.6;
+max-width:95%;
+}
+
+.title{
+font-size:30px;
+}
+
+.message{
+font-size:16px;
+line-height:1.8;
+}
+
+.glass{
+padding:35px 25px;
+}
+
+.popup-box{
+font-size:26px;
+padding:30px;
+}
+
 }
 
 </style>
@@ -252,9 +311,11 @@ transform:translateY(0);
 <source src="bg.mp3" type="audio/mp3">
 </audio>
 
+<!-- POPUP -->
 <div id="popup">
 <div class="popup-box">
-Close your eyes for a few seconds first 🙈❤️
+Please don’t cry again 🥹<br>
+you’re gonna ruin your lashes ❤️
 </div>
 </div>
 
@@ -262,6 +323,7 @@ Close your eyes for a few seconds first 🙈❤️
 <section id="landing">
 
 <h1 id="landingTitle"></h1>
+
 <p id="landingText"></p>
 
 <button onclick="enterSite()">Open</button>
