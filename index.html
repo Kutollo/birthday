@@ -54,7 +54,7 @@ z-index:-1;
 }
 
 /* =======================
-OPENING IMAGE (ADDED)
+OPENING IMAGE
 ======================= */
 
 #openingImage{
@@ -74,6 +74,19 @@ justify-content:center;
 width:100%;
 height:100%;
 object-fit:cover;
+transform:scale(0.2);
+opacity:0;
+animation:zoomIn 1.8s ease forwards;
+}
+
+@keyframes zoomIn{
+0%{transform:scale(0.2);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+#openingImage.fadeOut{
+transition:1s ease;
+opacity:0;
 }
 
 /* =======================
@@ -328,11 +341,12 @@ padding:30px;
 
 <body>
 
-<!-- OPENING IMAGE + AUDIO (ADDED) -->
+<!-- OPENING IMAGE -->
 <div id="openingImage">
     <img src="IMG_2186.png">
 </div>
 
+<!-- AUDIO -->
 <audio id="introSong">
     <source src="love.mp3" type="audio/mp3">
 </audio>
@@ -406,100 +420,79 @@ you’re gonna ruin your lashes ❤️
 
 <script>
 
-/* =======================
-POST-BIRTHDAY MESSAGES (UNCHANGED)
-======================= */
-
-const landingTitle =
-"Made with love… just for you, my Luyanda 💗";
+/* TEXTS */
+const landingTitle = "Made with love… just for you, my Luyanda 💗";
 
 const landingText =
 "I made this for you because you deserve to feel loved, appreciated, and special in every possible way. 💗\n\n" +
-
 "I know I wasn’t there for the past two birthdays,\n" +
 "but having the chance to celebrate this one with you meant more to me than you probably realize.\n\n" +
-
 "So even after the birthday celebrations are over…\n" +
 "I still wanted you to have something you can come back to and smile at whenever you need to. 🩵";
 
-const introLine =
-"I wanted this to remain something personal, meaningful, and unforgettable… because celebrating you will always matter to me.";
+const introLine = "I wanted this to remain something personal, meaningful, and unforgettable… because celebrating you will always matter to me.";
 
-const mainTitle =
-"To My Luyanda 🩵";
+const mainTitle = "To My Luyanda 🩵";
 
 const mainText =
 "Your birthday may have passed… but the way I feel about you hasn’t changed for a second. 🩵\n\n" +
-
 "I still hope your day was filled with love, laughter, peace, and all the little things that made your heart feel light and happy.\n\n" +
-
 "You deserve happiness that goes beyond just one special day.\n\n" +
-
 "I’ve always had a soft spot for you… just as much as you’ve always had one for me.\n\n" +
-
 "No matter the time, distance, or everything that happened in between, that feeling never truly disappeared.\n\n" +
-
 "Being able to talk to you again is something I genuinely appreciate more than I say out loud.\n\n" +
-
 "And I’ll always be grateful that somehow we found our way back to each other.\n\n" +
-
 "I know I might not be perfect, but one thing I mean with all my heart is this: I never want to hurt you again or take your love for granted.\n\n" +
-
 "I just want you to continue feeling loved, appreciated, protected, and cared for… not only on your birthday, but every day after it too.\n\n" +
-
-"And even long after all the birthday wishes fade away… I hope you never forget how special you are to me.\n\n" +
-
 "I love you 🩵";
 
-/* =======================
-FIX ONLY (ADDED FEATURE)
-======================= */
+const giftTitle = "Your Gift 🎁";
 
+/* FIXED GIFT TEXT */
+const giftText =
+"I got you something small…\n\n" +
+"but it means so much more than it probably looks like. 🥹\n\n" +
+"I wanted to give you something you could keep close to you… something simple, but constant.\n\n" +
+"Something that quietly becomes part of your everyday life… and maybe reminds you, even in silence, that there’s someone thinking about you.\n\n" +
+"Not in a loud or overwhelming way… just something soft, steady, and real.\n\n" +
+"And every time you notice it on your wrist, I hope it brings you a little warmth… a quiet reminder that you are cared for, appreciated, valued, and deeply close to someone’s heart.\n\n" +
+"It’s honestly just something I felt was right for you.\n\n" +
+"I can’t wait to see how beautiful it looks on that cute hand of yours… 🥺\n\n" +
+"And I hope it stays with you for a very long time… the same way you’ve stayed close to my heart. 🩵";
+
+/* LOAD */
 window.onload = function(){
 
 document.getElementById("landingTitle").innerText = landingTitle;
 document.getElementById("landingText").innerText = landingText;
 
-/* OPENING AUDIO */
+/* OPENING IMAGE + MUSIC */
 const introSong = document.getElementById("introSong");
 const openingImage = document.getElementById("openingImage");
 
 introSong.preload = "auto";
-introSong.load();
+introSong.currentTime = 204;
 
-/* set 3:24 */
-introSong.addEventListener("loadedmetadata", () => {
-    introSong.currentTime = 204;
-});
-
-/* autoplay attempt + fallback */
+/* autoplay fix */
 introSong.play().catch(() => {
     document.addEventListener("click", () => {
         introSong.currentTime = 204;
         introSong.play();
-    }, { once: true });
+    }, { once:true });
 });
 
-/* 30 seconds intro screen */
+/* 30s intro */
 setTimeout(() => {
+    openingImage.classList.add("fadeOut");
+    introSong.pause();
+    introSong.currentTime = 0;
 
-if (openingImage) {
-    openingImage.style.transition = "1s ease";
-    openingImage.style.opacity = "0";
-}
-
-introSong.pause();
-introSong.currentTime = 0;
-
-setTimeout(() => {
-    if (openingImage) openingImage.remove();
-}, 1000);
-
+    setTimeout(() => openingImage.remove(), 1000);
 }, 30000);
 
 };
 
-/* ENTER SITE */
+/* ENTER */
 function enterSite(){
 
 document.getElementById("landing").classList.add("hide");
@@ -512,7 +505,6 @@ document.getElementById("main").style.display="block";
 const music=document.getElementById("music");
 
 music.volume=0.6;
-
 music.play().catch(()=>{});
 
 startFlow();
@@ -540,10 +532,6 @@ document.getElementById("section2").classList.add("show");
 
 const vid=document.getElementById("video");
 
-vid.classList.add("show");
-vid.muted=true;
-vid.loop=true;
-
 vid.play().catch(()=>{});
 
 setTimeout(()=>{
@@ -560,32 +548,21 @@ document.getElementById("giftTitle").innerText = giftTitle;
 
 }
 
-/* GIFT */
+/* GIFT FIXED */
 function revealGift(){
 
 const gift=document.getElementById("gift");
 
 gift.style.display="block";
-
-gift.innerText = giftText;
-
-setTimeout(()=>{
+gift.innerText = String(giftText);
 
 const popup=document.getElementById("popup");
 
-popup.classList.add("show");
-
-if(navigator.vibrate){
-
-navigator.vibrate([200,100,200,100,500]);
-
-}
-
 setTimeout(()=>{
 
-popup.classList.remove("show");
+popup.classList.add("show");
 
-},10000);
+setTimeout(()=>popup.classList.remove("show"),10000);
 
 },2000);
 
@@ -597,20 +574,13 @@ setInterval(()=>{
 const heart=document.createElement("div");
 
 heart.className="heart";
-
 heart.innerHTML="❤️";
-
 heart.style.left=Math.random()*100+"vw";
-
 heart.style.animationDuration=(4+Math.random()*6)+"s";
 
 document.body.appendChild(heart);
 
-setTimeout(()=>{
-
-heart.remove();
-
-},9000);
+setTimeout(()=>heart.remove(),9000);
 
 },500);
 
