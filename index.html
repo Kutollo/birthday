@@ -54,7 +54,7 @@ z-index:-1;
 }
 
 /* =======================
-OPENING IMAGE
+OPENING IMAGE (ADDED)
 ======================= */
 
 #openingImage{
@@ -64,7 +64,7 @@ left:0;
 width:100%;
 height:100%;
 background:black;
-z-index:100000;
+z-index:99999;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -288,16 +288,37 @@ pointer-events:none;
 100%{transform:translateY(-120vh);opacity:0;}
 }
 
-/* RESPONSIVE */
+/* =======================
+RESPONSIVE
+======================= */
 
 @media(max-width:768px){
 
-#landingTitle{font-size:34px;}
-#landingText{font-size:14px;max-width:95%;}
-.glass{padding:35px 25px;}
-.title{font-size:30px;}
-.message{font-size:16px;}
-.popup-box{font-size:26px;padding:30px;}
+#landingTitle{
+font-size:34px;
+}
+
+#landingText{
+font-size:14px;
+max-width:95%;
+}
+
+.glass{
+padding:35px 25px;
+}
+
+.title{
+font-size:30px;
+}
+
+.message{
+font-size:16px;
+}
+
+.popup-box{
+font-size:26px;
+padding:30px;
+}
 
 }
 
@@ -307,16 +328,16 @@ pointer-events:none;
 
 <body>
 
-<!-- OPENING IMAGE -->
+<!-- OPENING IMAGE + AUDIO (ADDED) -->
 <div id="openingImage">
     <img src="IMG_2186.png">
 </div>
 
-<!-- AUDIO -->
 <audio id="introSong">
     <source src="love.mp3" type="audio/mp3">
 </audio>
 
+<!-- BACKGROUND -->
 <video autoplay muted loop playsinline id="bgVideo">
 <source src="cinematic.mp4" type="video/mp4">
 </video>
@@ -339,6 +360,7 @@ you’re gonna ruin your lashes ❤️
 <section id="landing">
 
 <h1 id="landingTitle"></h1>
+
 <p id="landingText"></p>
 
 <button onclick="enterSite()">Open</button>
@@ -351,7 +373,9 @@ you’re gonna ruin your lashes ❤️
 <div class="glass" id="section1">
 
 <p id="introLine"></p>
+
 <h1 class="title" id="mainTitle"></h1>
+
 <p class="message" id="message"></p>
 
 <img src="IMG_2034.jpeg" class="photo" id="photo">
@@ -374,7 +398,7 @@ you’re gonna ruin your lashes ❤️
 
 <button onclick="revealGift()">Reveal Gift Message</button>
 
-<p class="message" id="gift" style="display:none;margin-top:25px;"></p>
+<p class="message" id="gift" style="display:none; margin-top:25px;"></p>
 
 </div>
 
@@ -382,20 +406,100 @@ you’re gonna ruin your lashes ❤️
 
 <script>
 
-/* TEXT */
-const landingTitle = "Made with love… just for you, my Luyanda 💗";
+/* =======================
+POST-BIRTHDAY MESSAGES (UNCHANGED)
+======================= */
+
+const landingTitle =
+"Made with love… just for you, my Luyanda 💗";
 
 const landingText =
 "I made this for you because you deserve to feel loved, appreciated, and special in every possible way. 💗\n\n" +
-"So even after the birthday celebrations… I still wanted you to have something special. 🩵";
 
-/* LOAD */
+"I know I wasn’t there for the past two birthdays,\n" +
+"but having the chance to celebrate this one with you meant more to me than you probably realize.\n\n" +
+
+"So even after the birthday celebrations are over…\n" +
+"I still wanted you to have something you can come back to and smile at whenever you need to. 🩵";
+
+const introLine =
+"I wanted this to remain something personal, meaningful, and unforgettable… because celebrating you will always matter to me.";
+
+const mainTitle =
+"To My Luyanda 🩵";
+
+const mainText =
+"Your birthday may have passed… but the way I feel about you hasn’t changed for a second. 🩵\n\n" +
+
+"I still hope your day was filled with love, laughter, peace, and all the little things that made your heart feel light and happy.\n\n" +
+
+"You deserve happiness that goes beyond just one special day.\n\n" +
+
+"I’ve always had a soft spot for you… just as much as you’ve always had one for me.\n\n" +
+
+"No matter the time, distance, or everything that happened in between, that feeling never truly disappeared.\n\n" +
+
+"Being able to talk to you again is something I genuinely appreciate more than I say out loud.\n\n" +
+
+"And I’ll always be grateful that somehow we found our way back to each other.\n\n" +
+
+"I know I might not be perfect, but one thing I mean with all my heart is this: I never want to hurt you again or take your love for granted.\n\n" +
+
+"I just want you to continue feeling loved, appreciated, protected, and cared for… not only on your birthday, but every day after it too.\n\n" +
+
+"And even long after all the birthday wishes fade away… I hope you never forget how special you are to me.\n\n" +
+
+"I love you 🩵";
+
+/* =======================
+FIX ONLY (ADDED FEATURE)
+======================= */
+
 window.onload = function(){
+
 document.getElementById("landingTitle").innerText = landingTitle;
 document.getElementById("landingText").innerText = landingText;
+
+/* OPENING AUDIO */
+const introSong = document.getElementById("introSong");
+const openingImage = document.getElementById("openingImage");
+
+introSong.preload = "auto";
+introSong.load();
+
+/* set 3:24 */
+introSong.addEventListener("loadedmetadata", () => {
+    introSong.currentTime = 204;
+});
+
+/* autoplay attempt + fallback */
+introSong.play().catch(() => {
+    document.addEventListener("click", () => {
+        introSong.currentTime = 204;
+        introSong.play();
+    }, { once: true });
+});
+
+/* 30 seconds intro screen */
+setTimeout(() => {
+
+if (openingImage) {
+    openingImage.style.transition = "1s ease";
+    openingImage.style.opacity = "0";
+}
+
+introSong.pause();
+introSong.currentTime = 0;
+
+setTimeout(() => {
+    if (openingImage) openingImage.remove();
+}, 1000);
+
+}, 30000);
+
 };
 
-/* ENTER SITE (FIXED AUDIO HERE) */
+/* ENTER SITE */
 function enterSite(){
 
 document.getElementById("landing").classList.add("hide");
@@ -405,27 +509,11 @@ setTimeout(()=>{
 document.getElementById("landing").style.display="none";
 document.getElementById("main").style.display="block";
 
-/* START INTRO SONG AFTER USER CLICK (IMPORTANT FIX) */
-const introSong = document.getElementById("introSong");
-const openingImage = document.getElementById("openingImage");
+const music=document.getElementById("music");
 
-introSong.currentTime = 204; // 3:24
+music.volume=0.6;
 
-introSong.play().catch(()=>{});
-
-/* REMOVE IMAGE AFTER 30s */
-setTimeout(()=>{
-
-openingImage.style.opacity="0";
-
-setTimeout(()=>{
-openingImage.remove();
-},1000);
-
-introSong.pause();
-introSong.currentTime = 0;
-
-},30000);
+music.play().catch(()=>{});
 
 startFlow();
 
@@ -438,33 +526,92 @@ function startFlow(){
 
 document.getElementById("section1").classList.add("show");
 
+document.getElementById("introLine").innerText = introLine;
+document.getElementById("mainTitle").innerText = mainTitle;
+document.getElementById("message").innerText = mainText;
+
 setTimeout(()=>{
+
+document.getElementById("photo").classList.add("show");
+
+setTimeout(()=>{
+
 document.getElementById("section2").classList.add("show");
 
 const vid=document.getElementById("video");
+
+vid.classList.add("show");
+vid.muted=true;
+vid.loop=true;
+
 vid.play().catch(()=>{});
 
 setTimeout(()=>{
+
 document.getElementById("section3").classList.add("show");
+
+document.getElementById("giftTitle").innerText = giftTitle;
+
 },2000);
 
-},1500);
+},2000);
+
+},1200);
 
 }
 
 /* GIFT */
 function revealGift(){
-document.getElementById("gift").style.display="block";
+
+const gift=document.getElementById("gift");
+
+gift.style.display="block";
+
+gift.innerText = giftText;
+
+setTimeout(()=>{
+
+const popup=document.getElementById("popup");
+
+popup.classList.add("show");
+
+if(navigator.vibrate){
+
+navigator.vibrate([200,100,200,100,500]);
+
+}
+
+setTimeout(()=>{
+
+popup.classList.remove("show");
+
+},10000);
+
+},2000);
+
 }
 
 /* HEARTS */
 setInterval(()=>{
-const h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),9000);
+
+const heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.animationDuration=(4+Math.random()*6)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+
+heart.remove();
+
+},9000);
+
 },500);
 
 </script>
